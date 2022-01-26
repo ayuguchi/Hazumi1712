@@ -20,11 +20,28 @@ col = 3
 def main():
 #    f_20f1 = open('../dumpfiles/1712F2006.csv')
     ef1 = pd.read_csv('../elan/1712F2006.csv')
-    ef1_int = ef1.set_index('sys_utterance')
-    print(ef1_int['Int_HRI-i':'Int_TOH'])
-#    print(type(ef1_int)) 
-#    print(ef1_int.loc['Int_HRI-i':'Int_TOH']) 
+    ef1_index = ef1.set_index('sys_utterance')
+    ef1_int = ef1_index['Int_HRI-i':'Int_TOH']
+#    print(ef1_int) 
 
+    ef1_int_A = ef1_index.loc['Int_HRI-i',' これから「ドラマ」の話をしましょう！']
+    ef1_int_B = ef1_index.loc['Int_HRI-n',' これから「ドラマ」の話をしましょう！']
+    ef1_int_C = ef1_index.loc['Int_KIT',' これから「ドラマ」の話をしましょう！']
+    ef1_int_D = ef1_index.loc['Int_OSA-k',' これから「ドラマ」の話をしましょう！']
+    ef1_int_E = ef1_index.loc['Int_OSA-n',' これから「ドラマ」の話をしましょう！']
+    ef1_int_G = ef1_index.loc['Int_TOH',' これから「ドラマ」の話をしましょう！']
+ #   print(type(ef1_index))
+    print(ef1_int_A)
+#    print(ef1_int_B)
+#    print(ef1_int_B)
+#    print(ef1_int_C)
+#    print(ef1_int_D)
+#    print(ef1_int_E)
+
+    ef1_int_A = pd.DataFrame(ef1_int_A)
+    ef1_int_B = pd.DataFrame(ef1_int_B)
+    #print(type(ef1_int_A))
+    print(ef1_int_A.join(ef1_int_B, lsuffix='_HRI-i', rsuffix='_HRI-n'))
 
 '''
     for d_row in d_f_20f1:
