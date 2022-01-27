@@ -30,7 +30,6 @@ def main():
     ef1_int_D = ef1_index.loc['Int_OSA-k', :]
     ef1_int_E = ef1_index.loc['Int_OSA-n', :]
     ef1_int_G = ef1_index.loc['Int_TOH', :]
- #   print(type(ef1_index))
 #    print(ef1_int_A)
 #    print(ef1_int_B)
 #    print(ef1_int_B)
@@ -52,11 +51,11 @@ def main():
     ef1_int_G_ant = ef1_int_G[['165.0',' これから「ドラマ」の話をしましょう！']]
 
 #    print(ef1_int_A.join(ef1_int_B, lsuffix='_HRI-i', rsuffix='_HRI-n'))
-    ef1_int_ant = ef1_int_A_ant.merge(ef1_int_B_ant, how='left', on='165.0')
-    ef1_int_ant = ef1_int_ant.merge(ef1_int_C_ant, how='left', on='165.0')
-    ef1_int_ant = ef1_int_ant.merge(ef1_int_D_ant, how='left', on='165.0')
+    ef1_int_ant = ef1_int_A_ant.merge(ef1_int_B_ant, how='left', on='165.0', suffixes=('_HRI-i', '_HRI-n'))
+    ef1_int_ant = ef1_int_ant.merge(ef1_int_C_ant, how='left', on='165.0', suffixes=('_HRI-i', '_HRI-n'))
+    ef1_int_ant = ef1_int_ant.merge(ef1_int_D_ant, how='left', on='165.0', suffixes=('_KIT', '_OSA-k'))
     ef1_int_ant = ef1_int_ant.merge(ef1_int_E_ant, how='left', on='165.0')
-    ef1_int_ant = ef1_int_ant.merge(ef1_int_G_ant, how='left', on='165.0')
+    ef1_int_ant = ef1_int_ant.merge(ef1_int_G_ant, how='left', on='165.0', suffixes=('_OSA-n', '_TOH'))
     print(ef1_int_ant)
 
     
