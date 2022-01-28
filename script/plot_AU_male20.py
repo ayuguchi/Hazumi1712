@@ -20,13 +20,13 @@ def main():
     f_20m1 = open('../dumpfiles/1712M2007.csv')
     d_f_20m1 = csv.reader(f_20m1)
     label_d_f_20m1 = next(d_f_20m1)
-    f_20m2 = open('../dumpfiles/1712M2021.csv')
+    f_20m2 = open('../dumpfiles/1712M2021.csv') #glasses
     d_f_20m2 = csv.reader(f_20m2)
     label_d_f_20m2 = next(d_f_20m2)
     f_20m3 = open('../dumpfiles/1712M2024.csv')
     d_f_20m3 = csv.reader(f_20m3)
     label_d_f_20m3 = next(d_f_20m3)
-    f_20m4 = open('../dumpfiles/1712M2028.csv')
+    f_20m4 = open('../dumpfiles/1712M2028.csv') #glasses
     d_f_20m4 = csv.reader(f_20m4)
     label_d_f_20m4 = next(d_f_20m4)
     f_20m5 = open('../dumpfiles/1712M2029.csv')

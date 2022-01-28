@@ -8,16 +8,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-start_time = []
-au01 = []
-au02 = []
-au04 = []
-au05 = []
-au45 = []
-
-row = 2
-col = 3
-
 def main():
 #    f_20f1 = open('../dumpfiles/1712F2006.csv')
     ef1 = pd.read_csv('../elan/1712F2006.csv')
@@ -27,6 +17,14 @@ def main():
     ef2 = pd.read_csv('../elan/1712F2010.csv')
     ef2_index = ef2.set_index('sys_utterance')
     ef2_int = ef2_index['Int_HRI-i':'Int_TOT']
+
+    ef3 = pd.read_csv('../elan/1712F2018.csv')
+    ef3_index = ef3.set_index('sys_utterance')
+    ef3_int = ef3_index['Int_HRI-i':'Int_JAI']
+
+    ef4 = pd.read_csv('../elan/1712F2019.csv')
+    ef4_index = ef4.set_index('sys_utterance')
+    ef4_int = ef4_index['Int_HRI-i':'Int_TOH']
 #    print(ef1_int) 
 
     ef1_int_A = ef1_index.loc['Int_HRI-i', :]
@@ -69,7 +67,12 @@ def main():
     print('O Numbers of ef1:\n', ef1_int_ant_bool_o.sum(axis='columns'))
     print('X Numbers of ef1:\n', ef1_int_ant_bool_x.sum(axis='columns'))
 
-    #print(ef1_int_ant.nunique(axis='columns'))
+    ef1_int_ant_bool_o_num = ef1_int_ant_bool_o.sum(axis='columns')
+    ef1_int_ant_bool_x_num = ef1_int_ant_bool_x.sum(axis='columns')
+#    print(type(ef1_int_ant_bool_o_num))
+    ef1_int_ant_bool_num = pd.concat([ef1_int_ant_bool_o_num, ef1_int_ant_bool_x_num], axis='columns') 
+    print(ef1_int_ant_bool_num)
+
 
     ef2_int_A = ef2_index.loc['Int_HRI-i', :]
     ef2_int_B = ef2_index.loc['Int_HRI-n', :]
@@ -89,8 +92,82 @@ def main():
     ef2_int_ant_bool_o = (ef2_int_ant == "o")
     ef2_int_ant_bool_x = (ef2_int_ant == "x")
 
-    print('O Numbers of ef1:\n', ef2_int_ant_bool_o.sum(axis='columns'))
-    print('X Numbers of ef1:\n', ef2_int_ant_bool_x.sum(axis='columns'))
+    print('O Numbers of ef2:\n', ef2_int_ant_bool_o.sum(axis='columns'))
+    print('X Numbers of ef2:\n', ef2_int_ant_bool_x.sum(axis='columns'))
+
+    ef2_int_ant_bool_o_num = ef2_int_ant_bool_o.sum(axis='columns')
+    ef2_int_ant_bool_x_num = ef2_int_ant_bool_x.sum(axis='columns')
+#    print(type(ef1_int_ant_bool_o_num))
+    ef2_int_ant_bool_num = pd.concat([ef2_int_ant_bool_o_num, ef2_int_ant_bool_x_num], axis='columns')
+    print(ef2_int_ant_bool_num)
+
+
+    ef3_int_A = ef3_index.loc['Int_HRI-i', :]
+    ef3_int_B = ef3_index.loc['Int_HRI-n', :]
+    ef3_int_C = ef3_index.loc['Int_JAI', :]
+    
+    ef3_int_A = pd.DataFrame(ef3_int_A)
+    ef3_int_A_ant = ef3_int_A[['136.0',' これから「アニメ・漫画」について話しましょう！']]
+    ef3_int_B = pd.DataFrame(ef3_int_B)
+    ef3_int_B_ant = ef3_int_B[['136.0',' これから「アニメ・漫画」について話しましょう！']]
+    ef3_int_C = pd.DataFrame(ef3_int_C)
+    ef3_int_C_ant = ef3_int_C[['136.0',' これから「アニメ・漫画」について話しましょう！']]
+
+    ef3_int_ant = ef3_int_A_ant.merge(ef3_int_B_ant, how='left', on='136.0', suffixes=('_HRI-i', '_HRI-n'))
+    ef3_int_ant = ef3_int_ant.merge(ef3_int_C_ant, how='left', on='136.0', suffixes=('_HRI-i', '_HRI-n'))
+    print(ef3_int_ant)
+
+    ef3_int_ant_bool_o = (ef3_int_ant == "o")
+    ef3_int_ant_bool_x = (ef3_int_ant == "x")
+
+    print('O Numbers of ef3:\n', ef3_int_ant_bool_o.sum(axis='columns'))
+    print('X Numbers of ef3:\n', ef3_int_ant_bool_x.sum(axis='columns'))
+
+    ef3_int_ant_bool_o_num = ef3_int_ant_bool_o.sum(axis='columns')
+    ef3_int_ant_bool_x_num = ef3_int_ant_bool_x.sum(axis='columns')
+#    print(type(ef1_int_ant_bool_o_num))
+    ef3_int_ant_bool_num = pd.concat([ef3_int_ant_bool_o_num, ef3_int_ant_bool_x_num], axis='columns')
+    print(ef3_int_ant_bool_num)
+
+
+    ef4_int_A = ef4_index.loc['Int_HRI-i', :]
+    ef4_int_B = ef4_index.loc['Int_HRI-n', :]
+    ef4_int_C = ef4_index.loc['Int_KIT', :]
+    ef4_int_D = ef4_index.loc['Int_OSA-k', :]
+    ef4_int_E = ef4_index.loc['Int_OSA-n', :]
+    ef4_int_G = ef4_index.loc['Int_TOH', :]
+
+    ef4_int_A = pd.DataFrame(ef4_int_A)
+    ef4_int_A_ant = ef4_int_A[['150.0',' これから「アニメ・漫画」について話しましょう！']]
+    ef4_int_B = pd.DataFrame(ef4_int_B)
+    ef4_int_B_ant = ef4_int_B[['150.0',' これから「アニメ・漫画」について話しましょう！']]
+    ef4_int_C = pd.DataFrame(ef4_int_C)
+    ef4_int_C_ant = ef4_int_C[['150.0',' これから「アニメ・漫画」について話しましょう！']]
+    ef4_int_D = pd.DataFrame(ef4_int_D)
+    ef4_int_D_ant = ef4_int_D[['150.0',' これから「アニメ・漫画」について話しましょう！']]
+    ef4_int_E = pd.DataFrame(ef4_int_E)
+    ef4_int_E_ant = ef4_int_E[['150.0',' これから「アニメ・漫画」について話しましょう！']]
+    ef4_int_G = pd.DataFrame(ef4_int_G)
+    ef4_int_G_ant = ef4_int_G[['150.0',' これから「アニメ・漫画」について話しましょう！']]
+
+    ef4_int_ant = ef4_int_A_ant.merge(ef4_int_B_ant, how='left', on='150.0', suffixes=('_HRI-i', '_HRI-n'))
+    ef4_int_ant = ef4_int_ant.merge(ef4_int_C_ant, how='left', on='150.0', suffixes=('_HRI-i', '_HRI-n'))
+    ef4_int_ant = ef4_int_ant.merge(ef4_int_D_ant, how='left', on='150.0', suffixes=('_KIT', '_OSA-k'))
+    ef4_int_ant = ef4_int_ant.merge(ef4_int_E_ant, how='left', on='150.0')
+    ef4_int_ant = ef4_int_ant.merge(ef4_int_G_ant, how='left', on='150.0', suffixes=('_OSA-n', '_TOH'))
+    print(ef4_int_ant)
+
+    ef4_int_ant_bool_o = (ef4_int_ant == "o")
+    ef4_int_ant_bool_x = (ef4_int_ant == "x")
+
+    print('O Numbers of ef4:\n', ef4_int_ant_bool_o.sum(axis='columns'))
+    print('X Numbers of ef4:\n', ef4_int_ant_bool_x.sum(axis='columns'))
+
+    ef4_int_ant_bool_o_num = ef4_int_ant_bool_o.sum(axis='columns')
+    ef4_int_ant_bool_x_num = ef4_int_ant_bool_x.sum(axis='columns')
+#    print(type(ef1_int_ant_bool_o_num))
+    ef4_int_ant_bool_num = pd.concat([ef4_int_ant_bool_o_num, ef4_int_ant_bool_x_num], axis='columns')
+    print(ef4_int_ant_bool_num)
 
     '''
     for d_row in d_f_20f4:
