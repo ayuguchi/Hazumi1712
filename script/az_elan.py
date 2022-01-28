@@ -1,5 +1,6 @@
 # -*- encoding: UTF-8 -*-
 from cProfile import label
+from re import A
 import sys
 import csv
 import pandas as pd
@@ -22,6 +23,10 @@ def main():
     ef1 = pd.read_csv('../elan/1712F2006.csv')
     ef1_index = ef1.set_index('sys_utterance')
     ef1_int = ef1_index['Int_HRI-i':'Int_TOH']
+
+    ef2 = pd.read_csv('../elan/1712F2010.csv')
+    ef2_index = ef2.set_index('sys_utterance')
+    ef2_int = ef2_index['Int_HRI-i':'Int_TOT']
 #    print(ef1_int) 
 
     ef1_int_A = ef1_index.loc['Int_HRI-i', :]
@@ -58,7 +63,35 @@ def main():
     ef1_int_ant = ef1_int_ant.merge(ef1_int_G_ant, how='left', on='165.0', suffixes=('_OSA-n', '_TOH'))
     print(ef1_int_ant)
 
+    ef1_int_ant_bool_o = (ef1_int_ant == "o")
+    ef1_int_ant_bool_x = (ef1_int_ant == "x")
+
+    print('O Numbers of ef1:\n', ef1_int_ant_bool_o.sum(axis='columns'))
+    print('X Numbers of ef1:\n', ef1_int_ant_bool_x.sum(axis='columns'))
+
+    #print(ef1_int_ant.nunique(axis='columns'))
+
+    ef2_int_A = ef2_index.loc['Int_HRI-i', :]
+    ef2_int_B = ef2_index.loc['Int_HRI-n', :]
+    ef2_int_C = ef2_index.loc['Int_TOT', :]
     
+    ef2_int_A = pd.DataFrame(ef2_int_A)
+    ef2_int_A_ant = ef2_int_A[['143.0',' これから「ゲーム」について話しましょう']]
+    ef2_int_B = pd.DataFrame(ef2_int_B)
+    ef2_int_B_ant = ef2_int_B[['143.0',' これから「ゲーム」について話しましょう']]
+    ef2_int_C = pd.DataFrame(ef2_int_C)
+    ef2_int_C_ant = ef2_int_C[['143.0',' これから「ゲーム」について話しましょう']]
+
+    ef2_int_ant = ef2_int_A_ant.merge(ef2_int_B_ant, how='left', on='143.0', suffixes=('_HRI-i', '_HRI-n'))
+    ef2_int_ant = ef2_int_ant.merge(ef2_int_C_ant, how='left', on='143.0', suffixes=('_HRI-i', '_HRI-n'))
+    print(ef2_int_ant)
+
+    ef2_int_ant_bool_o = (ef2_int_ant == "o")
+    ef2_int_ant_bool_x = (ef2_int_ant == "x")
+
+    print('O Numbers of ef1:\n', ef2_int_ant_bool_o.sum(axis='columns'))
+    print('X Numbers of ef1:\n', ef2_int_ant_bool_x.sum(axis='columns'))
+
     '''
     for d_row in d_f_20f4:
         start_time.append(float(d_row[1]))
