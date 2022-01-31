@@ -70,8 +70,26 @@ def main():
     ef1_int_ant_bool_o_num = ef1_int_ant_bool_o.sum(axis='columns')
     ef1_int_ant_bool_x_num = ef1_int_ant_bool_x.sum(axis='columns')
 #    print(type(ef1_int_ant_bool_o_num))
-    ef1_int_ant_bool_num = pd.concat([ef1_int_ant_bool_o_num, ef1_int_ant_bool_x_num], axis='columns') 
-    print(ef1_int_ant_bool_num)
+#    ef1_int_ant_bool_num = pd.concat([ef1_int_ant_bool_o_num, ef1_int_ant_bool_x_num], axis='columns') 
+#    print(ef1_int_ant_bool_num)
+#    print( ef1_int_ant_bool_num[0] > ef1_int_ant_bool_num[1])
+    print(ef1_int_ant_bool_o_num > ef1_int_ant_bool_x_num)
+    ef1_int_ant_bool = ef1_int_ant_bool_o_num > ef1_int_ant_bool_x_num
+
+    ef1_int_ant_score = ef1_int_ant_bool.mask(ef1_int_ant_bool==True, 1)
+    ef1_int_ant_score = ef1_int_ant_score.mask(ef1_int_ant_bool==False, -1)
+    print(ef1_int_ant_score)
+#    ef1_int_ant_score.to_csv('./test.csv')
+
+#    plt.figure()
+#    ef1_int_ant_score.plot(label='Interest level', marker='.')
+
+#    plt.title('1712F2019')
+#    plt.ylim(-0.9,0.9)
+#   plt.grid()
+#    plt.legend()
+
+#    plt.show()
 
 
     ef2_int_A = ef2_index.loc['Int_HRI-i', :]
@@ -92,14 +110,20 @@ def main():
     ef2_int_ant_bool_o = (ef2_int_ant == "o")
     ef2_int_ant_bool_x = (ef2_int_ant == "x")
 
-    print('O Numbers of ef2:\n', ef2_int_ant_bool_o.sum(axis='columns'))
-    print('X Numbers of ef2:\n', ef2_int_ant_bool_x.sum(axis='columns'))
+#    print('O Numbers of ef2:\n', ef2_int_ant_bool_o.sum(axis='columns'))
+#    print('X Numbers of ef2:\n', ef2_int_ant_bool_x.sum(axis='columns'))
 
     ef2_int_ant_bool_o_num = ef2_int_ant_bool_o.sum(axis='columns')
     ef2_int_ant_bool_x_num = ef2_int_ant_bool_x.sum(axis='columns')
 #    print(type(ef1_int_ant_bool_o_num))
-    ef2_int_ant_bool_num = pd.concat([ef2_int_ant_bool_o_num, ef2_int_ant_bool_x_num], axis='columns')
-    print(ef2_int_ant_bool_num)
+#    ef2_int_ant_bool_num = pd.concat([ef2_int_ant_bool_o_num, ef2_int_ant_bool_x_num], axis='columns')
+#    print(ef2_int_ant_bool_num)
+    print(ef2_int_ant_bool_o_num > ef2_int_ant_bool_x_num)
+    ef2_int_ant_bool = ef2_int_ant_bool_o_num > ef2_int_ant_bool_x_num
+
+    ef2_int_ant_score = ef2_int_ant_bool.mask(ef2_int_ant_bool==True, 1)
+    ef2_int_ant_score = ef2_int_ant_score.mask(ef2_int_ant_bool==False, -1)
+    print(ef2_int_ant_score)
 
 
     ef3_int_A = ef3_index.loc['Int_HRI-i', :]
@@ -120,14 +144,21 @@ def main():
     ef3_int_ant_bool_o = (ef3_int_ant == "o")
     ef3_int_ant_bool_x = (ef3_int_ant == "x")
 
-    print('O Numbers of ef3:\n', ef3_int_ant_bool_o.sum(axis='columns'))
-    print('X Numbers of ef3:\n', ef3_int_ant_bool_x.sum(axis='columns'))
+#    print('O Numbers of ef3:\n', ef3_int_ant_bool_o.sum(axis='columns'))
+#    print('X Numbers of ef3:\n', ef3_int_ant_bool_x.sum(axis='columns'))
 
     ef3_int_ant_bool_o_num = ef3_int_ant_bool_o.sum(axis='columns')
     ef3_int_ant_bool_x_num = ef3_int_ant_bool_x.sum(axis='columns')
 #    print(type(ef1_int_ant_bool_o_num))
-    ef3_int_ant_bool_num = pd.concat([ef3_int_ant_bool_o_num, ef3_int_ant_bool_x_num], axis='columns')
-    print(ef3_int_ant_bool_num)
+#    ef3_int_ant_bool_num = pd.concat([ef3_int_ant_bool_o_num, ef3_int_ant_bool_x_num], axis='columns')
+#    print(ef3_int_ant_bool_num)
+
+    print(ef3_int_ant_bool_o_num > ef3_int_ant_bool_x_num)
+    ef3_int_ant_bool = ef3_int_ant_bool_o_num > ef3_int_ant_bool_x_num
+
+    ef3_int_ant_score = ef3_int_ant_bool.mask(ef3_int_ant_bool==True, 1)
+    ef3_int_ant_score = ef3_int_ant_score.mask(ef3_int_ant_bool==False, -1)
+    print(ef3_int_ant_score)
 
 
     ef4_int_A = ef4_index.loc['Int_HRI-i', :]
@@ -160,14 +191,21 @@ def main():
     ef4_int_ant_bool_o = (ef4_int_ant == "o")
     ef4_int_ant_bool_x = (ef4_int_ant == "x")
 
-    print('O Numbers of ef4:\n', ef4_int_ant_bool_o.sum(axis='columns'))
-    print('X Numbers of ef4:\n', ef4_int_ant_bool_x.sum(axis='columns'))
+#    print('O Numbers of ef4:\n', ef4_int_ant_bool_o.sum(axis='columns'))
+#    print('X Numbers of ef4:\n', ef4_int_ant_bool_x.sum(axis='columns'))
 
     ef4_int_ant_bool_o_num = ef4_int_ant_bool_o.sum(axis='columns')
     ef4_int_ant_bool_x_num = ef4_int_ant_bool_x.sum(axis='columns')
 #    print(type(ef1_int_ant_bool_o_num))
-    ef4_int_ant_bool_num = pd.concat([ef4_int_ant_bool_o_num, ef4_int_ant_bool_x_num], axis='columns')
-    print(ef4_int_ant_bool_num)
+#    ef4_int_ant_bool_num = pd.concat([ef4_int_ant_bool_o_num, ef4_int_ant_bool_x_num], axis='columns')
+#    print(ef4_int_ant_bool_num)
+
+    print(ef4_int_ant_bool_o_num > ef4_int_ant_bool_x_num)
+    ef4_int_ant_bool = ef4_int_ant_bool_o_num > ef4_int_ant_bool_x_num
+
+    ef4_int_ant_score = ef4_int_ant_bool.mask(ef4_int_ant_bool==True, 1)
+    ef4_int_ant_score = ef4_int_ant_score.mask(ef4_int_ant_bool==False, -1)
+    print(ef4_int_ant_score)
 
     '''
     for d_row in d_f_20f4:
