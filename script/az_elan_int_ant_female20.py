@@ -80,7 +80,7 @@ def main():
     ef1_int_ant_score = ef1_int_ant_bool.mask(ef1_int_ant_bool==True, 1)
     ef1_int_ant_score = ef1_int_ant_score.mask(ef1_int_ant_bool==False, -1)
     print(ef1_int_ant_score)
-#    ef1_int_ant_score.to_csv('./test.csv')
+    ef1_int_ant_score.to_csv('./1712F2006_int_level.csv')
 
     plt.subplot(col, row, 1)
     plt.plot(ef1_int_ant_score, marker='.')
@@ -124,6 +124,7 @@ def main():
     ef2_int_ant_score = ef2_int_ant_bool.mask(ef2_int_ant_bool==True, 1)
     ef2_int_ant_score = ef2_int_ant_score.mask(ef2_int_ant_bool==False, -1)
     print(ef2_int_ant_score)
+    ef2_int_ant_score.to_csv('./1712F2010_int_level.csv')
 
     plt.subplot(col, row, 2)
     plt.plot(ef2_int_ant_score, marker='.')
@@ -168,6 +169,7 @@ def main():
     ef3_int_ant_score = ef3_int_ant_bool.mask(ef3_int_ant_bool==True, 1)
     ef3_int_ant_score = ef3_int_ant_score.mask(ef3_int_ant_bool==False, -1)
     print(ef3_int_ant_score)
+    ef3_int_ant_score.to_csv('./1712F2018_int_level.csv')
 
     plt.subplot(col, row, 3)
     plt.plot(ef3_int_ant_score, marker='.')
@@ -224,6 +226,7 @@ def main():
     ef4_int_ant_score = ef4_int_ant_bool.mask(ef4_int_ant_bool==True, 1)
     ef4_int_ant_score = ef4_int_ant_score.mask(ef4_int_ant_bool==False, -1)
     print(ef4_int_ant_score)
+    ef4_int_ant_score.to_csv('./1712F2019_int_level.csv')
 
     plt.subplot(col, row, 4)
     plt.plot(ef3_int_ant_score, marker='.')

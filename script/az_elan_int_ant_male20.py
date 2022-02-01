@@ -83,7 +83,7 @@ def main():
     em1_int_ant_score = em1_int_ant_bool.mask(em1_int_ant_bool==True, 1)
     em1_int_ant_score = em1_int_ant_score.mask(em1_int_ant_bool==False, -1)
     print(em1_int_ant_score)
-#    ef1_int_ant_score.to_csv('./test.csv')
+    em1_int_ant_score.to_csv('./1712M2007_int_level.csv')
 
     plt.subplot(col, row, 1)
     plt.plot(em1_int_ant_score, marker='.')
@@ -127,6 +127,7 @@ def main():
     em2_int_ant_score = em2_int_ant_bool.mask(em2_int_ant_bool==True, 1)
     em2_int_ant_score = em2_int_ant_score.mask(em2_int_ant_bool==False, -1)
     print(em2_int_ant_score)
+    em2_int_ant_score.to_csv('./1712M2021_int_level.csv')
 
     plt.subplot(col, row, 2)
     plt.plot(em2_int_ant_score, marker='.')
@@ -171,6 +172,7 @@ def main():
     em3_int_ant_score = em3_int_ant_bool.mask(em3_int_ant_bool==True, 1)
     em3_int_ant_score = em3_int_ant_score.mask(em3_int_ant_bool==False, -1)
     print(em3_int_ant_score)
+    em3_int_ant_score.to_csv('./1712M2024_int_level.csv')
 
     plt.subplot(col, row, 3)
     plt.plot(em3_int_ant_score, marker='.')
@@ -227,6 +229,7 @@ def main():
     em4_int_ant_score = em4_int_ant_bool.mask(em4_int_ant_bool==True, 1)
     em4_int_ant_score = em4_int_ant_score.mask(em4_int_ant_bool==False, -1)
     print(em4_int_ant_score)
+    em4_int_ant_score.to_csv('./1712M2028_int_level.csv')
 
     plt.subplot(col, row, 4)
     plt.plot(em3_int_ant_score, marker='.')
@@ -270,6 +273,7 @@ def main():
     em5_int_ant_score = em5_int_ant_bool.mask(em5_int_ant_bool==True, 1)
     em5_int_ant_score = em5_int_ant_score.mask(em5_int_ant_bool==False, -1)
     print(em5_int_ant_score)
+    em5_int_ant_score.to_csv('./1712M2029_int_level.csv')
 
     plt.subplot(col, row, 5)
     plt.plot(em5_int_ant_score, marker='.')
