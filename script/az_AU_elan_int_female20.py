@@ -81,13 +81,13 @@ def main():
 #    print(len(dif_au45))
 
     plt.subplot(col, row, 1)
-    plt.xlabel('time')
+    plt.xlabel('time (ms)')
     plt.ylabel('Action Units | Interest Level')
-#    plt.plot(start_time, au01, label='AU01', marker='.')
-#    plt.plot(start_time, au02, label='AU02', marker='.')
+    plt.plot(start_time, au01, label='AU01', marker='.')
+    plt.plot(start_time, au02, label='AU02', marker='.')
 #    plt.plot(start_time, au04, label='AU04', marker='.')
 #    plt.plot(start_time, au05, label='AU05', marker='.')
-#    plt.plot(start_time, au45, label='AU45', marker='.')
+    plt.plot(start_time, au45, label='AU45', marker='.')
 
     print(len(start_time[1:]))
 
@@ -98,7 +98,7 @@ def main():
     plt.plot(start_time[1:], dif_au45, label='dif_AU45', marker='.')
     plt.plot(start_time[0:], e_20f1_int['0'], label='interest_level', marker='.', color='grey')
 
-    plt.title('1712F2007')
+    plt.title('1712F2006')
     plt.ylim(-1.2,1.2)
     plt.grid()
 #    plt.legend()
@@ -108,8 +108,8 @@ def main():
     start_time.clear()
     au01.clear()
     au02.clear()
-    au04.clear()
-    au05.clear()
+#    au04.clear()
+#    au05.clear()
     au45.clear()
 
 
@@ -134,8 +134,12 @@ def main():
     dif_au45 = np.diff(au45_array)
 
     plt.subplot(col, row, 2)
-    plt.xlabel('time')
+    plt.xlabel('time (ms)')
     plt.ylabel('Action Units | Interest Level')
+
+    plt.plot(start_time, au01, label='AU01', marker='.')
+    plt.plot(start_time, au02, label='AU02', marker='.')
+    plt.plot(start_time, au45, label='AU45', marker='.')
 
     plt.plot(start_time[1:], dif_au01, label='dif_AU01', marker='.')
     plt.plot(start_time[1:], dif_au02, label='dif_AU02', marker='.')
@@ -178,8 +182,12 @@ def main():
     dif_au45 = np.diff(au45_array)
     
     plt.subplot(col, row, 3)
-    plt.xlabel('time')
+    plt.xlabel('time (ms)')
     plt.ylabel('Action Units | Interest Level')
+
+    plt.plot(start_time, au01, label='AU01', marker='.')
+    plt.plot(start_time, au02, label='AU02', marker='.')
+    plt.plot(start_time, au45, label='AU45', marker='.')
 
     plt.plot(start_time[1:], dif_au01, label='dif_AU01', marker='.')
     plt.plot(start_time[1:], dif_au02, label='dif_AU02', marker='.')
@@ -222,8 +230,12 @@ def main():
     dif_au45 = np.diff(au45_array)
     
     plt.subplot(col, row, 4)
-    plt.xlabel('time')
+    plt.xlabel('time (ms)')
     plt.ylabel('Action Units | Interest Level')
+
+    plt.plot(start_time, au01, label='AU01', marker='.')
+    plt.plot(start_time, au02, label='AU02', marker='.')
+    plt.plot(start_time, au45, label='AU45', marker='.')
 
     plt.plot(start_time[1:], dif_au01, label='dif_AU01', marker='.')
     plt.plot(start_time[1:], dif_au02, label='dif_AU02', marker='.')
@@ -235,7 +247,7 @@ def main():
     plt.title('1712F2019')
     plt.ylim(-1.2,1.2)
     plt.grid()
-    plt.legend(loc='best', borderaxespad=0)
+    plt.legend(loc='upper right', borderaxespad=0)
 
     start_time.clear()
     au01.clear()
