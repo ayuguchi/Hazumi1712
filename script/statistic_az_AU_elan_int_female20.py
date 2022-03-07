@@ -2,7 +2,7 @@
 from cProfile import label
 import sys
 import csv
-from turtle import color
+from turtle import color, st
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -47,6 +47,8 @@ def main():
     f_20m5 = open('../dumpfiles/1712M2029.csv')
     d_f_20m5 = csv.reader(f_20m5)
     label_d_f_20m5 = next(d_f_20m5)
+
+#    f_20f2_dataFrame = pd.read_csv('../dumpfiles/1712F2010.csv')
 
     e_20f1_int = pd.read_csv('../script/1712F2006_int_level.csv')
     e_20f2_int = pd.read_csv('../script/1712F2010_int_level.csv')
@@ -134,6 +136,18 @@ def main():
 #    dif_au04 = np.diff(au04_array)
 #    dif_au05 = np.diff(au05_array)
     dif_au45 = np.diff(au45_array)
+
+#    print(e_20f2_int['0']
+
+    startTime_DataFrame= pd.DataFrame(start_time)
+    au01_DataFrame= pd.DataFrame(au01)
+    au02_DataFrame= pd.DataFrame(au02)
+
+    print(au01_DataFrame)
+
+#    auInterest_DataFrame = startTime_DataFrame.merge(au01_DataFrame,how='left',on='0')
+    auInterest_DataFrame = pd.concat([startTime_DataFrame,au01_DataFrame,au02_DataFrame,e_20f2_int['0']],axis=1)
+    print(auInterest_DataFrame)
 
     plt.subplot(col, row, 1)#2
     plt.xlabel('time (ms)')
