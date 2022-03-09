@@ -2,7 +2,7 @@
 from cProfile import label
 import sys
 import csv
-from turtle import color, st
+#from turtle import color, st
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -145,10 +145,17 @@ def main():
 
 #    auInterest_DataFrame = startTime_DataFrame.merge(au01_DataFrame,how='left',on='0')
     auInterest_DataFrame = pd.concat([startTime_DataFrame,au01_DataFrame,au02_DataFrame,e_20f2_int['0']],axis=1)
+    auInterest_DataFrame = auInterest_DataFrame.set_axis(['start_time','AU01','AU02','interest_level'], axis=1)
     print(auInterest_DataFrame)
 
-    print(auInterest_DataFrame.iloc[:,[3]] == -1)
+    negInterest_DataFrame = auInterest_DataFrame.query('interest_level == -1')
+    azAuInterest_DataFrame = auInterest_DataFrame.query('interest_level == -1 & AU01 >= 0.5 | AU02 >= 0.5')
 
+#    print(len(negInterest_DataFrame))
+#    print(len(azAuInterest_DataFrame))
+    print('Appearance rate', float(len(azAuInterest_DataFrame)/len(negInterest_DataFrame)))
+    
+    #Plot
     plt.subplot(col, row, 1)#2
     plt.xlabel('time (ms)')
     plt.ylabel('Action Units | Interest Level')
