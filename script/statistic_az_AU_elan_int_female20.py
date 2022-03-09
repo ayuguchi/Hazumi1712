@@ -143,11 +143,11 @@ def main():
     au01_DataFrame= pd.DataFrame(au01)
     au02_DataFrame= pd.DataFrame(au02)
 
-    print(au01_DataFrame)
-
 #    auInterest_DataFrame = startTime_DataFrame.merge(au01_DataFrame,how='left',on='0')
     auInterest_DataFrame = pd.concat([startTime_DataFrame,au01_DataFrame,au02_DataFrame,e_20f2_int['0']],axis=1)
     print(auInterest_DataFrame)
+
+    print(auInterest_DataFrame.iloc[:,[3]] == -1)
 
     plt.subplot(col, row, 1)#2
     plt.xlabel('time (ms)')
