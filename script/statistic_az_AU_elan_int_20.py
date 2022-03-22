@@ -14,8 +14,8 @@ au04 = []
 au05 = []
 au45 = []
 
-row = 2 #2
-col = 3 #3
+#row = 2 #2
+#col = 3 #3
 
 def main():
     f_20f1 = open('../dumpfiles/1712F2006.csv')
@@ -95,39 +95,13 @@ def main():
     auInterest_DataFrame = auInterest_DataFrame.set_axis(['start_time','AU01','AU02','interest_level'], axis=1)
     print(auInterest_DataFrame)
 
-    negInterest_DataFrame = auInterest_DataFrame.query('interest_level == -1')
-    azAuInterest_DataFrame = auInterest_DataFrame.query('interest_level == -1 & AU01 >= 0.5 | AU02 >= 0.5')
+    negInterest_DataFrame_f1 = auInterest_DataFrame.query('interest_level == -1')
+    azAuInterest_DataFrame_f1 = auInterest_DataFrame.query('interest_level == -1 & AU01 >= 0.5 | AU02 >= 0.5')
 
 #    print(len(negInterest_DataFrame))
 #    print(len(azAuInterest_DataFrame))
-    print('Appearance rate of f1', float(len(azAuInterest_DataFrame)/len(negInterest_DataFrame)))
+    print('Appearance rate of f1', float(len(azAuInterest_DataFrame_f1)/len(negInterest_DataFrame_f1)))
     
-#    print(len(azAuInterest_DataFrame))
-    plt.subplot(col, row, 1)
-    plt.xlabel('time (ms)')
-    plt.ylabel('Action Units | Interest Level')
-    plt.plot(start_time, au01, label='AU01', marker='.')
-    plt.plot(start_time, au02, label='AU02', marker='.')
-#    plt.plot(start_time, au04, label='AU04', marker='.')
-#    plt.plot(start_time, au05, label='AU05', marker='.')
-#    plt.plot(start_time, au45, label='AU45', marker='.')
-
-#    print(len(start_time[1:]))
-
-    plt.plot(start_time[1:], dif_au01, label='dif_AU01', marker='.')
-    plt.plot(start_time[1:], dif_au02, label='dif_AU02', marker='.')
-#    plt.plot(start_time[1:], dif_au04, label='dif_AU04', marker='.')
-#    plt.plot(start_time[1:], dif_au05, label='dif_AU05', marker='.')
-#    plt.plot(start_time[1:], dif_au45, label='dif_AU45', marker='.')
-    plt.plot(start_time[0:], e_20f1_int['0'], label='interest_level', marker='.', color='grey')
-
-    plt.title('1712F2006')
-    plt.ylim(-1.2,1.2)
-    plt.grid()
-#    plt.legend()
-    plt.legend(loc='best', borderaxespad=0)
-
-
     start_time.clear()
     au01.clear()
     au02.clear()
@@ -139,8 +113,8 @@ def main():
     au01_DataFrame.drop(au01_DataFrame.index, inplace=True)
     au02_DataFrame.drop(au02_DataFrame.index, inplace=True)
     auInterest_DataFrame.drop(auInterest_DataFrame.index, inplace=True)
-    negInterest_DataFrame.drop(negInterest_DataFrame.index, inplace=True)
-    azAuInterest_DataFrame.drop(azAuInterest_DataFrame.index, inplace=True)
+#    negInterest_DataFrame.drop(negInterest_DataFrame.index, inplace=True)
+#    azAuInterest_DataFrame.drop(azAuInterest_DataFrame.index, inplace=True)
 
     for d_row in d_f_20f2:
         start_time.append(float(d_row[1]))
@@ -172,33 +146,12 @@ def main():
     auInterest_DataFrame = auInterest_DataFrame.set_axis(['start_time','AU01','AU02','interest_level'], axis=1)
     print(auInterest_DataFrame)
 
-    negInterest_DataFrame = auInterest_DataFrame.query('interest_level == -1')
-    azAuInterest_DataFrame = auInterest_DataFrame.query('interest_level == -1 & AU01 >= 0.5 | AU02 >= 0.5')
+    negInterest_DataFrame_f2 = auInterest_DataFrame.query('interest_level == -1')
+    azAuInterest_DataFrame_f2 = auInterest_DataFrame.query('interest_level == -1 & AU01 >= 0.5 | AU02 >= 0.5')
 
 #    print(len(negInterest_DataFrame))
 #    print(len(azAuInterest_DataFrame))
-    print('Appearance rate of f2', float(len(azAuInterest_DataFrame)/len(negInterest_DataFrame)))
-    
-    #Plot
-    plt.subplot(col, row, 2)#2
-    plt.xlabel('time (ms)')
-    plt.ylabel('Action Units | Interest Level')
-
-    plt.plot(start_time, au01, label='AU01', marker='.')
-    plt.plot(start_time, au02, label='AU02', marker='.')
-#    plt.plot(start_time, au45, label='AU45', marker='.')
-
-    plt.plot(start_time[1:], dif_au01, label='dif_AU01', marker='.')
-    plt.plot(start_time[1:], dif_au02, label='dif_AU02', marker='.')
-#    plt.plot(start_time[1:], dif_au04, label='dif_AU04', marker='.')
-#    plt.plot(start_time[1:], dif_au05, label='dif_AU05', marker='.')
-#    plt.plot(start_time[1:], dif_au45, label='dif_AU45', marker='.')
-    plt.plot(start_time[0:], e_20f2_int['0'], label='interest_level', marker='.', color='grey')
-
-#    plt.title('1712F2010')
-    plt.ylim(-1.2,1.2)
-    plt.grid()
-    plt.legend(loc='upper left', borderaxespad=0)
+    print('Appearance rate of f2', float(len(azAuInterest_DataFrame_f2)/len(negInterest_DataFrame_f2)))
     
     start_time.clear()
     au01.clear()
@@ -211,8 +164,8 @@ def main():
     au01_DataFrame.drop(au01_DataFrame.index, inplace=True)
     au02_DataFrame.drop(au02_DataFrame.index, inplace=True)
     auInterest_DataFrame.drop(auInterest_DataFrame.index, inplace=True)
-    negInterest_DataFrame.drop(negInterest_DataFrame.index, inplace=True)
-    azAuInterest_DataFrame.drop(azAuInterest_DataFrame.index, inplace=True)
+#    negInterest_DataFrame.drop(negInterest_DataFrame.index, inplace=True)
+#    azAuInterest_DataFrame.drop(azAuInterest_DataFrame.index, inplace=True)
 
 
     for d_row in d_f_20f3:
@@ -243,34 +196,13 @@ def main():
     auInterest_DataFrame = auInterest_DataFrame.set_axis(['start_time','AU01','AU02','interest_level'], axis=1)
     print(auInterest_DataFrame)
 
-    negInterest_DataFrame = auInterest_DataFrame.query('interest_level == -1')
-    azAuInterest_DataFrame = auInterest_DataFrame.query('interest_level == -1 & AU01 >= 0.5 | AU02 >= 0.5')
+    negInterest_DataFrame_f3 = auInterest_DataFrame.query('interest_level == -1')
+    azAuInterest_DataFrame_f3 = auInterest_DataFrame.query('interest_level == -1 & AU01 >= 0.5 | AU02 >= 0.5')
 
 #    print(len(negInterest_DataFrame))
 #    print(len(azAuInterest_DataFrame))
-    print('Appearance rate of f3', float(len(azAuInterest_DataFrame)/len(negInterest_DataFrame)))
-    
-    
-    plt.subplot(col, row, 3)#3
-    plt.xlabel('time (ms)')
-    plt.ylabel('Action Units | Interest Level')
-
-    plt.plot(start_time, au01, label='AU01', marker='.')
-    plt.plot(start_time, au02, label='AU02', marker='.')
-#    plt.plot(start_time, au45, label='AU45', marker='.')
-
-    plt.plot(start_time[1:], dif_au01, label='dif_AU01', marker='.')
-    plt.plot(start_time[1:], dif_au02, label='dif_AU02', marker='.')
-#    plt.plot(start_time[1:], dif_au04, label='dif_AU04', marker='.')
-#    plt.plot(start_time[1:], dif_au05, label='dif_AU05', marker='.')
-#    plt.plot(start_time[1:], dif_au45, label='dif_AU45', marker='.')
-    plt.plot(start_time[0:], e_20f3_int['0'], label='interest_level', marker='.', color='grey')
-
-#    plt.title('1712F2018')
-    plt.ylim(-1.2,1.2)
-    plt.grid()
-    plt.legend(loc='upper left', borderaxespad=0)
-
+    print('Appearance rate of f3', float(len(azAuInterest_DataFrame_f3)/len(negInterest_DataFrame_f3)))
+        
     start_time.clear()
     au01.clear()
     au02.clear()
@@ -282,8 +214,8 @@ def main():
     au01_DataFrame.drop(au01_DataFrame.index, inplace=True)
     au02_DataFrame.drop(au02_DataFrame.index, inplace=True)
     auInterest_DataFrame.drop(auInterest_DataFrame.index, inplace=True)
-    negInterest_DataFrame.drop(negInterest_DataFrame.index, inplace=True)
-    azAuInterest_DataFrame.drop(azAuInterest_DataFrame.index, inplace=True)
+#    negInterest_DataFrame.drop(negInterest_DataFrame.index, inplace=True)
+#    azAuInterest_DataFrame.drop(azAuInterest_DataFrame.index, inplace=True)
 
 
     for d_row in d_f_20f4:
@@ -314,34 +246,13 @@ def main():
     auInterest_DataFrame = auInterest_DataFrame.set_axis(['start_time','AU01','AU02','interest_level'], axis=1)
     print(auInterest_DataFrame)
 
-    negInterest_DataFrame = auInterest_DataFrame.query('interest_level == -1')
-    azAuInterest_DataFrame = auInterest_DataFrame.query('interest_level == -1 & AU01 >= 0.5 | AU02 >= 0.5')
+    negInterest_DataFrame_f4 = auInterest_DataFrame.query('interest_level == -1')
+    azAuInterest_DataFrame_f4 = auInterest_DataFrame.query('interest_level == -1 & AU01 >= 0.5 | AU02 >= 0.5')
 
 #    print(len(negInterest_DataFrame))
 #    print(len(azAuInterest_DataFrame))
-    print('Appearance rate of f4', float(len(azAuInterest_DataFrame)/len(negInterest_DataFrame)))
+    print('Appearance rate of f4', float(len(azAuInterest_DataFrame_f4)/len(negInterest_DataFrame_f4)))
     
-    
-    plt.subplot(col, row, 4)
-    plt.xlabel('time (ms)')
-    plt.ylabel('Action Units | Interest Level')
-
-    plt.plot(start_time, au01, label='AU01', marker='.')
-    plt.plot(start_time, au02, label='AU02', marker='.')
-#    plt.plot(start_time, au45, label='AU45', marker='.')
-
-    plt.plot(start_time[1:], dif_au01, label='dif_AU01', marker='.')
-    plt.plot(start_time[1:], dif_au02, label='dif_AU02', marker='.')
-#    plt.plot(start_time[1:], dif_au04, label='dif_AU04', marker='.')
-#    plt.plot(start_time[1:], dif_au05, label='dif_AU05', marker='.')
-#    plt.plot(start_time[1:], dif_au45, label='dif_AU45', marker='.')
-    plt.plot(start_time[0:], e_20f4_int['0'], label='interest_level', marker='.', color='grey')
-
-    plt.title('1712F2019')
-    plt.ylim(-1.2,1.2)
-    plt.grid()
-    plt.legend(loc='upper right', borderaxespad=0)
-
     start_time.clear()
     au01.clear()
     au02.clear()
@@ -349,8 +260,277 @@ def main():
 #    au05.clear()
     au45.clear()
 
-    plt.tight_layout()
-    plt.show()
+    startTime_DataFrame.drop(startTime_DataFrame.index, inplace=True)
+    au01_DataFrame.drop(au01_DataFrame.index, inplace=True)
+    au02_DataFrame.drop(au02_DataFrame.index, inplace=True)
+    auInterest_DataFrame.drop(auInterest_DataFrame.index, inplace=True)
+#    negInterest_DataFrame.drop(negInterest_DataFrame.index, inplace=True)
+#    azAuInterest_DataFrame.drop(azAuInterest_DataFrame.index, inplace=True)
+
+    for d_row in d_f_20m1:
+        start_time.append(float(d_row[1]))
+        au01.append(float(d_row[1420]))
+        au02.append(float(d_row[1421]))
+#        au04.append(float(d_row[1422]))
+#        au05.append(float(d_row[1423]))
+        au45.append(float(d_row[1437]))
+
+    au01_array = np.array(au01)
+    au02_array = np.array(au02)
+#    au04_array = np.array(au04)
+#    au05_array = np.array(au05)
+    au45_array = np.array(au45)
+
+    dif_au01 = np.diff(au01_array)
+    dif_au02 = np.diff(au02_array)
+#    dif_au04 = np.diff(au04_array)
+#    dif_au05 = np.diff(au05_array)
+    dif_au45 = np.diff(au45_array)
+#    print(len(au45_array))
+#    print(dif_au45)
+#    print(len(dif_au45))
+
+    startTime_DataFrame= pd.DataFrame(start_time)
+    au01_DataFrame= pd.DataFrame(au01)
+    au02_DataFrame= pd.DataFrame(au02)
+
+    auInterest_DataFrame = pd.concat([startTime_DataFrame,au01_DataFrame,au02_DataFrame,e_20m1_int['0']],axis=1)
+    auInterest_DataFrame = auInterest_DataFrame.set_axis(['start_time','AU01','AU02','interest_level'], axis=1)
+    print(auInterest_DataFrame)
+
+    negInterest_DataFrame_m1 = auInterest_DataFrame.query('interest_level == -1')
+    azAuInterest_DataFrame_m1 = auInterest_DataFrame.query('interest_level == -1 & AU01 >= 0.5 | AU02 >= 0.5')
+
+#    print(len(negInterest_DataFrame))
+#    print(len(azAuInterest_DataFrame))
+    print('Appearance rate of m1:', float(len(azAuInterest_DataFrame_m1)/len(negInterest_DataFrame_m1)))
+    
+    start_time.clear()
+    au01.clear()
+    au02.clear()
+#    au04.clear()
+#    au05.clear()
+    au45.clear()
+
+    startTime_DataFrame.drop(startTime_DataFrame.index, inplace=True)
+    au01_DataFrame.drop(au01_DataFrame.index, inplace=True)
+    au02_DataFrame.drop(au02_DataFrame.index, inplace=True)
+    auInterest_DataFrame.drop(auInterest_DataFrame.index, inplace=True)
+#    negInterest_DataFrame.drop(negInterest_DataFrame.index, inplace=True)
+#    azAuInterest_DataFrame.drop(azAuInterest_DataFrame.index, inplace=True)
+
+    for d_row in d_f_20m2:
+        start_time.append(float(d_row[1]))
+        au01.append(float(d_row[1420]))
+        au02.append(float(d_row[1421]))
+#        au04.append(float(d_row[1422]))
+#        au05.append(float(d_row[1423]))
+        au45.append(float(d_row[1437]))
+
+    au01_array = np.array(au01)
+    au02_array = np.array(au02)
+#    au04_array = np.array(au04)
+#    au05_array = np.array(au05)
+    au45_array = np.array(au45)
+
+    dif_au01 = np.diff(au01_array)
+    dif_au02 = np.diff(au02_array)
+#    dif_au04 = np.diff(au04_array)
+#    dif_au05 = np.diff(au05_array)
+    dif_au45 = np.diff(au45_array)
+#    print(len(au45_array))
+#    print(dif_au45)
+#    print(len(dif_au45))
+
+    startTime_DataFrame= pd.DataFrame(start_time)
+    au01_DataFrame= pd.DataFrame(au01)
+    au02_DataFrame= pd.DataFrame(au02)
+
+    auInterest_DataFrame = pd.concat([startTime_DataFrame,au01_DataFrame,au02_DataFrame,e_20m2_int['0']],axis=1)
+    auInterest_DataFrame = auInterest_DataFrame.set_axis(['start_time','AU01','AU02','interest_level'], axis=1)
+    print(auInterest_DataFrame)
+
+    negInterest_DataFrame_m2 = auInterest_DataFrame.query('interest_level == -1')
+    azAuInterest_DataFrame_m2 = auInterest_DataFrame.query('interest_level == -1 & AU01 >= 0.5 | AU02 >= 0.5')
+
+#    print(len(negInterest_DataFrame))
+#    print(len(azAuInterest_DataFrame))
+    print('Appearance rate of m2:', float(len(azAuInterest_DataFrame_m2)/len(negInterest_DataFrame_m2)))
+    
+    start_time.clear()
+    au01.clear()
+    au02.clear()
+#    au04.clear()
+#    au05.clear()
+    au45.clear()
+
+    startTime_DataFrame.drop(startTime_DataFrame.index, inplace=True)
+    au01_DataFrame.drop(au01_DataFrame.index, inplace=True)
+    au02_DataFrame.drop(au02_DataFrame.index, inplace=True)
+    auInterest_DataFrame.drop(auInterest_DataFrame.index, inplace=True)
+#    negInterest_DataFrame.drop(negInterest_DataFrame.index, inplace=True)
+#    azAuInterest_DataFrame.drop(azAuInterest_DataFrame.index, inplace=True)
+
+    for d_row in d_f_20m3:
+        start_time.append(float(d_row[1]))
+        au01.append(float(d_row[1420]))
+        au02.append(float(d_row[1421]))
+#        au04.append(float(d_row[1422]))
+#        au05.append(float(d_row[1423]))
+        au45.append(float(d_row[1437]))
+
+    au01_array = np.array(au01)
+    au02_array = np.array(au02)
+#    au04_array = np.array(au04)
+#    au05_array = np.array(au05)
+    au45_array = np.array(au45)
+
+    dif_au01 = np.diff(au01_array)
+    dif_au02 = np.diff(au02_array)
+#    dif_au04 = np.diff(au04_array)
+#    dif_au05 = np.diff(au05_array)
+    dif_au45 = np.diff(au45_array)
+#    print(len(au45_array))
+#    print(dif_au45)
+#    print(len(dif_au45))
+
+    startTime_DataFrame= pd.DataFrame(start_time)
+    au01_DataFrame= pd.DataFrame(au01)
+    au02_DataFrame= pd.DataFrame(au02)
+
+    auInterest_DataFrame = pd.concat([startTime_DataFrame,au01_DataFrame,au02_DataFrame,e_20m3_int['0']],axis=1)
+    auInterest_DataFrame = auInterest_DataFrame.set_axis(['start_time','AU01','AU02','interest_level'], axis=1)
+    print(auInterest_DataFrame)
+
+    negInterest_DataFrame_m3 = auInterest_DataFrame.query('interest_level == -1')
+    azAuInterest_DataFrame_m3 = auInterest_DataFrame.query('interest_level == -1 & AU01 >= 0.5 | AU02 >= 0.5')
+
+#    print(len(negInterest_DataFrame))
+#    print(len(azAuInterest_DataFrame))
+    print('Appearance rate of m3:', float(len(azAuInterest_DataFrame_m3)/len(negInterest_DataFrame_m3)))
+    
+    start_time.clear()
+    au01.clear()
+    au02.clear()
+#    au04.clear()
+#    au05.clear()
+    au45.clear()
+    
+    startTime_DataFrame.drop(startTime_DataFrame.index, inplace=True)
+    au01_DataFrame.drop(au01_DataFrame.index, inplace=True)
+    au02_DataFrame.drop(au02_DataFrame.index, inplace=True)
+    auInterest_DataFrame.drop(auInterest_DataFrame.index, inplace=True)
+#    negInterest_DataFrame.drop(negInterest_DataFrame.index, inplace=True)
+#    azAuInterest_DataFrame.drop(azAuInterest_DataFrame.index, inplace=True)
+
+    for d_row in d_f_20m4:
+        start_time.append(float(d_row[1]))
+        au01.append(float(d_row[1420]))
+        au02.append(float(d_row[1421]))
+#        au04.append(float(d_row[1422]))
+#        au05.append(float(d_row[1423]))
+        au45.append(float(d_row[1437]))
+
+    au01_array = np.array(au01)
+    au02_array = np.array(au02)
+#    au04_array = np.array(au04)
+#    au05_array = np.array(au05)
+    au45_array = np.array(au45)
+
+    dif_au01 = np.diff(au01_array)
+    dif_au02 = np.diff(au02_array)
+#    dif_au04 = np.diff(au04_array)
+#    dif_au05 = np.diff(au05_array)
+    dif_au45 = np.diff(au45_array)
+#    print(len(au45_array))
+#    print(dif_au45)
+#    print(len(dif_au45))
+
+    startTime_DataFrame= pd.DataFrame(start_time)
+    au01_DataFrame= pd.DataFrame(au01)
+    au02_DataFrame= pd.DataFrame(au02)
+
+    auInterest_DataFrame = pd.concat([startTime_DataFrame,au01_DataFrame,au02_DataFrame,e_20m4_int['0']],axis=1)
+    auInterest_DataFrame = auInterest_DataFrame.set_axis(['start_time','AU01','AU02','interest_level'], axis=1)
+    print(auInterest_DataFrame)
+
+    negInterest_DataFrame_m4 = auInterest_DataFrame.query('interest_level == -1')
+    azAuInterest_DataFrame_m4 = auInterest_DataFrame.query('interest_level == -1 & AU01 >= 0.5 | AU02 >= 0.5')
+
+#    print(len(negInterest_DataFrame))
+#    print(len(azAuInterest_DataFrame))
+    print('Appearance rate of m4:', float(len(azAuInterest_DataFrame_m4)/len(negInterest_DataFrame_m4)))
+    
+    start_time.clear()
+    au01.clear()
+    au02.clear()
+#    au04.clear()
+#    au05.clear()
+    au45.clear()
+
+    startTime_DataFrame.drop(startTime_DataFrame.index, inplace=True)
+    au01_DataFrame.drop(au01_DataFrame.index, inplace=True)
+    au02_DataFrame.drop(au02_DataFrame.index, inplace=True)
+    auInterest_DataFrame.drop(auInterest_DataFrame.index, inplace=True)
+#    negInterest_DataFrame.drop(negInterest_DataFrame.index, inplace=True)
+#    azAuInterest_DataFrame.drop(azAuInterest_DataFrame.index, inplace=True)
+
+    for d_row in d_f_20m5:
+        start_time.append(float(d_row[1]))
+        au01.append(float(d_row[1420]))
+        au02.append(float(d_row[1421]))
+#        au04.append(float(d_row[1422]))
+#        au05.append(float(d_row[1423]))
+        au45.append(float(d_row[1437]))
+
+    au01_array = np.array(au01)
+    au02_array = np.array(au02)
+#    au04_array = np.array(au04)
+#    au05_array = np.array(au05)
+    au45_array = np.array(au45)
+
+    dif_au01 = np.diff(au01_array)
+    dif_au02 = np.diff(au02_array)
+#    dif_au04 = np.diff(au04_array)
+#    dif_au05 = np.diff(au05_array)
+    dif_au45 = np.diff(au45_array)
+#    print(len(au45_array))
+#    print(dif_au45)
+#    print(len(dif_au45))
+
+    startTime_DataFrame= pd.DataFrame(start_time)
+    au01_DataFrame= pd.DataFrame(au01)
+    au02_DataFrame= pd.DataFrame(au02)
+
+    auInterest_DataFrame = pd.concat([startTime_DataFrame,au01_DataFrame,au02_DataFrame,e_20m5_int['0']],axis=1)
+    auInterest_DataFrame = auInterest_DataFrame.set_axis(['start_time','AU01','AU02','interest_level'], axis=1)
+    print(auInterest_DataFrame)
+
+    negInterest_DataFrame_m5 = auInterest_DataFrame.query('interest_level == -1')
+    azAuInterest_DataFrame_m5 = auInterest_DataFrame.query('interest_level == -1 & AU01 >= 0.5 | AU02 >= 0.5')
+
+#    print(len(negInterest_DataFrame))
+#    print(len(azAuInterest_DataFrame))
+    print('Appearance rate of m5:', float(len(azAuInterest_DataFrame_m5)/len(negInterest_DataFrame_m5)))
+    
+    start_time.clear()
+    au01.clear()
+    au02.clear()
+#    au04.clear()
+#    au05.clear()
+    au45.clear()
+
+    startTime_DataFrame.drop(startTime_DataFrame.index, inplace=True)
+    au01_DataFrame.drop(au01_DataFrame.index, inplace=True)
+    au02_DataFrame.drop(au02_DataFrame.index, inplace=True)
+    auInterest_DataFrame.drop(auInterest_DataFrame.index, inplace=True)
+#    negInterest_DataFrame.drop(negInterest_DataFrame.index, inplace=True)
+#    azAuInterest_DataFrame.drop(azAuInterest_DataFrame.index, inplace=True)
+
+#    plt.tight_layout()
+#    plt.show()
+
+    print('Total Appearance rate:', float((len(azAuInterest_DataFrame_f1)+len(azAuInterest_DataFrame_f2)+len(azAuInterest_DataFrame_f3)+len(azAuInterest_DataFrame_f4)+len(azAuInterest_DataFrame_m1)+len(azAuInterest_DataFrame_m2)+len(azAuInterest_DataFrame_m3)+len(azAuInterest_DataFrame_m4)+len(azAuInterest_DataFrame_m5))/(len(negInterest_DataFrame_f1)+len(negInterest_DataFrame_f2)+len(negInterest_DataFrame_f3)+len(negInterest_DataFrame_f4)+len(negInterest_DataFrame_m1)+len(negInterest_DataFrame_m2)+len(negInterest_DataFrame_m3)+len(negInterest_DataFrame_m4)+len(negInterest_DataFrame_m5))))
 
 if __name__ == '__main__':
     main()
