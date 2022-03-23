@@ -95,11 +95,20 @@ def main():
     auInterest_DataFrame = auInterest_DataFrame.set_axis(['start_time','AU01','AU02','interest_level'], axis=1)
     print(auInterest_DataFrame)
 
-    negInterest_DataFrame_f1 = auInterest_DataFrame.query('interest_level == -1')
+
+    Int_DataFrame = auInterest_DataFrame['interest_level']
+    auInterest_DataFrame['count_interest_level'] = Int_DataFrame.groupby((Int_DataFrame != Int_DataFrame.shift()).cumsum()).cumcount() +1
+    #print(auInterest_DataFrame)
+    longNegInterest_DataFrame_f1 = auInterest_DataFrame.query('interest_level == -1 & count_interest_level >= 5')
+    negInterest_DataFrame_f1 = auInterest_DataFrame.query('interest_level == -1' )
     azAuInterest_DataFrame_f1 = auInterest_DataFrame.query('interest_level == -1 & AU01 >= 0.5 | AU02 >= 0.5')
+
 
 #    print(len(negInterest_DataFrame))
 #    print(len(azAuInterest_DataFrame))
+    print('longNegInterest_DataFrame_f1', longNegInterest_DataFrame_f1)
+    print('negInterest_DataFrame_f1', negInterest_DataFrame_f1)
+    print('azAuInterest_DataFrame_f1', azAuInterest_DataFrame_f1)
     print('Appearance rate of f1', float(len(azAuInterest_DataFrame_f1)/len(negInterest_DataFrame_f1)))
     
     start_time.clear()
@@ -111,7 +120,8 @@ def main():
 
     startTime_DataFrame.drop(startTime_DataFrame.index, inplace=True)
     au01_DataFrame.drop(au01_DataFrame.index, inplace=True)
-    au02_DataFrame.drop(au02_DataFrame.index, inplace=True)
+    au02_DataFrame.drop(au02_DataFrame.index, inplace=True) 
+    Int_DataFrame.drop(Int_DataFrame.index, inplace=True)
     auInterest_DataFrame.drop(auInterest_DataFrame.index, inplace=True)
 #    negInterest_DataFrame.drop(negInterest_DataFrame.index, inplace=True)
 #    azAuInterest_DataFrame.drop(azAuInterest_DataFrame.index, inplace=True)
@@ -146,11 +156,20 @@ def main():
     auInterest_DataFrame = auInterest_DataFrame.set_axis(['start_time','AU01','AU02','interest_level'], axis=1)
     print(auInterest_DataFrame)
 
+    Int_DataFrame = auInterest_DataFrame['interest_level']
+    auInterest_DataFrame['count_interest_level'] = Int_DataFrame.groupby((Int_DataFrame != Int_DataFrame.shift()).cumsum()).cumcount() +1
+    #print(auInterest_DataFrame)
+    longNegInterest_DataFrame_f2 = auInterest_DataFrame.query('interest_level == -1 & count_interest_level >= 5')
     negInterest_DataFrame_f2 = auInterest_DataFrame.query('interest_level == -1')
     azAuInterest_DataFrame_f2 = auInterest_DataFrame.query('interest_level == -1 & AU01 >= 0.5 | AU02 >= 0.5')
+    azAuInterest_DataFrame_f2New = negInterest_DataFrame_f2.query('AU01 >= 0.5 | AU02 >= 0.5')
 
 #    print(len(negInterest_DataFrame))
 #    print(len(azAuInterest_DataFrame))
+    print('longNegInterest_DataFrame_f2', longNegInterest_DataFrame_f2)
+    print('negInterest_DataFrame_f2', negInterest_DataFrame_f2)
+    print('azAuInterest_DataFrame_f2', azAuInterest_DataFrame_f2)
+    print('azAuInterest_DataFrame_f2New', azAuInterest_DataFrame_f2New)
     print('Appearance rate of f2', float(len(azAuInterest_DataFrame_f2)/len(negInterest_DataFrame_f2)))
     
     start_time.clear()
@@ -163,6 +182,7 @@ def main():
     startTime_DataFrame.drop(startTime_DataFrame.index, inplace=True)
     au01_DataFrame.drop(au01_DataFrame.index, inplace=True)
     au02_DataFrame.drop(au02_DataFrame.index, inplace=True)
+    Int_DataFrame.drop(Int_DataFrame.index, inplace=True)
     auInterest_DataFrame.drop(auInterest_DataFrame.index, inplace=True)
 #    negInterest_DataFrame.drop(negInterest_DataFrame.index, inplace=True)
 #    azAuInterest_DataFrame.drop(azAuInterest_DataFrame.index, inplace=True)
@@ -172,7 +192,7 @@ def main():
         start_time.append(float(d_row[1]))
         au01.append(float(d_row[1420]))
         au02.append(float(d_row[1421]))
-#        au04.append(float(d_row[1422]))
+#        au04.append(float(d_row[1422]))    print('longNegInterest_DataFrame_f2', longNegInterest_DataFrame_f2)
 #        au05.append(float(d_row[1423]))
         au45.append(float(d_row[1437]))
 
@@ -195,12 +215,19 @@ def main():
     auInterest_DataFrame = pd.concat([startTime_DataFrame,au01_DataFrame,au02_DataFrame,e_20f3_int['0']],axis=1)
     auInterest_DataFrame = auInterest_DataFrame.set_axis(['start_time','AU01','AU02','interest_level'], axis=1)
     print(auInterest_DataFrame)
-
+    
+    Int_DataFrame = auInterest_DataFrame['interest_level']
+    auInterest_DataFrame['count_interest_level'] = Int_DataFrame.groupby((Int_DataFrame != Int_DataFrame.shift()).cumsum()).cumcount() +1
+    #print(auInterest_DataFrame)
+    longNegInterest_DataFrame_f3 = auInterest_DataFrame.query('interest_level == -1 & count_interest_level >= 5')    
     negInterest_DataFrame_f3 = auInterest_DataFrame.query('interest_level == -1')
     azAuInterest_DataFrame_f3 = auInterest_DataFrame.query('interest_level == -1 & AU01 >= 0.5 | AU02 >= 0.5')
 
 #    print(len(negInterest_DataFrame))
 #    print(len(azAuInterest_DataFrame))
+    print('longNegInterest_DataFrame_f3', longNegInterest_DataFrame_f3)
+    print('negInterest_DataFrame_f3', negInterest_DataFrame_f3)
+    print('azAuInterest_DataFrame_f3', azAuInterest_DataFrame_f3)
     print('Appearance rate of f3', float(len(azAuInterest_DataFrame_f3)/len(negInterest_DataFrame_f3)))
         
     start_time.clear()
@@ -213,6 +240,7 @@ def main():
     startTime_DataFrame.drop(startTime_DataFrame.index, inplace=True)
     au01_DataFrame.drop(au01_DataFrame.index, inplace=True)
     au02_DataFrame.drop(au02_DataFrame.index, inplace=True)
+    Int_DataFrame.drop(Int_DataFrame.index, inplace=True)
     auInterest_DataFrame.drop(auInterest_DataFrame.index, inplace=True)
 #    negInterest_DataFrame.drop(negInterest_DataFrame.index, inplace=True)
 #    azAuInterest_DataFrame.drop(azAuInterest_DataFrame.index, inplace=True)
@@ -246,11 +274,18 @@ def main():
     auInterest_DataFrame = auInterest_DataFrame.set_axis(['start_time','AU01','AU02','interest_level'], axis=1)
     print(auInterest_DataFrame)
 
+    Int_DataFrame = auInterest_DataFrame['interest_level']
+    auInterest_DataFrame['count_interest_level'] = Int_DataFrame.groupby((Int_DataFrame != Int_DataFrame.shift()).cumsum()).cumcount() +1
+    #print(auInterest_DataFrame)
+    longNegInterest_DataFrame_f4 = auInterest_DataFrame.query('interest_level == -1 & count_interest_level >= 5')
     negInterest_DataFrame_f4 = auInterest_DataFrame.query('interest_level == -1')
     azAuInterest_DataFrame_f4 = auInterest_DataFrame.query('interest_level == -1 & AU01 >= 0.5 | AU02 >= 0.5')
 
 #    print(len(negInterest_DataFrame))
 #    print(len(azAuInterest_DataFrame))
+    print('longNegInterest_DataFrame_f4', longNegInterest_DataFrame_f4)
+    print('negInterest_DataFrame_f4', negInterest_DataFrame_f4)
+    print('azAuInterest_DataFrame_f4', azAuInterest_DataFrame_f4)
     print('Appearance rate of f4', float(len(azAuInterest_DataFrame_f4)/len(negInterest_DataFrame_f4)))
     
     start_time.clear()
@@ -263,6 +298,7 @@ def main():
     startTime_DataFrame.drop(startTime_DataFrame.index, inplace=True)
     au01_DataFrame.drop(au01_DataFrame.index, inplace=True)
     au02_DataFrame.drop(au02_DataFrame.index, inplace=True)
+    Int_DataFrame.drop(Int_DataFrame.index, inplace=True)
     auInterest_DataFrame.drop(auInterest_DataFrame.index, inplace=True)
 #    negInterest_DataFrame.drop(negInterest_DataFrame.index, inplace=True)
 #    azAuInterest_DataFrame.drop(azAuInterest_DataFrame.index, inplace=True)
@@ -298,11 +334,18 @@ def main():
     auInterest_DataFrame = auInterest_DataFrame.set_axis(['start_time','AU01','AU02','interest_level'], axis=1)
     print(auInterest_DataFrame)
 
+    Int_DataFrame = auInterest_DataFrame['interest_level']
+    auInterest_DataFrame['count_interest_level'] = Int_DataFrame.groupby((Int_DataFrame != Int_DataFrame.shift()).cumsum()).cumcount() +1
+    #print(auInterest_DataFrame)
+    longNegInterest_DataFrame_m1 = auInterest_DataFrame.query('interest_level == -1 & count_interest_level >= 5')
     negInterest_DataFrame_m1 = auInterest_DataFrame.query('interest_level == -1')
     azAuInterest_DataFrame_m1 = auInterest_DataFrame.query('interest_level == -1 & AU01 >= 0.5 | AU02 >= 0.5')
 
 #    print(len(negInterest_DataFrame))
 #    print(len(azAuInterest_DataFrame))
+    print('longNegInterest_DataFrame_m1', longNegInterest_DataFrame_m1)
+    print('negInterest_DataFrame_m1', negInterest_DataFrame_m1)
+    print('azAuInterest_DataFrame_m1', azAuInterest_DataFrame_m1)
     print('Appearance rate of m1:', float(len(azAuInterest_DataFrame_m1)/len(negInterest_DataFrame_m1)))
     
     start_time.clear()
@@ -315,6 +358,7 @@ def main():
     startTime_DataFrame.drop(startTime_DataFrame.index, inplace=True)
     au01_DataFrame.drop(au01_DataFrame.index, inplace=True)
     au02_DataFrame.drop(au02_DataFrame.index, inplace=True)
+    Int_DataFrame.drop(Int_DataFrame.index, inplace=True)
     auInterest_DataFrame.drop(auInterest_DataFrame.index, inplace=True)
 #    negInterest_DataFrame.drop(negInterest_DataFrame.index, inplace=True)
 #    azAuInterest_DataFrame.drop(azAuInterest_DataFrame.index, inplace=True)
@@ -350,11 +394,18 @@ def main():
     auInterest_DataFrame = auInterest_DataFrame.set_axis(['start_time','AU01','AU02','interest_level'], axis=1)
     print(auInterest_DataFrame)
 
+    Int_DataFrame = auInterest_DataFrame['interest_level']
+    auInterest_DataFrame['count_interest_level'] = Int_DataFrame.groupby((Int_DataFrame != Int_DataFrame.shift()).cumsum()).cumcount() +1
+    #print(auInterest_DataFrame)
+    longNegInterest_DataFrame_m2 = auInterest_DataFrame.query('interest_level == -1 & count_interest_level >= 5')
     negInterest_DataFrame_m2 = auInterest_DataFrame.query('interest_level == -1')
     azAuInterest_DataFrame_m2 = auInterest_DataFrame.query('interest_level == -1 & AU01 >= 0.5 | AU02 >= 0.5')
 
 #    print(len(negInterest_DataFrame))
 #    print(len(azAuInterest_DataFrame))
+    print('longNegInterest_DataFrame_m2', longNegInterest_DataFrame_m2)
+    print('negInterest_DataFrame_m2', negInterest_DataFrame_m2)
+    print('azAuInterest_DataFrame_m2', azAuInterest_DataFrame_m2)
     print('Appearance rate of m2:', float(len(azAuInterest_DataFrame_m2)/len(negInterest_DataFrame_m2)))
     
     start_time.clear()
@@ -367,6 +418,7 @@ def main():
     startTime_DataFrame.drop(startTime_DataFrame.index, inplace=True)
     au01_DataFrame.drop(au01_DataFrame.index, inplace=True)
     au02_DataFrame.drop(au02_DataFrame.index, inplace=True)
+    Int_DataFrame.drop(Int_DataFrame.index, inplace=True)
     auInterest_DataFrame.drop(auInterest_DataFrame.index, inplace=True)
 #    negInterest_DataFrame.drop(negInterest_DataFrame.index, inplace=True)
 #    azAuInterest_DataFrame.drop(azAuInterest_DataFrame.index, inplace=True)
@@ -402,11 +454,18 @@ def main():
     auInterest_DataFrame = auInterest_DataFrame.set_axis(['start_time','AU01','AU02','interest_level'], axis=1)
     print(auInterest_DataFrame)
 
+    Int_DataFrame = auInterest_DataFrame['interest_level']
+    auInterest_DataFrame['count_interest_level'] = Int_DataFrame.groupby((Int_DataFrame != Int_DataFrame.shift()).cumsum()).cumcount() +1
+    #print(auInterest_DataFrame)
+    longNegInterest_DataFrame_m3 = auInterest_DataFrame.query('interest_level == -1 & count_interest_level >= 5')
     negInterest_DataFrame_m3 = auInterest_DataFrame.query('interest_level == -1')
     azAuInterest_DataFrame_m3 = auInterest_DataFrame.query('interest_level == -1 & AU01 >= 0.5 | AU02 >= 0.5')
 
 #    print(len(negInterest_DataFrame))
 #    print(len(azAuInterest_DataFrame))
+    print('longNegInterest_DataFrame_m3', longNegInterest_DataFrame_m3)
+    print('negInterest_DataFrame_m3', negInterest_DataFrame_m3)
+    print('azAuInterest_DataFrame_m3', azAuInterest_DataFrame_m3)
     print('Appearance rate of m3:', float(len(azAuInterest_DataFrame_m3)/len(negInterest_DataFrame_m3)))
     
     start_time.clear()
@@ -419,6 +478,7 @@ def main():
     startTime_DataFrame.drop(startTime_DataFrame.index, inplace=True)
     au01_DataFrame.drop(au01_DataFrame.index, inplace=True)
     au02_DataFrame.drop(au02_DataFrame.index, inplace=True)
+    Int_DataFrame.drop(Int_DataFrame.index, inplace=True)
     auInterest_DataFrame.drop(auInterest_DataFrame.index, inplace=True)
 #    negInterest_DataFrame.drop(negInterest_DataFrame.index, inplace=True)
 #    azAuInterest_DataFrame.drop(azAuInterest_DataFrame.index, inplace=True)
@@ -454,11 +514,18 @@ def main():
     auInterest_DataFrame = auInterest_DataFrame.set_axis(['start_time','AU01','AU02','interest_level'], axis=1)
     print(auInterest_DataFrame)
 
+    Int_DataFrame = auInterest_DataFrame['interest_level']
+    auInterest_DataFrame['count_interest_level'] = Int_DataFrame.groupby((Int_DataFrame != Int_DataFrame.shift()).cumsum()).cumcount() +1
+    #print(auInterest_DataFrame)
+    longNegInterest_DataFrame_m4 = auInterest_DataFrame.query('interest_level == -1 & count_interest_level >= 5')
     negInterest_DataFrame_m4 = auInterest_DataFrame.query('interest_level == -1')
     azAuInterest_DataFrame_m4 = auInterest_DataFrame.query('interest_level == -1 & AU01 >= 0.5 | AU02 >= 0.5')
 
 #    print(len(negInterest_DataFrame))
 #    print(len(azAuInterest_DataFrame))
+    print('longNegInterest_DataFrame_m4', longNegInterest_DataFrame_m4)
+    print('negInterest_DataFrame_m4', negInterest_DataFrame_m4)
+    print('azAuInterest_DataFrame_m4', azAuInterest_DataFrame_m4)
     print('Appearance rate of m4:', float(len(azAuInterest_DataFrame_m4)/len(negInterest_DataFrame_m4)))
     
     start_time.clear()
@@ -471,6 +538,7 @@ def main():
     startTime_DataFrame.drop(startTime_DataFrame.index, inplace=True)
     au01_DataFrame.drop(au01_DataFrame.index, inplace=True)
     au02_DataFrame.drop(au02_DataFrame.index, inplace=True)
+    Int_DataFrame.drop(Int_DataFrame.index, inplace=True)
     auInterest_DataFrame.drop(auInterest_DataFrame.index, inplace=True)
 #    negInterest_DataFrame.drop(negInterest_DataFrame.index, inplace=True)
 #    azAuInterest_DataFrame.drop(azAuInterest_DataFrame.index, inplace=True)
@@ -506,11 +574,18 @@ def main():
     auInterest_DataFrame = auInterest_DataFrame.set_axis(['start_time','AU01','AU02','interest_level'], axis=1)
     print(auInterest_DataFrame)
 
+    Int_DataFrame = auInterest_DataFrame['interest_level']
+    auInterest_DataFrame['count_interest_level'] = Int_DataFrame.groupby((Int_DataFrame != Int_DataFrame.shift()).cumsum()).cumcount() +1
+    #print(auInterest_DataFrame)
+    longNegInterest_DataFrame_m5 = auInterest_DataFrame.query('interest_level == -1 & count_interest_level >= 5')
     negInterest_DataFrame_m5 = auInterest_DataFrame.query('interest_level == -1')
     azAuInterest_DataFrame_m5 = auInterest_DataFrame.query('interest_level == -1 & AU01 >= 0.5 | AU02 >= 0.5')
 
 #    print(len(negInterest_DataFrame))
 #    print(len(azAuInterest_DataFrame))
+    print('longNegInterest_DataFrame_m5', longNegInterest_DataFrame_m5)
+    print('negInterest_DataFrame_m5', negInterest_DataFrame_m5)
+    print('azAuInterest_DataFrame_m5', azAuInterest_DataFrame_m5)
     print('Appearance rate of m5:', float(len(azAuInterest_DataFrame_m5)/len(negInterest_DataFrame_m5)))
     
     start_time.clear()
@@ -523,12 +598,15 @@ def main():
     startTime_DataFrame.drop(startTime_DataFrame.index, inplace=True)
     au01_DataFrame.drop(au01_DataFrame.index, inplace=True)
     au02_DataFrame.drop(au02_DataFrame.index, inplace=True)
+    Int_DataFrame.drop(Int_DataFrame.index, inplace=True)
     auInterest_DataFrame.drop(auInterest_DataFrame.index, inplace=True)
 #    negInterest_DataFrame.drop(negInterest_DataFrame.index, inplace=True)
 #    azAuInterest_DataFrame.drop(azAuInterest_DataFrame.index, inplace=True)
 
 #    plt.tight_layout()
 #    plt.show()
+
+    print('Appearance rate for females:', float((len(azAuInterest_DataFrame_f1)+len(azAuInterest_DataFrame_f2)+len(azAuInterest_DataFrame_f3)+len(azAuInterest_DataFrame_f4))/(len(negInterest_DataFrame_f1)+len(negInterest_DataFrame_f2)+len(negInterest_DataFrame_f3)+len(negInterest_DataFrame_f4))))
 
     print('Total Appearance rate:', float((len(azAuInterest_DataFrame_f1)+len(azAuInterest_DataFrame_f2)+len(azAuInterest_DataFrame_f3)+len(azAuInterest_DataFrame_f4)+len(azAuInterest_DataFrame_m1)+len(azAuInterest_DataFrame_m2)+len(azAuInterest_DataFrame_m3)+len(azAuInterest_DataFrame_m4)+len(azAuInterest_DataFrame_m5))/(len(negInterest_DataFrame_f1)+len(negInterest_DataFrame_f2)+len(negInterest_DataFrame_f3)+len(negInterest_DataFrame_f4)+len(negInterest_DataFrame_m1)+len(negInterest_DataFrame_m2)+len(negInterest_DataFrame_m3)+len(negInterest_DataFrame_m4)+len(negInterest_DataFrame_m5))))
 
