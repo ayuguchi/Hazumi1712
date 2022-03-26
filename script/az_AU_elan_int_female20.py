@@ -136,7 +136,9 @@ def main():
 
     plt.subplot(col, row, 1)#2
     plt.xlabel('time (ms)')
-    plt.ylabel('Action Units | Interest Level')
+#    plt.ylabel('Action Units | Interest Level')
+    plt.ylabel('Action Unit Values')
+
 
     plt.plot(start_time, au01, label='AU01', marker='.')
     plt.plot(start_time, au02, label='AU02', marker='.')
@@ -147,10 +149,11 @@ def main():
 #    plt.plot(start_time[1:], dif_au04, label='dif_AU04', marker='.')
 #    plt.plot(start_time[1:], dif_au05, label='dif_AU05', marker='.')
 #    plt.plot(start_time[1:], dif_au45, label='dif_AU45', marker='.')
-    plt.plot(start_time[0:], e_20f2_int['0'], label='interest_level', marker='.', color='grey')
+#    plt.plot(start_time[0:], e_20f2_int['0'], label='interest_level', marker='.', color='grey')
 
 #    plt.title('1712F2010')
     plt.ylim(-1.2,1.2)
+    plt.xlim(100000, 1200000)
     plt.grid()
     plt.legend(loc='upper left', borderaxespad=0)
     
@@ -184,7 +187,8 @@ def main():
     
     plt.subplot(col, row, 2)#3
     plt.xlabel('time (ms)')
-    plt.ylabel('Action Units | Interest Level')
+#    plt.ylabel('Action Units | Interest Level')
+    plt.ylabel('Action Unit Values')
 
     plt.plot(start_time, au01, label='AU01', marker='.')
     plt.plot(start_time, au02, label='AU02', marker='.')
@@ -195,10 +199,11 @@ def main():
 #    plt.plot(start_time[1:], dif_au04, label='dif_AU04', marker='.')
 #    plt.plot(start_time[1:], dif_au05, label='dif_AU05', marker='.')
 #    plt.plot(start_time[1:], dif_au45, label='dif_AU45', marker='.')
-    plt.plot(start_time[0:], e_20f3_int['0'], label='interest_level', marker='.', color='grey')
+#    plt.plot(start_time[0:], e_20f3_int['0'], label='interest_level', marker='.', color='grey')
 
 #    plt.title('1712F2018')
     plt.ylim(-1.2,1.2)
+    plt.xlim(100000, 1200000)
     plt.grid()
     plt.legend(loc='upper left', borderaxespad=0)
 
