@@ -4,6 +4,7 @@ import csv
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+from scipy.spatial.transform import Rotation
 #import seaborn as sns
 
 #start_time = []
@@ -103,50 +104,68 @@ def main():
     '''
 
 ### F2
-    start_time_f2 = d_20f2_dump['end(system)[ms]'].values
-    au01_array_f2 = d_20f2_dump['AU01_c_mean'].values
-    au02_array_f2 = d_20f2_dump['AU02_c_mean'].values
-    head_vel_max_array_f2 = d_20f2_dump['Head_velocity_max'].values
-    head_vel_max_array_f2 = head_vel_max_array_f2 * 10
-    shoulderRight_vel_max_array_f2 = d_20f2_dump['ShoulderRight_velocity_max'].values
-    shoulderRight_vel_max_array_f2 = shoulderRight_vel_max_array_f2 * 10
-    shoulderLeft_vel_max_array_f2 = d_20f2_dump['ShoulderLeft_velocity_max'].values
-    shoulderLeft_vel_max_array_f2 = shoulderLeft_vel_max_array_f2 * 10
+#    start_time_f2 = d_20f2_dump['end(system)[ms]'].values
+#    au01_array_f2 = d_20f2_dump['AU01_c_mean'].values
+#    au02_array_f2 = d_20f2_dump['AU02_c_mean'].values
+#    head_vel_max_array_f2 = d_20f2_dump['Head_velocity_max'].values
+#    head_vel_max_array_f2 = head_vel_max_array_f2 * 10
+#    shoulderRight_vel_max_array_f2 = d_20f2_dump['ShoulderRight_velocity_max'].values
+#    shoulderRight_vel_max_array_f2 = shoulderRight_vel_max_array_f2 * 10
+#    shoulderLeft_vel_max_array_f2 = d_20f2_dump['ShoulderLeft_velocity_max'].values
+#    shoulderLeft_vel_max_array_f2 = shoulderLeft_vel_max_array_f2 * 10
 
-    dif_au01_f2 = np.diff(au01_array_f2)
-    dif_au02_f2 = np.diff(au02_array_f2)
+#    head_pos_x_array_f2 = d_20f2_kinect['Head_X'].values
+#    head_pos_y_array_f2 = d_20f2_kinect['Head_Y'].values
+#    head_pos_z_array_f2 = d_20f2_kinect['Head_Z'].values
+
+    head_pos_array_f2 = d_20f2_kinect[['Head_X', 'Head_Y', 'Head_Z']].values
+#    print(head_pos_array_f2)
+
+#    neck_pos_x_array_f2 = d_20f2_kinect['Neck_X'].values
+#    neck_pos_y_array_f2 = d_20f2_kinect['Neck_Y'].values
+#    neck_pos_z_array_f2 = d_20f2_kinect['Neck_Z'].values
+
+    neck_pos_array_f2 = d_20f2_kinect[['Neck_X', 'Neck_Y', 'Neck_Z']].values
+#    print(neck_pos_array_f2)
+
+    head_vec_array_f2 = head_pos_array_f2 - neck_pos_array_f2
+    print(head_vec_array_f2)
+
+
+#    dif_au01_f2 = np.diff(au01_array_f2)
+#    dif_au02_f2 = np.diff(au02_array_f2)
 #    dif_au45 = np.diff(au45_array)
 
     plt.subplot(col, row, 1)#2
     plt.xlabel('time (ms)')
-#    plt.ylabel('Positions')
-    plt.ylabel('Action Units | Velocity (10*cm/s)')
+    plt.ylabel('Positions')
+#    plt.ylabel('Action Units | Velocity (10*cm/s)')
 
-    plt.plot(start_time_f2, au01_array_f2, label='AU01', marker='.')
-    plt.plot(start_time_f2, au02_array_f2, label='AU02', marker='.')
-    plt.plot(start_time_f2[1:], dif_au01_f2, label='Delta of AU01', marker='.')
-    plt.plot(start_time_f2[1:], dif_au02_f2, label='Delta of AU02', marker='.')
+#    plt.plot(start_time_f2, au01_array_f2, label='AU01', marker='.')
+#    plt.plot(start_time_f2, au02_array_f2, label='AU02', marker='.')
+#    plt.plot(start_time_f2[1:], dif_au01_f2, label='Delta of AU01', marker='.')
+#    plt.plot(start_time_f2[1:], dif_au02_f2, label='Delta of AU02', marker='.')
 
-#    plt.plot(d_20f2_dump['end(system)[ms]'], d_20f2_dump['Head_velocity_mean'], label='Mean of Head Velocity', marker='.')
-    plt.plot(start_time_f2, head_vel_max_array_f2, label='Max of Head Velocity', marker='.')
-#    plt.plot(start_time_f2, shoulderRight_vel_max_array_f2, label='Max of Sholder Right Velocity', marker='.', linestyle = "dashed")
-#    plt.plot(start_time_f2, shoulderLeft_vel_max_array_f2, label='Max of Sholder Left Velocity', marker='.', linestyle = "dashed")
+##    plt.plot(d_20f2_dump['end(system)[ms]'], d_20f2_dump['Head_velocity_mean'], label='Mean of Head Velocity', marker='.')
+#    plt.plot(start_time_f2, head_vel_max_array_f2, label='Max of Head Velocity', marker='.')
+##    plt.plot(start_time_f2, shoulderRight_vel_max_array_f2, label='Max of Sholder Right Velocity', marker='.', linestyle = "dashed")
+##    plt.plot(start_time_f2, shoulderLeft_vel_max_array_f2, label='Max of Sholder Left Velocity', marker='.', linestyle = "dashed")
 
-#    plt.plot(d_20f2_kinect['SysTime'], d_20f2_kinect['Head_X'], label='Head_X', marker='.')
-#    plt.plot(d_20f2_kinect['SysTime'], d_20f2_kinect['Head_Y'], label='Head_Y', marker='.')
-#    plt.plot(d_20f2_kinect['SysTime'], d_20f2_kinect['Head_Z'], label='Head_Y', marker='.')
+    plt.plot(d_20f2_kinect['SysTime'], d_20f2_kinect['Head_X'], label='Head_X', marker='.')
+    plt.plot(d_20f2_kinect['SysTime'], d_20f2_kinect['Head_Y'], label='Head_Y', marker='.')
+    plt.plot(d_20f2_kinect['SysTime'], d_20f2_kinect['Head_Z'], label='Head_Y', marker='.')
 
-#    plt.plot(d_20f2_kinect['SysTime'], d_20f2_kinect['Neck_X'], label='Head_X', marker='.')
-#    plt.plot(d_20f2_kinect['SysTime'], d_20f2_kinect['Neck_Y'], label='Head_Y', marker='.')
-#    plt.plot(d_20f2_kinect['SysTime'], d_20f2_kinect['Neck_Z'], label='Head_Y', marker='.')
+    plt.plot(d_20f2_kinect['SysTime'], d_20f2_kinect['Neck_X'], label='Head_X', marker='.')
+    plt.plot(d_20f2_kinect['SysTime'], d_20f2_kinect['Neck_Y'], label='Head_Y', marker='.')
+    plt.plot(d_20f2_kinect['SysTime'], d_20f2_kinect['Neck_Z'], label='Head_Y', marker='.')
 
 #    plt.plot(start_time[1:], dif_au04, label='dif_AU04', marker='.')
 #    plt.plot(start_time[1:], dif_au05, label='dif_AU05', marker='.')
 #    plt.plot(start_time[1:], dif_au45, label='dif_AU45', marker='.')
-    plt.plot(start_time_f2, e_20f2_int['0'], label='Interest Level', marker='.', color='grey', linestyle = "--")
+#    plt.plot(start_time_f2, e_20f2_int['0'], label='Interest Level', marker='.', color='grey', linestyle = "--")
 
     plt.title('1712F2010')
-    plt.ylim(-1.2,4.0)
+#    plt.ylim(-1.2,4.0)
 #    plt.xlim(100000, 1200000)
     plt.grid()
     plt.legend(loc='upper left', borderaxespad=0)
