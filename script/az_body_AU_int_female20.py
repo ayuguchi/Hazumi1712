@@ -14,23 +14,10 @@ au04 = []
 au05 = []
 au45 = []
 
-row = 1 #2
+row = 2 #2
 col = 2 #3
 
 def main():
-#    f_20f1 = open('../dumpfiles/1712F2006.csv')
-#    d_f_20f1 = csv.reader(f_20f1)
-#    label_d_f_20f1 = next(d_f_20f1)
-#    f_20f2 = open('../dumpfiles/1712F2010.csv')
-#    d_f_20f2 = csv.reader(f_20f2)
-#    label_d_f_20f2 = next(d_f_20f2)
-#    f_20f3 = open('../dumpfiles/1712F2018.csv')
-#    d_f_20f3 = csv.reader(f_20f3)
-#    label_d_f_20f3 = next(d_f_20f3)
-#    f_20f4 = open('../dumpfiles/1712F2019.csv')
-#    d_f_20f4 = csv.reader(f_20f4)
-#    label_d_f_20f4 = next(d_f_20f4)
-
     d_20f1_dump = pd.read_csv('../dumpfiles/1712F2006.csv')
     d_20f2_dump = pd.read_csv('../dumpfiles/1712F2010.csv')
     d_20f3_dump = pd.read_csv('../dumpfiles/1712F2018.csv')
@@ -46,62 +33,50 @@ def main():
     d_20f3_kinect = pd.read_csv('../kinect/1712F2018/Body/BodyData.csv')
     d_20f4_kinect = pd.read_csv('../kinect/1712F2019/Body/BodyData.csv')
 
-    '''
-    for d_row in d_f_20f1:
-        start_time.append(float(d_row[1]))
-        au01.append(float(d_row[1420]))
-        au02.append(float(d_row[1421]))
-#        au04.append(float(d_row[1422]))
-#        au05.append(float(d_row[1423]))
-        au45.append(float(d_row[1437]))
+### F1
+    start_time_f1 = d_20f1_dump['end(system)[ms]'].values
+    au01_array_f1 = d_20f1_dump['AU01_c_mean'].values
+    au02_array_f1 = d_20f1_dump['AU02_c_mean'].values
+    head_vel_max_array_f1 = d_20f1_dump['Head_velocity_max'].values
+    head_vel_max_array_f1 = head_vel_max_array_f1 * 10
+#    shoulderRight_vel_max_array_f1 = d_20f1_dump['ShoulderRight_velocity_max'].values
+#    shoulderRight_vel_max_array_f1 = shoulderRight_vel_max_array_f1 * 10
+#    shoulderLeft_vel_max_array_f1 = d_20f1_dump['ShoulderLeft_velocity_max'].values
+#    shoulderLeft_vel_max_array_f1 = shoulderLeft_vel_max_array_f1 * 10
 
-    au01_array = np.array(au01)
-    au02_array = np.array(au02)
-#    au04_array = np.array(au04)
-#    au05_array = np.array(au05)
-    au45_array = np.array(au45)
+    dif_au01_f1 = np.diff(au01_array_f1)
+    dif_au02_f1 = np.diff(au02_array_f1)
+#    dif_au45 = np.diff(au45_array)
 
-    dif_au01 = np.diff(au01_array)
-    dif_au02 = np.diff(au02_array)
-#    dif_au04 = np.diff(au04_array)
-#    dif_au05 = np.diff(au05_array)
-    dif_au45 = np.diff(au45_array)
-#    print(len(au45_array))
-#    print(dif_au45)
-#    print(len(dif_au45))
-
-    plt.subplot(col, row, 1)
+    azAU_appear_f1 = d_20f1_dump.query('AU01_c_mean >= 0.5 | AU02_c_mean >= 0.5')
+    azHead_appear_f1 = d_20f1_dump.query('Head_velocity_max > 0.075')
+    azAU_Head_appear_f1 = azHead_appear_f1.query('AU01_c_mean >= 0.5 | AU02_c_mean >= 0.5')
+    print('AU appearance rate of f1', float(len(azAU_appear_f1)/len(d_20f1_dump)))
+    print('Head appearance rate of f1', float(len(azHead_appear_f1)/len(d_20f1_dump)))
+    print('AU_Head appearance rate of f1', float(len(azAU_Head_appear_f1)/len(d_20f1_dump)))
+    
+    plt.subplot(col, row, 1)#1
     plt.xlabel('time (ms)')
-    plt.ylabel('Action Units | Interest Level')
-    plt.plot(start_time, au01, label='AU01', marker='.')
-    plt.plot(start_time, au02, label='AU02', marker='.')
-#    plt.plot(start_time, au04, label='AU04', marker='.')
-#    plt.plot(start_time, au05, label='AU05', marker='.')
-#    plt.plot(start_time, au45, label='AU45', marker='.')
+    plt.ylabel('AUs | Velocity (10*cm/s) | Interest Level')
 
-    print(len(start_time[1:]))
+    plt.plot(start_time_f1, au01_array_f1, label='AU01', marker='.')
+    plt.plot(start_time_f1, au02_array_f1, label='AU02', marker='.')
+    plt.plot(start_time_f1[1:], dif_au01_f1, label='Delta of AU01', marker='.')
+    plt.plot(start_time_f1[1:], dif_au02_f1, label='Delta of AU02', marker='.')
 
-    plt.plot(start_time[1:], dif_au01, label='dif_AU01', marker='.')
-    plt.plot(start_time[1:], dif_au02, label='dif_AU02', marker='.')
-#    plt.plot(start_time[1:], dif_au04, label='dif_AU04', marker='.')
-#    plt.plot(start_time[1:], dif_au05, label='dif_AU05', marker='.')
+#    plt.plot(d_20f2_dump['end(system)[ms]'], d_20f2_dump['Head_velocity_mean'], label='Mean of Head Velocity', marker='.')
+    plt.plot(start_time_f1, head_vel_max_array_f1, label='Max of Head Velocity', marker='.')
+#    plt.plot(start_time_f3, shoulderRight_vel_max_array_f3, label='Max of Sholder Right Velocity', marker='.', linestyle = "dashed")
+#    plt.plot(start_time_f3, shoulderLeft_vel_max_array_f3, label='Max of Sholder Left Velocity', marker='.', linestyle = "dashed")
+
 #    plt.plot(start_time[1:], dif_au45, label='dif_AU45', marker='.')
-    plt.plot(start_time[0:], e_20f1_int['0'], label='interest_level', marker='.', color='grey')
+    plt.plot(start_time_f1, e_20f1_int['0'], label='Interest Level', marker='.', color='grey', linestyle = "--")
 
     plt.title('1712F2006')
-    plt.ylim(-1.2,1.2)
+    plt.ylim(-1.2,4.0)
+#    plt.xlim(100000, 1200000)
     plt.grid()
-#    plt.legend()
-    plt.legend(loc='best', borderaxespad=0)
-
-
-    start_time.clear()
-    au01.clear()
-    au02.clear()
-#    au04.clear()
-#    au05.clear()
-    au45.clear()
-    '''
+    plt.legend(loc='upper left', borderaxespad=0)
 
 ### F2
     start_time_f2 = d_20f2_dump['end(system)[ms]'].values
@@ -118,10 +93,17 @@ def main():
     dif_au02_f2 = np.diff(au02_array_f2)
 #    dif_au45 = np.diff(au45_array)
 
-    plt.subplot(col, row, 1)#2
+    azAU_appear_f2 = d_20f2_dump.query('AU01_c_mean >= 0.5 | AU02_c_mean >= 0.5')
+    azHead_appear_f2 = d_20f2_dump.query('Head_velocity_max > 0.075')
+    azAU_Head_appear_f2 = azHead_appear_f2.query('AU01_c_mean >= 0.5 | AU02_c_mean >= 0.5')
+    print('AU appearance rate of f2', float(len(azAU_appear_f2)/len(d_20f2_dump)))
+    print('Head appearance rate of f2', float(len(azHead_appear_f2)/len(d_20f2_dump)))
+    print('AU_Head appearance rate of f2', float(len(azAU_Head_appear_f2)/len(d_20f2_dump)))
+
+    plt.subplot(col, row, 2)#2
     plt.xlabel('time (ms)')
 #    plt.ylabel('Positions')
-    plt.ylabel('Action Units | Velocity (10*cm/s)')
+    plt.ylabel('AUs | Velocity (10*cm/s) | Interest Level')
 
     plt.plot(start_time_f2, au01_array_f2, label='AU01', marker='.')
     plt.plot(start_time_f2, au02_array_f2, label='AU02', marker='.')
@@ -132,14 +114,6 @@ def main():
     plt.plot(start_time_f2, head_vel_max_array_f2, label='Max of Head Velocity', marker='.')
 #    plt.plot(start_time_f2, shoulderRight_vel_max_array_f2, label='Max of Sholder Right Velocity', marker='.', linestyle = "dashed")
 #    plt.plot(start_time_f2, shoulderLeft_vel_max_array_f2, label='Max of Sholder Left Velocity', marker='.', linestyle = "dashed")
-
-#    plt.plot(d_20f2_kinect['SysTime'], d_20f2_kinect['Head_X'], label='Head_X', marker='.')
-#    plt.plot(d_20f2_kinect['SysTime'], d_20f2_kinect['Head_Y'], label='Head_Y', marker='.')
-#    plt.plot(d_20f2_kinect['SysTime'], d_20f2_kinect['Head_Z'], label='Head_Y', marker='.')
-
-#    plt.plot(d_20f2_kinect['SysTime'], d_20f2_kinect['Neck_X'], label='Head_X', marker='.')
-#    plt.plot(d_20f2_kinect['SysTime'], d_20f2_kinect['Neck_Y'], label='Head_Y', marker='.')
-#    plt.plot(d_20f2_kinect['SysTime'], d_20f2_kinect['Neck_Z'], label='Head_Y', marker='.')
 
 #    plt.plot(start_time[1:], dif_au04, label='dif_AU04', marker='.')
 #    plt.plot(start_time[1:], dif_au05, label='dif_AU05', marker='.')
@@ -159,18 +133,25 @@ def main():
     au02_array_f3 = d_20f3_dump['AU02_c_mean'].values
     head_vel_max_array_f3 = d_20f3_dump['Head_velocity_max'].values
     head_vel_max_array_f3 = head_vel_max_array_f3 * 10
-    shoulderRight_vel_max_array_f3 = d_20f3_dump['ShoulderRight_velocity_max'].values
-    shoulderRight_vel_max_array_f3 = shoulderRight_vel_max_array_f3 * 10
-    shoulderLeft_vel_max_array_f3 = d_20f3_dump['ShoulderLeft_velocity_max'].values
-    shoulderLeft_vel_max_array_f3 = shoulderLeft_vel_max_array_f3 * 10
+#    shoulderRight_vel_max_array_f3 = d_20f3_dump['ShoulderRight_velocity_max'].values
+#    shoulderRight_vel_max_array_f3 = shoulderRight_vel_max_array_f3 * 10
+#    shoulderLeft_vel_max_array_f3 = d_20f3_dump['ShoulderLeft_velocity_max'].values
+#    shoulderLeft_vel_max_array_f3 = shoulderLeft_vel_max_array_f3 * 10
 
     dif_au01_f3 = np.diff(au01_array_f3)
     dif_au02_f3 = np.diff(au02_array_f3)
 #    dif_au45 = np.diff(au45_array)
+
+    azAU_appear_f3 = d_20f3_dump.query('AU01_c_mean >= 0.5 | AU02_c_mean >= 0.5')
+    azHead_appear_f3 = d_20f3_dump.query('Head_velocity_max > 0.075')
+    azAU_Head_appear_f3 = azHead_appear_f3.query('AU01_c_mean >= 0.5 | AU02_c_mean >= 0.5')
+    print('AU appearance rate of f3', float(len(azAU_appear_f3)/len(d_20f3_dump)))
+    print('Head appearance rate of f3', float(len(azHead_appear_f3)/len(d_20f3_dump)))
+    print('AU_Head appearance rate of f3', float(len(azAU_Head_appear_f3)/len(d_20f3_dump)))
     
-    plt.subplot(col, row, 2)#3
+    plt.subplot(col, row, 3)#3
     plt.xlabel('time (ms)')
-    plt.ylabel('Action Units | Velocity (10*cm/s)')
+    plt.ylabel('AUs | Velocity (10*cm/s) | Interest Level')
 
     plt.plot(start_time_f3, au01_array_f3, label='AU01', marker='.')
     plt.plot(start_time_f3, au02_array_f3, label='AU02', marker='.')
@@ -191,56 +172,58 @@ def main():
     plt.grid()
     plt.legend(loc='upper left', borderaxespad=0)
 
-    '''
-    for d_row in d_f_20f4:
-        start_time.append(float(d_row[1]))
-        au01.append(float(d_row[1420]))
-        au02.append(float(d_row[1421]))
-#        au04.append(float(d_row[1422]))
-#        au05.append(float(d_row[1423]))
-        au45.append(float(d_row[1437]))
+### F4
+    start_time_f4 = d_20f4_dump['end(system)[ms]'].values
+    au01_array_f4 = d_20f4_dump['AU01_c_mean'].values
+    au02_array_f4 = d_20f4_dump['AU02_c_mean'].values
+    head_vel_max_array_f4 = d_20f4_dump['Head_velocity_max'].values
+    head_vel_max_array_f4 = head_vel_max_array_f4 * 10
+#    shoulderRight_vel_max_array_f3 = d_20f3_dump['ShoulderRight_velocity_max'].values
+#    shoulderRight_vel_max_array_f3 = shoulderRight_vel_max_array_f3 * 10
+#    shoulderLeft_vel_max_array_f3 = d_20f3_dump['ShoulderLeft_velocity_max'].values
+#    shoulderLeft_vel_max_array_f3 = shoulderLeft_vel_max_array_f3 * 10
 
-    au01_array = np.array(au01)
-    au02_array = np.array(au02)
-#    au04_array = np.array(au04)
-#    au05_array = np.array(au05)
-    au45_array = np.array(au45)
+    dif_au01_f4 = np.diff(au01_array_f4)
+    dif_au02_f4 = np.diff(au02_array_f4)
+#    dif_au45 = np.diff(au45_array)
 
-    dif_au01 = np.diff(au01_array)
-    dif_au02 = np.diff(au02_array)
-#    dif_au04 = np.diff(au04_array)
-#    dif_au05 = np.diff(au05_array)
-    dif_au45 = np.diff(au45_array)
+    azAU_appear_f4 = d_20f4_dump.query('AU01_c_mean >= 0.5 | AU02_c_mean >= 0.5')
+    azHead_appear_f4 = d_20f4_dump.query('Head_velocity_max > 0.075')
+    azAU_Head_appear_f4 = azHead_appear_f4.query('AU01_c_mean >= 0.5 | AU02_c_mean >= 0.5')
+    print('AU appearance rate of f4', float(len(azAU_appear_f4)/len(d_20f4_dump)))
+    print('Head appearance rate of f4', float(len(azHead_appear_f4)/len(d_20f4_dump)))
+    print('AU_Head appearance rate of f4', float(len(azAU_Head_appear_f4)/len(d_20f4_dump)))
     
-    plt.subplot(col, row, 4)
+    plt.subplot(col, row, 4)#4
     plt.xlabel('time (ms)')
-    plt.ylabel('Action Units | Interest Level')
+    plt.ylabel('AUs | Velocity (10*cm/s) | Interest Level')
 
-    plt.plot(start_time, au01, label='AU01', marker='.')
-    plt.plot(start_time, au02, label='AU02', marker='.')
-#    plt.plot(start_time, au45, label='AU45', marker='.')
+    plt.plot(start_time_f4, au01_array_f4, label='AU01', marker='.')
+    plt.plot(start_time_f4, au02_array_f4, label='AU02', marker='.')
+    plt.plot(start_time_f4[1:], dif_au01_f4, label='Delta of AU01', marker='.')
+    plt.plot(start_time_f4[1:], dif_au02_f4, label='Delta of AU02', marker='.')
 
-    plt.plot(start_time[1:], dif_au01, label='dif_AU01', marker='.')
-    plt.plot(start_time[1:], dif_au02, label='dif_AU02', marker='.')
-#    plt.plot(start_time[1:], dif_au04, label='dif_AU04', marker='.')
-#    plt.plot(start_time[1:], dif_au05, label='dif_AU05', marker='.')
+#    plt.plot(d_20f2_dump['end(system)[ms]'], d_20f2_dump['Head_velocity_mean'], label='Mean of Head Velocity', marker='.')
+    plt.plot(start_time_f4, head_vel_max_array_f4, label='Max of Head Velocity', marker='.')
+#    plt.plot(start_time_f3, shoulderRight_vel_max_array_f3, label='Max of Sholder Right Velocity', marker='.', linestyle = "dashed")
+#    plt.plot(start_time_f3, shoulderLeft_vel_max_array_f3, label='Max of Sholder Left Velocity', marker='.', linestyle = "dashed")
+
 #    plt.plot(start_time[1:], dif_au45, label='dif_AU45', marker='.')
-    plt.plot(start_time[0:], e_20f4_int['0'], label='interest_level', marker='.', color='grey')
+    plt.plot(start_time_f4, e_20f4_int['0'], label='Interest Level', marker='.', color='grey', linestyle = "--")
 
     plt.title('1712F2019')
-    plt.ylim(-1.2,1.2)
+    plt.ylim(-1.2,4.0)
+#    plt.xlim(100000, 1200000)
     plt.grid()
-    plt.legend(loc='upper right', borderaxespad=0)
+    plt.legend(loc='upper left', borderaxespad=0)
 
-    start_time.clear()
-    au01.clear()
-    au02.clear()
-#    au04.clear()
-#    au05.clear()
-    au45.clear()
-    '''
     plt.tight_layout()
     plt.show()
+
+    print('Total AU appearance rate', float((len(azAU_appear_f1)+len(azAU_appear_f2)+len(azAU_appear_f3)+len(azAU_appear_f4))/(len(d_20f1_dump)+len(d_20f2_dump)+len(d_20f3_dump)+len(d_20f4_dump))))
+    print('Total Head appearance rate of f4', float((len(azHead_appear_f1)+len(azHead_appear_f2)+len(azHead_appear_f3)+len(azHead_appear_f4))/(len(d_20f1_dump)+len(d_20f2_dump)+len(d_20f3_dump)+len(d_20f4_dump))))
+    print('Total AU_Head appearance rate of f4', float((len(azAU_Head_appear_f1)+len(azAU_Head_appear_f2)+len(azAU_Head_appear_f3)+len(azAU_Head_appear_f4))/(len(d_20f1_dump)+len(d_20f2_dump)+len(d_20f3_dump)+len(d_20f4_dump))))
+
 
 if __name__ == '__main__':
     main()
