@@ -58,31 +58,470 @@ def main():
 #    e_20f3_int = pd.read_csv('../script/1712F2018_int_level.csv')
 #    e_20f4_int = pd.read_csv('../script/1712F2019_int_level.csv')
 
-    data_num = ['20f1','20f2','20f3','20f4','30f1','30f2','30f3','40f1','40f2','40f3','40f4','50f1','50f2','50f3','20m1','20m2','20m3','20m4','20m5','30m1','30m2','30m3','40m1','40m2','40m3','40m4','40m5',]
+#    data_num = ['20f1','20f2','20f3','20f4','30f1','30f2','30f3','40f1','40f2','40f3','40f4','50f1','50f2','50f3','20m1','20m2','20m3','20m4','20m5','30m1','30m2','30m3','40m1','40m2','40m3','40m4','40m5',]
 
-#    for n in data_num:
-    au01_array_ = d_20f1_dump['AU01_c_mean'].values
-    au02_array_20f1 = d_20f1_dump['AU02_c_mean'].values
-    au04_array_20f1 = d_20f1_dump['AU04_c_mean'].values
-    au05_array_20f1 = d_20f1_dump['AU05_c_mean'].values
-    au06_array_20f1 = d_20f1_dump['AU06_c_mean'].values
-    au07_array_f1 = d_20f1_dump['AU07_c_mean'].values
-    au09_array_f1 = d_20f1_dump['AU09_c_mean'].values
-    au10_array_f1 = d_20f1_dump['AU10_c_mean'].values
-    au12_array_f1 = d_20f1_dump['AU12_c_mean'].values
-    au14_array_f1 = d_20f1_dump['AU14_c_mean'].values
-    au15_array_f1 = d_20f1_dump['AU15_c_mean'].values
-    au17_array_f1 = d_20f1_dump['AU17_c_mean'].values
-    au20_array_f1 = d_20f1_dump['AU20_c_mean'].values
-    au23_array_f1 = d_20f1_dump['AU23_c_mean'].values
-    au25_array_f1 = d_20f1_dump['AU25_c_mean'].values
-    au26_array_f1 = d_20f1_dump['AU26_c_mean'].values
-    au28_array_f1 = d_20f1_dump['AU28_c_mean'].values
-    au45_array_f1 = d_20f1_dump['AU45_c_mean'].values
+    au_array_20f1 = pd.concat([d_20f1_dump['AU01_c_mean'], d_20f1_dump['AU02_c_mean'], d_20f1_dump['AU04_c_mean'], d_20f1_dump['AU05_c_mean'], d_20f1_dump['AU06_c_mean'], d_20f1_dump['AU07_c_mean'], d_20f1_dump['AU09_c_mean'], d_20f1_dump['AU10_c_mean'], d_20f1_dump['AU12_c_mean'], d_20f1_dump['AU14_c_mean'], d_20f1_dump['AU15_c_mean'], d_20f1_dump['AU17_c_mean'], d_20f1_dump['AU20_c_mean'], d_20f1_dump['AU23_c_mean'], d_20f1_dump['AU25_c_mean'], d_20f1_dump['AU26_c_mean'], d_20f1_dump['AU28_c_mean'], d_20f1_dump['AU45_c_mean']], axis=1)
+
+    au_array_20f2 = pd.concat([d_20f2_dump['AU01_c_mean'], d_20f2_dump['AU02_c_mean'], d_20f2_dump['AU04_c_mean'], d_20f2_dump['AU05_c_mean'], d_20f2_dump['AU06_c_mean'], d_20f2_dump['AU07_c_mean'], d_20f2_dump['AU09_c_mean'], d_20f2_dump['AU10_c_mean'], d_20f2_dump['AU12_c_mean'], d_20f2_dump['AU14_c_mean'], d_20f2_dump['AU15_c_mean'], d_20f2_dump['AU17_c_mean'], d_20f2_dump['AU20_c_mean'], d_20f2_dump['AU23_c_mean'], d_20f2_dump['AU25_c_mean'], d_20f2_dump['AU26_c_mean'], d_20f2_dump['AU28_c_mean'], d_20f2_dump['AU45_c_mean']], axis=1)
+
+    au_array_20f3 = pd.concat([d_20f3_dump['AU01_c_mean'], d_20f3_dump['AU02_c_mean'], d_20f3_dump['AU04_c_mean'], d_20f3_dump['AU05_c_mean'], d_20f3_dump['AU06_c_mean'], d_20f3_dump['AU07_c_mean'], d_20f3_dump['AU09_c_mean'], d_20f3_dump['AU10_c_mean'], d_20f3_dump['AU12_c_mean'], d_20f3_dump['AU14_c_mean'], d_20f3_dump['AU15_c_mean'], d_20f3_dump['AU17_c_mean'], d_20f3_dump['AU20_c_mean'], d_20f3_dump['AU23_c_mean'], d_20f3_dump['AU25_c_mean'], d_20f3_dump['AU26_c_mean'], d_20f3_dump['AU28_c_mean'], d_20f3_dump['AU45_c_mean']], axis=1)
+
+    au_array_20f4 = pd.concat([d_20f4_dump['AU01_c_mean'], d_20f4_dump['AU02_c_mean'], d_20f4_dump['AU04_c_mean'], d_20f4_dump['AU05_c_mean'], d_20f4_dump['AU06_c_mean'], d_20f4_dump['AU07_c_mean'], d_20f4_dump['AU09_c_mean'], d_20f4_dump['AU10_c_mean'], d_20f4_dump['AU12_c_mean'], d_20f4_dump['AU14_c_mean'], d_20f4_dump['AU15_c_mean'], d_20f4_dump['AU17_c_mean'], d_20f4_dump['AU20_c_mean'], d_20f4_dump['AU23_c_mean'], d_20f4_dump['AU25_c_mean'], d_20f4_dump['AU26_c_mean'], d_20f4_dump['AU28_c_mean'], d_20f4_dump['AU45_c_mean']], axis=1)
+
+
+    au_array_30f1 = pd.concat([d_30f1_dump['AU01_c_mean'], d_30f1_dump['AU02_c_mean'], d_30f1_dump['AU04_c_mean'], d_30f1_dump['AU05_c_mean'], d_30f1_dump['AU06_c_mean'], d_30f1_dump['AU07_c_mean'], d_30f1_dump['AU09_c_mean'], d_30f1_dump['AU10_c_mean'], d_30f1_dump['AU12_c_mean'], d_30f1_dump['AU14_c_mean'], d_30f1_dump['AU15_c_mean'], d_30f1_dump['AU17_c_mean'], d_30f1_dump['AU20_c_mean'], d_30f1_dump['AU23_c_mean'], d_30f1_dump['AU25_c_mean'], d_30f1_dump['AU26_c_mean'], d_30f1_dump['AU28_c_mean'], d_30f1_dump['AU45_c_mean']], axis=1)
+
+    au_array_30f2 = pd.concat([d_30f2_dump['AU01_c_mean'], d_30f2_dump['AU02_c_mean'], d_30f2_dump['AU04_c_mean'], d_30f2_dump['AU05_c_mean'], d_30f2_dump['AU06_c_mean'], d_30f2_dump['AU07_c_mean'], d_30f2_dump['AU09_c_mean'], d_30f2_dump['AU10_c_mean'], d_30f2_dump['AU12_c_mean'], d_30f2_dump['AU14_c_mean'], d_30f2_dump['AU15_c_mean'], d_30f2_dump['AU17_c_mean'], d_30f2_dump['AU20_c_mean'], d_30f2_dump['AU23_c_mean'], d_30f2_dump['AU25_c_mean'], d_30f2_dump['AU26_c_mean'], d_30f2_dump['AU28_c_mean'], d_30f2_dump['AU45_c_mean']], axis=1)
+
+    au_array_30f3 = pd.concat([d_30f3_dump['AU01_c_mean'], d_30f3_dump['AU02_c_mean'], d_30f3_dump['AU04_c_mean'], d_30f3_dump['AU05_c_mean'], d_30f3_dump['AU06_c_mean'], d_30f3_dump['AU07_c_mean'], d_30f3_dump['AU09_c_mean'], d_30f3_dump['AU10_c_mean'], d_30f3_dump['AU12_c_mean'], d_30f3_dump['AU14_c_mean'], d_30f3_dump['AU15_c_mean'], d_30f3_dump['AU17_c_mean'], d_30f3_dump['AU20_c_mean'], d_30f3_dump['AU23_c_mean'], d_30f3_dump['AU25_c_mean'], d_30f3_dump['AU26_c_mean'], d_30f3_dump['AU28_c_mean'], d_30f3_dump['AU45_c_mean']], axis=1)
+
+
+    au_array_40f1 = pd.concat([d_40f1_dump['AU01_c_mean'], d_40f1_dump['AU02_c_mean'], d_40f1_dump['AU04_c_mean'], d_40f1_dump['AU05_c_mean'], d_40f1_dump['AU06_c_mean'], d_40f1_dump['AU07_c_mean'], d_40f1_dump['AU09_c_mean'], d_40f1_dump['AU10_c_mean'], d_40f1_dump['AU12_c_mean'], d_40f1_dump['AU14_c_mean'], d_40f1_dump['AU15_c_mean'], d_40f1_dump['AU17_c_mean'], d_40f1_dump['AU20_c_mean'], d_40f1_dump['AU23_c_mean'], d_40f1_dump['AU25_c_mean'], d_40f1_dump['AU26_c_mean'], d_40f1_dump['AU28_c_mean'], d_40f1_dump['AU45_c_mean']], axis=1)
+
+    au_array_40f2 = pd.concat([d_40f2_dump['AU01_c_mean'], d_40f2_dump['AU02_c_mean'], d_40f2_dump['AU04_c_mean'], d_40f2_dump['AU05_c_mean'], d_40f2_dump['AU06_c_mean'], d_40f2_dump['AU07_c_mean'], d_40f2_dump['AU09_c_mean'], d_40f2_dump['AU10_c_mean'], d_40f2_dump['AU12_c_mean'], d_40f2_dump['AU14_c_mean'], d_40f2_dump['AU15_c_mean'], d_40f2_dump['AU17_c_mean'], d_40f2_dump['AU20_c_mean'], d_40f2_dump['AU23_c_mean'], d_40f2_dump['AU25_c_mean'], d_40f2_dump['AU26_c_mean'], d_40f2_dump['AU28_c_mean'], d_40f2_dump['AU45_c_mean']], axis=1)
+
+    au_array_40f3 = pd.concat([d_40f3_dump['AU01_c_mean'], d_40f3_dump['AU02_c_mean'], d_40f3_dump['AU04_c_mean'], d_40f3_dump['AU05_c_mean'], d_40f3_dump['AU06_c_mean'], d_40f3_dump['AU07_c_mean'], d_40f3_dump['AU09_c_mean'], d_40f3_dump['AU10_c_mean'], d_40f3_dump['AU12_c_mean'], d_40f3_dump['AU14_c_mean'], d_40f3_dump['AU15_c_mean'], d_40f3_dump['AU17_c_mean'], d_40f3_dump['AU20_c_mean'], d_40f3_dump['AU23_c_mean'], d_40f3_dump['AU25_c_mean'], d_40f3_dump['AU26_c_mean'], d_40f3_dump['AU28_c_mean'], d_40f3_dump['AU45_c_mean']], axis=1)
+
+    au_array_40f4 = pd.concat([d_40f4_dump['AU01_c_mean'], d_40f4_dump['AU02_c_mean'], d_40f4_dump['AU04_c_mean'], d_40f4_dump['AU05_c_mean'], d_40f4_dump['AU06_c_mean'], d_40f4_dump['AU07_c_mean'], d_40f4_dump['AU09_c_mean'], d_40f4_dump['AU10_c_mean'], d_40f4_dump['AU12_c_mean'], d_40f4_dump['AU14_c_mean'], d_40f4_dump['AU15_c_mean'], d_40f4_dump['AU17_c_mean'], d_40f4_dump['AU20_c_mean'], d_40f4_dump['AU23_c_mean'], d_40f4_dump['AU25_c_mean'], d_40f4_dump['AU26_c_mean'], d_40f4_dump['AU28_c_mean'], d_40f4_dump['AU45_c_mean']], axis=1)
+
+
+    au_array_50f1 = pd.concat([d_50f1_dump['AU01_c_mean'], d_50f1_dump['AU02_c_mean'], d_50f1_dump['AU04_c_mean'], d_50f1_dump['AU05_c_mean'], d_50f1_dump['AU06_c_mean'], d_50f1_dump['AU07_c_mean'], d_50f1_dump['AU09_c_mean'], d_50f1_dump['AU10_c_mean'], d_50f1_dump['AU12_c_mean'], d_50f1_dump['AU14_c_mean'], d_50f1_dump['AU15_c_mean'], d_50f1_dump['AU17_c_mean'], d_50f1_dump['AU20_c_mean'], d_50f1_dump['AU23_c_mean'], d_50f1_dump['AU25_c_mean'], d_50f1_dump['AU26_c_mean'], d_50f1_dump['AU28_c_mean'], d_50f1_dump['AU45_c_mean']], axis=1)
+
+    au_array_50f2 = pd.concat([d_50f2_dump['AU01_c_mean'], d_50f2_dump['AU02_c_mean'], d_50f2_dump['AU04_c_mean'], d_50f2_dump['AU05_c_mean'], d_50f2_dump['AU06_c_mean'], d_50f2_dump['AU07_c_mean'], d_50f2_dump['AU09_c_mean'], d_50f2_dump['AU10_c_mean'], d_50f2_dump['AU12_c_mean'], d_50f2_dump['AU14_c_mean'], d_50f2_dump['AU15_c_mean'], d_50f2_dump['AU17_c_mean'], d_50f2_dump['AU20_c_mean'], d_50f2_dump['AU23_c_mean'], d_50f2_dump['AU25_c_mean'], d_50f2_dump['AU26_c_mean'], d_50f2_dump['AU28_c_mean'], d_50f2_dump['AU45_c_mean']], axis=1)
+
+    au_array_50f3 = pd.concat([d_50f3_dump['AU01_c_mean'], d_50f3_dump['AU02_c_mean'], d_50f3_dump['AU04_c_mean'], d_50f3_dump['AU05_c_mean'], d_50f3_dump['AU06_c_mean'], d_50f3_dump['AU07_c_mean'], d_50f3_dump['AU09_c_mean'], d_50f3_dump['AU10_c_mean'], d_50f3_dump['AU12_c_mean'], d_50f3_dump['AU14_c_mean'], d_50f3_dump['AU15_c_mean'], d_50f3_dump['AU17_c_mean'], d_50f3_dump['AU20_c_mean'], d_50f3_dump['AU23_c_mean'], d_50f3_dump['AU25_c_mean'], d_50f3_dump['AU26_c_mean'], d_50f3_dump['AU28_c_mean'], d_50f3_dump['AU45_c_mean']], axis=1)
+
+
+    au_array_20m1 = pd.concat([d_20m1_dump['AU01_c_mean'], d_20m1_dump['AU02_c_mean'], d_20m1_dump['AU04_c_mean'], d_20m1_dump['AU05_c_mean'], d_20m1_dump['AU06_c_mean'], d_20m1_dump['AU07_c_mean'], d_20m1_dump['AU09_c_mean'], d_20m1_dump['AU10_c_mean'], d_20m1_dump['AU12_c_mean'], d_20m1_dump['AU14_c_mean'], d_20m1_dump['AU15_c_mean'], d_20m1_dump['AU17_c_mean'], d_20m1_dump['AU20_c_mean'], d_20m1_dump['AU23_c_mean'], d_20m1_dump['AU25_c_mean'], d_20m1_dump['AU26_c_mean'], d_20m1_dump['AU28_c_mean'], d_20m1_dump['AU45_c_mean']], axis=1) 
+
+    au_array_20m2 = pd.concat([d_20m2_dump['AU01_c_mean'], d_20m2_dump['AU02_c_mean'], d_20m2_dump['AU04_c_mean'], d_20m2_dump['AU05_c_mean'], d_20m2_dump['AU06_c_mean'], d_20m2_dump['AU07_c_mean'], d_20m2_dump['AU09_c_mean'], d_20m2_dump['AU10_c_mean'], d_20m2_dump['AU12_c_mean'], d_20m2_dump['AU14_c_mean'], d_20m2_dump['AU15_c_mean'], d_20m2_dump['AU17_c_mean'], d_20m2_dump['AU20_c_mean'], d_20m2_dump['AU23_c_mean'], d_20m2_dump['AU25_c_mean'], d_20m2_dump['AU26_c_mean'], d_20m2_dump['AU28_c_mean'], d_20m2_dump['AU45_c_mean']], axis=1)    
+
+    au_array_20m3 = pd.concat([d_20m3_dump['AU01_c_mean'], d_20m3_dump['AU02_c_mean'], d_20m3_dump['AU04_c_mean'], d_20m3_dump['AU05_c_mean'], d_20m3_dump['AU06_c_mean'], d_20m3_dump['AU07_c_mean'], d_20m3_dump['AU09_c_mean'], d_20m3_dump['AU10_c_mean'], d_20m3_dump['AU12_c_mean'], d_20m3_dump['AU14_c_mean'], d_20m3_dump['AU15_c_mean'], d_20m3_dump['AU17_c_mean'], d_20m3_dump['AU20_c_mean'], d_20m3_dump['AU23_c_mean'], d_20m3_dump['AU25_c_mean'], d_20m3_dump['AU26_c_mean'], d_20m3_dump['AU28_c_mean'], d_20m3_dump['AU45_c_mean']], axis=1)
+
+    au_array_20m4 = pd.concat([d_20m4_dump['AU01_c_mean'], d_20m4_dump['AU02_c_mean'], d_20m4_dump['AU04_c_mean'], d_20m4_dump['AU05_c_mean'], d_20m4_dump['AU06_c_mean'], d_20m4_dump['AU07_c_mean'], d_20m4_dump['AU09_c_mean'], d_20m4_dump['AU10_c_mean'], d_20m4_dump['AU12_c_mean'], d_20m4_dump['AU14_c_mean'], d_20m4_dump['AU15_c_mean'], d_20m4_dump['AU17_c_mean'], d_20m4_dump['AU20_c_mean'], d_20m4_dump['AU23_c_mean'], d_20m4_dump['AU25_c_mean'], d_20m4_dump['AU26_c_mean'], d_20m4_dump['AU28_c_mean'], d_20m4_dump['AU45_c_mean']], axis=1)
+
+    au_array_20m5 = pd.concat([d_20m5_dump['AU01_c_mean'], d_20m5_dump['AU02_c_mean'], d_20m5_dump['AU04_c_mean'], d_20m5_dump['AU05_c_mean'], d_20m5_dump['AU06_c_mean'], d_20m5_dump['AU07_c_mean'], d_20m5_dump['AU09_c_mean'], d_20m5_dump['AU10_c_mean'], d_20m5_dump['AU12_c_mean'], d_20m5_dump['AU14_c_mean'], d_20m5_dump['AU15_c_mean'], d_20m5_dump['AU17_c_mean'], d_20m5_dump['AU20_c_mean'], d_20m5_dump['AU23_c_mean'], d_20m5_dump['AU25_c_mean'], d_20m5_dump['AU26_c_mean'], d_20m5_dump['AU28_c_mean'], d_20m5_dump['AU45_c_mean']], axis=1)
+
+
+    au_array_30m1 = pd.concat([d_30m1_dump['AU01_c_mean'], d_30m1_dump['AU02_c_mean'], d_30m1_dump['AU04_c_mean'], d_30m1_dump['AU05_c_mean'], d_30m1_dump['AU06_c_mean'], d_30m1_dump['AU07_c_mean'], d_30m1_dump['AU09_c_mean'], d_30m1_dump['AU10_c_mean'], d_30m1_dump['AU12_c_mean'], d_30m1_dump['AU14_c_mean'], d_30m1_dump['AU15_c_mean'], d_30m1_dump['AU17_c_mean'], d_30m1_dump['AU20_c_mean'], d_30m1_dump['AU23_c_mean'], d_30m1_dump['AU25_c_mean'], d_30m1_dump['AU26_c_mean'], d_30m1_dump['AU28_c_mean'], d_30m1_dump['AU45_c_mean']], axis=1)
+
+    au_array_30m2 = pd.concat([d_30m2_dump['AU01_c_mean'], d_30m2_dump['AU02_c_mean'], d_30m2_dump['AU04_c_mean'], d_30m2_dump['AU05_c_mean'], d_30m2_dump['AU06_c_mean'], d_30m2_dump['AU07_c_mean'], d_30m2_dump['AU09_c_mean'], d_30m2_dump['AU10_c_mean'], d_30m2_dump['AU12_c_mean'], d_30m2_dump['AU14_c_mean'], d_30m2_dump['AU15_c_mean'], d_30m2_dump['AU17_c_mean'], d_30m2_dump['AU20_c_mean'], d_30m2_dump['AU23_c_mean'], d_30m2_dump['AU25_c_mean'], d_30m2_dump['AU26_c_mean'], d_30m2_dump['AU28_c_mean'], d_30m2_dump['AU45_c_mean']], axis=1)
+
+    au_array_30m3 = pd.concat([d_30m3_dump['AU01_c_mean'], d_30m3_dump['AU02_c_mean'], d_30m3_dump['AU04_c_mean'], d_30m3_dump['AU05_c_mean'], d_30m3_dump['AU06_c_mean'], d_30m3_dump['AU07_c_mean'], d_30m3_dump['AU09_c_mean'], d_30m3_dump['AU10_c_mean'], d_30m3_dump['AU12_c_mean'], d_30m3_dump['AU14_c_mean'], d_30m3_dump['AU15_c_mean'], d_30m3_dump['AU17_c_mean'], d_30m3_dump['AU20_c_mean'], d_30m3_dump['AU23_c_mean'], d_30m3_dump['AU25_c_mean'], d_30m3_dump['AU26_c_mean'], d_30m3_dump['AU28_c_mean'], d_30m3_dump['AU45_c_mean']], axis=1)
+
+
+    au_array_40m1 = pd.concat([d_40m1_dump['AU01_c_mean'], d_40m1_dump['AU02_c_mean'], d_40m1_dump['AU04_c_mean'], d_40m1_dump['AU05_c_mean'], d_40m1_dump['AU06_c_mean'], d_40m1_dump['AU07_c_mean'], d_40m1_dump['AU09_c_mean'], d_40m1_dump['AU10_c_mean'], d_40m1_dump['AU12_c_mean'], d_40m1_dump['AU14_c_mean'], d_40m1_dump['AU15_c_mean'], d_40m1_dump['AU17_c_mean'], d_40m1_dump['AU20_c_mean'], d_40m1_dump['AU23_c_mean'], d_40m1_dump['AU25_c_mean'], d_40m1_dump['AU26_c_mean'], d_40m1_dump['AU28_c_mean'], d_40m1_dump['AU45_c_mean']], axis=1) 
+
+    au_array_40m2 = pd.concat([d_40m2_dump['AU01_c_mean'], d_40m2_dump['AU02_c_mean'], d_40m2_dump['AU04_c_mean'], d_40m2_dump['AU05_c_mean'], d_40m2_dump['AU06_c_mean'], d_40m2_dump['AU07_c_mean'], d_40m2_dump['AU09_c_mean'], d_40m2_dump['AU10_c_mean'], d_40m2_dump['AU12_c_mean'], d_40m2_dump['AU14_c_mean'], d_40m2_dump['AU15_c_mean'], d_40m2_dump['AU17_c_mean'], d_40m2_dump['AU20_c_mean'], d_40m2_dump['AU23_c_mean'], d_40m2_dump['AU25_c_mean'], d_40m2_dump['AU26_c_mean'], d_40m2_dump['AU28_c_mean'], d_40m2_dump['AU45_c_mean']], axis=1)    
+
+    au_array_40m3 = pd.concat([d_40m3_dump['AU01_c_mean'], d_40m3_dump['AU02_c_mean'], d_40m3_dump['AU04_c_mean'], d_40m3_dump['AU05_c_mean'], d_40m3_dump['AU06_c_mean'], d_40m3_dump['AU07_c_mean'], d_40m3_dump['AU09_c_mean'], d_40m3_dump['AU10_c_mean'], d_40m3_dump['AU12_c_mean'], d_40m3_dump['AU14_c_mean'], d_40m3_dump['AU15_c_mean'], d_40m3_dump['AU17_c_mean'], d_40m3_dump['AU20_c_mean'], d_40m3_dump['AU23_c_mean'], d_40m3_dump['AU25_c_mean'], d_40m3_dump['AU26_c_mean'], d_40m3_dump['AU28_c_mean'], d_40m3_dump['AU45_c_mean']], axis=1)
+
+    au_array_40m4 = pd.concat([d_40m4_dump['AU01_c_mean'], d_40m4_dump['AU02_c_mean'], d_40m4_dump['AU04_c_mean'], d_40m4_dump['AU05_c_mean'], d_40m4_dump['AU06_c_mean'], d_40m4_dump['AU07_c_mean'], d_40m4_dump['AU09_c_mean'], d_40m4_dump['AU10_c_mean'], d_40m4_dump['AU12_c_mean'], d_40m4_dump['AU14_c_mean'], d_40m4_dump['AU15_c_mean'], d_40m4_dump['AU17_c_mean'], d_40m4_dump['AU20_c_mean'], d_40m4_dump['AU23_c_mean'], d_40m4_dump['AU25_c_mean'], d_40m4_dump['AU26_c_mean'], d_40m4_dump['AU28_c_mean'], d_40m4_dump['AU45_c_mean']], axis=1)
+
+    au_array_40m5 = pd.concat([d_40m5_dump['AU01_c_mean'], d_40m5_dump['AU02_c_mean'], d_40m5_dump['AU04_c_mean'], d_40m5_dump['AU05_c_mean'], d_40m5_dump['AU06_c_mean'], d_40m5_dump['AU07_c_mean'], d_40m5_dump['AU09_c_mean'], d_40m5_dump['AU10_c_mean'], d_40m5_dump['AU12_c_mean'], d_40m5_dump['AU14_c_mean'], d_40m5_dump['AU15_c_mean'], d_40m5_dump['AU17_c_mean'], d_40m5_dump['AU20_c_mean'], d_40m5_dump['AU23_c_mean'], d_40m5_dump['AU25_c_mean'], d_40m5_dump['AU26_c_mean'], d_40m5_dump['AU28_c_mean'], d_40m5_dump['AU45_c_mean']], axis=1)
+
+
+    int_ant_array_20f1 = pd.concat([d_20f1_dump['IN1'], d_20f1_dump['IN2'], d_20f1_dump['IN3'], d_20f1_dump['IN4'], d_20f1_dump['IN5'], d_20f1_dump['IN6']], axis=1)
+    int_ant_array_20f2 = pd.concat([d_20f2_dump['IN1'], d_20f2_dump['IN2'], d_20f2_dump['IN3'], d_20f2_dump['IN4'], d_20f2_dump['IN5'], d_20f2_dump['IN6']], axis=1)
+    int_ant_array_20f3 = pd.concat([d_20f3_dump['IN1'], d_20f3_dump['IN2'], d_20f3_dump['IN3'], d_20f3_dump['IN4'], d_20f3_dump['IN5'], d_20f3_dump['IN6']], axis=1)
+    int_ant_array_20f4 = pd.concat([d_20f4_dump['IN1'], d_20f4_dump['IN2'], d_20f4_dump['IN3'], d_20f4_dump['IN4'], d_20f4_dump['IN5'], d_20f4_dump['IN6']], axis=1)
+
+    int_ant_array_30f1 = pd.concat([d_30f1_dump['IN1'], d_30f1_dump['IN2'], d_30f1_dump['IN3'], d_30f1_dump['IN4'], d_30f1_dump['IN5'], d_30f1_dump['IN6']], axis=1)
+    int_ant_array_30f2 = pd.concat([d_30f2_dump['IN1'], d_30f2_dump['IN2'], d_30f2_dump['IN3'], d_30f2_dump['IN4'], d_30f2_dump['IN5'], d_30f2_dump['IN6']], axis=1)
+    int_ant_array_30f3 = pd.concat([d_30f3_dump['IN1'], d_30f3_dump['IN2'], d_30f3_dump['IN3'], d_30f3_dump['IN4'], d_30f3_dump['IN5'], d_30f3_dump['IN6']], axis=1)
+
+    int_ant_array_40f1 = pd.concat([d_40f1_dump['IN1'], d_40f1_dump['IN2'], d_40f1_dump['IN3'], d_40f1_dump['IN4'], d_40f1_dump['IN5'], d_40f1_dump['IN6']], axis=1)
+    int_ant_array_40f2 = pd.concat([d_40f2_dump['IN1'], d_40f2_dump['IN2'], d_40f2_dump['IN3'], d_40f2_dump['IN4'], d_40f2_dump['IN5'], d_40f2_dump['IN6']], axis=1)
+    int_ant_array_40f3 = pd.concat([d_40f3_dump['IN1'], d_40f3_dump['IN2'], d_40f3_dump['IN3'], d_40f3_dump['IN4'], d_40f3_dump['IN5'], d_40f3_dump['IN6']], axis=1)
+    int_ant_array_40f4 = pd.concat([d_40f4_dump['IN1'], d_40f4_dump['IN2'], d_40f4_dump['IN3'], d_40f4_dump['IN4'], d_40f4_dump['IN5'], d_40f4_dump['IN6']], axis=1)
+
+    int_ant_array_50f1 = pd.concat([d_50f1_dump['IN1'], d_50f1_dump['IN2'], d_50f1_dump['IN3'], d_50f1_dump['IN4'], d_50f1_dump['IN5'], d_50f1_dump['IN6']], axis=1)
+    int_ant_array_50f2 = pd.concat([d_50f2_dump['IN1'], d_50f2_dump['IN2'], d_50f2_dump['IN3'], d_50f2_dump['IN4'], d_50f2_dump['IN5'], d_50f2_dump['IN6']], axis=1)
+    int_ant_array_50f3 = pd.concat([d_50f3_dump['IN1'], d_50f3_dump['IN2'], d_50f3_dump['IN3'], d_50f3_dump['IN4'], d_50f3_dump['IN5'], d_50f3_dump['IN6']], axis=1)
+
+    int_ant_array_20m1 = pd.concat([d_20m1_dump['IN1'], d_20m1_dump['IN2'], d_20m1_dump['IN3'], d_20m1_dump['IN4'], d_20m1_dump['IN5'], d_20m1_dump['IN6']], axis=1)
+    int_ant_array_20m2 = pd.concat([d_20m2_dump['IN1'], d_20m2_dump['IN2'], d_20m2_dump['IN3'], d_20m2_dump['IN4'], d_20m2_dump['IN5'], d_20m2_dump['IN6']], axis=1)
+    int_ant_array_20m3 = pd.concat([d_20m3_dump['IN1'], d_20m3_dump['IN2'], d_20m3_dump['IN3'], d_20m3_dump['IN4'], d_20m3_dump['IN5'], d_20m3_dump['IN6']], axis=1)
+    int_ant_array_20m4 = pd.concat([d_20m4_dump['IN1'], d_20m4_dump['IN2'], d_20m4_dump['IN3'], d_20m4_dump['IN4'], d_20m4_dump['IN5'], d_20m4_dump['IN6']], axis=1)
+    int_ant_array_20m5 = pd.concat([d_20m5_dump['IN1'], d_20m5_dump['IN2'], d_20m5_dump['IN3'], d_20m5_dump['IN4'], d_20m5_dump['IN5'], d_20m5_dump['IN6']], axis=1)
+
+    int_ant_array_30m1 = pd.concat([d_30m1_dump['IN1'], d_30m1_dump['IN2'], d_30m1_dump['IN3'], d_30m1_dump['IN4'], d_30m1_dump['IN5'], d_30m1_dump['IN6']], axis=1)
+    int_ant_array_30m2 = pd.concat([d_30m2_dump['IN1'], d_30m2_dump['IN2'], d_30m2_dump['IN3'], d_30m2_dump['IN4'], d_30m2_dump['IN5'], d_30m2_dump['IN6']], axis=1)
+    int_ant_array_30m3 = pd.concat([d_30m3_dump['IN1'], d_30m3_dump['IN2'], d_30m3_dump['IN3'], d_30m3_dump['IN4'], d_30m3_dump['IN5'], d_30m3_dump['IN6']], axis=1)
+
+    int_ant_array_40m1 = pd.concat([d_40m1_dump['IN1'], d_40m1_dump['IN2'], d_40m1_dump['IN3'], d_40m1_dump['IN4'], d_40m1_dump['IN5'], d_40m1_dump['IN6']], axis=1)
+    int_ant_array_40m2 = pd.concat([d_40m2_dump['IN1'], d_40m2_dump['IN2'], d_40m2_dump['IN3'], d_40m2_dump['IN4'], d_40m2_dump['IN5'], d_40m2_dump['IN6']], axis=1)
+    int_ant_array_40m3 = pd.concat([d_40m3_dump['IN1'], d_40m3_dump['IN2'], d_40m3_dump['IN3'], d_40m3_dump['IN4'], d_40m3_dump['IN5'], d_40m3_dump['IN6']], axis=1)
+    int_ant_array_40m4 = pd.concat([d_40m4_dump['IN1'], d_40m4_dump['IN2'], d_40m4_dump['IN3'], d_40m4_dump['IN4'], d_40m4_dump['IN5'], d_40m4_dump['IN6']], axis=1)
+    int_ant_array_40m5 = pd.concat([d_40m5_dump['IN1'], d_40m5_dump['IN2'], d_40m5_dump['IN3'], d_40m5_dump['IN4'], d_40m5_dump['IN5'], d_40m5_dump['IN6']], axis=1)
+
+
+    int_ant_array_20f1_bool_o = (int_ant_array_20f1 == "o")
+    int_ant_array_20f1_bool_x = (int_ant_array_20f1 == "x")
+    int_ant_array_20f1_bool_o_num = int_ant_array_20f1_bool_o.sum(axis='columns')
+    int_ant_array_20f1_bool_x_num = int_ant_array_20f1_bool_x.sum(axis='columns')
+    int_ant_array_20f1_bool = int_ant_array_20f1_bool_o_num > int_ant_array_20f1_bool_x_num
+    int_ant_array_20f1_score = int_ant_array_20f1_bool.mask(int_ant_array_20f1_bool==True, 1)
+    int_ant_array_20f1_score = int_ant_array_20f1_score.mask(int_ant_array_20f1_bool==False, 0)
+
+    int_ant_array_20f2_bool_o = (int_ant_array_20f2 == "o")
+    int_ant_array_20f2_bool_x = (int_ant_array_20f2 == "x")
+    int_ant_array_20f2_bool_o_num = int_ant_array_20f2_bool_o.sum(axis='columns')
+    int_ant_array_20f2_bool_x_num = int_ant_array_20f2_bool_x.sum(axis='columns')
+    int_ant_array_20f2_bool = int_ant_array_20f2_bool_o_num > int_ant_array_20f2_bool_x_num 
+    int_ant_array_20f2_score = int_ant_array_20f2_bool.mask(int_ant_array_20f2_bool==True, 1)
+    int_ant_array_20f2_score = int_ant_array_20f2_score.mask(int_ant_array_20f2_bool==False, 0)
+
+    int_ant_array_20f3_bool_o = (int_ant_array_20f3 == "o")
+    int_ant_array_20f3_bool_x = (int_ant_array_20f3 == "x")
+    int_ant_array_20f3_bool_o_num = int_ant_array_20f3_bool_o.sum(axis='columns')
+    int_ant_array_20f3_bool_x_num = int_ant_array_20f3_bool_x.sum(axis='columns')
+    int_ant_array_20f3_bool = int_ant_array_20f3_bool_o_num > int_ant_array_20f3_bool_x_num
+    int_ant_array_20f3_score = int_ant_array_20f3_bool.mask(int_ant_array_20f3_bool==True, 1)
+    int_ant_array_20f3_score = int_ant_array_20f3_score.mask(int_ant_array_20f3_bool==False, 0)
+
+    int_ant_array_20f4_bool_o = (int_ant_array_20f4 == "o")
+    int_ant_array_20f4_bool_x = (int_ant_array_20f4 == "x")
+    int_ant_array_20f4_bool_o_num = int_ant_array_20f4_bool_o.sum(axis='columns')
+    int_ant_array_20f4_bool_x_num = int_ant_array_20f4_bool_x.sum(axis='columns')
+    int_ant_array_20f4_bool = int_ant_array_20f4_bool_o_num > int_ant_array_20f4_bool_x_num
+    int_ant_array_20f4_score = int_ant_array_20f4_bool.mask(int_ant_array_20f4_bool==True, 1)
+    int_ant_array_20f4_score = int_ant_array_20f4_score.mask(int_ant_array_20f4_bool==False, 0)
+
+    
+    int_ant_array_30f1_bool_o = (int_ant_array_30f1 == "o")
+    int_ant_array_30f1_bool_x = (int_ant_array_30f1 == "x")
+    int_ant_array_30f1_bool_o_num = int_ant_array_30f1_bool_o.sum(axis='columns')
+    int_ant_array_30f1_bool_x_num = int_ant_array_30f1_bool_x.sum(axis='columns')
+    int_ant_array_30f1_bool = int_ant_array_30f1_bool_o_num > int_ant_array_30f1_bool_x_num
+    int_ant_array_30f1_score = int_ant_array_30f1_bool.mask(int_ant_array_30f1_bool==True, 1)
+    int_ant_array_30f1_score = int_ant_array_30f1_score.mask(int_ant_array_30f1_bool==False, 0)
+
+    int_ant_array_30f2_bool_o = (int_ant_array_30f2 == "o")
+    int_ant_array_30f2_bool_x = (int_ant_array_30f2 == "x")
+    int_ant_array_30f2_bool_o_num = int_ant_array_30f2_bool_o.sum(axis='columns')
+    int_ant_array_30f2_bool_x_num = int_ant_array_30f2_bool_x.sum(axis='columns')
+    int_ant_array_30f2_bool = int_ant_array_30f2_bool_o_num > int_ant_array_30f2_bool_x_num 
+    int_ant_array_30f2_score = int_ant_array_30f2_bool.mask(int_ant_array_30f2_bool==True, 1)
+    int_ant_array_30f2_score = int_ant_array_30f2_score.mask(int_ant_array_30f2_bool==False, 0)
+
+    int_ant_array_30f3_bool_o = (int_ant_array_30f3 == "o")
+    int_ant_array_30f3_bool_x = (int_ant_array_30f3 == "x")
+    int_ant_array_30f3_bool_o_num = int_ant_array_30f3_bool_o.sum(axis='columns')
+    int_ant_array_30f3_bool_x_num = int_ant_array_30f3_bool_x.sum(axis='columns')
+    int_ant_array_30f3_bool = int_ant_array_30f3_bool_o_num > int_ant_array_30f3_bool_x_num
+    int_ant_array_30f3_score = int_ant_array_30f3_bool.mask(int_ant_array_30f3_bool==True, 1)
+    int_ant_array_30f3_score = int_ant_array_30f3_score.mask(int_ant_array_30f3_bool==False, 0)
+
+
+    int_ant_array_40f1_bool_o = (int_ant_array_40f1 == "o")
+    int_ant_array_40f1_bool_x = (int_ant_array_40f1 == "x")
+    int_ant_array_40f1_bool_o_num = int_ant_array_40f1_bool_o.sum(axis='columns')
+    int_ant_array_40f1_bool_x_num = int_ant_array_40f1_bool_x.sum(axis='columns')
+    int_ant_array_40f1_bool = int_ant_array_40f1_bool_o_num > int_ant_array_40f1_bool_x_num
+    int_ant_array_40f1_score = int_ant_array_40f1_bool.mask(int_ant_array_40f1_bool==True, 1)
+    int_ant_array_40f1_score = int_ant_array_40f1_score.mask(int_ant_array_40f1_bool==False, 0)
+
+    int_ant_array_40f2_bool_o = (int_ant_array_40f2 == "o")
+    int_ant_array_40f2_bool_x = (int_ant_array_40f2 == "x")
+    int_ant_array_40f2_bool_o_num = int_ant_array_40f2_bool_o.sum(axis='columns')
+    int_ant_array_40f2_bool_x_num = int_ant_array_40f2_bool_x.sum(axis='columns')
+    int_ant_array_40f2_bool = int_ant_array_40f2_bool_o_num > int_ant_array_40f2_bool_x_num 
+    int_ant_array_40f2_score = int_ant_array_40f2_bool.mask(int_ant_array_40f2_bool==True, 1)
+    int_ant_array_40f2_score = int_ant_array_40f2_score.mask(int_ant_array_40f2_bool==False, 0)
+
+    int_ant_array_40f3_bool_o = (int_ant_array_40f3 == "o")
+    int_ant_array_40f3_bool_x = (int_ant_array_40f3 == "x")
+    int_ant_array_40f3_bool_o_num = int_ant_array_40f3_bool_o.sum(axis='columns')
+    int_ant_array_40f3_bool_x_num = int_ant_array_40f3_bool_x.sum(axis='columns')
+    int_ant_array_40f3_bool = int_ant_array_40f3_bool_o_num > int_ant_array_40f3_bool_x_num
+    int_ant_array_40f3_score = int_ant_array_40f3_bool.mask(int_ant_array_40f3_bool==True, 1)
+    int_ant_array_40f3_score = int_ant_array_40f3_score.mask(int_ant_array_40f3_bool==False, 0)
+
+    int_ant_array_40f4_bool_o = (int_ant_array_40f4 == "o")
+    int_ant_array_40f4_bool_x = (int_ant_array_40f4 == "x")
+    int_ant_array_40f4_bool_o_num = int_ant_array_40f4_bool_o.sum(axis='columns')
+    int_ant_array_40f4_bool_x_num = int_ant_array_40f4_bool_x.sum(axis='columns')
+    int_ant_array_40f4_bool = int_ant_array_40f4_bool_o_num > int_ant_array_40f4_bool_x_num
+    int_ant_array_40f4_score = int_ant_array_40f4_bool.mask(int_ant_array_40f4_bool==True, 1)
+    int_ant_array_40f4_score = int_ant_array_40f4_score.mask(int_ant_array_40f4_bool==False, 0)
+
+    
+    int_ant_array_50f1_bool_o = (int_ant_array_50f1 == "o")
+    int_ant_array_50f1_bool_x = (int_ant_array_50f1 == "x")
+    int_ant_array_50f1_bool_o_num = int_ant_array_50f1_bool_o.sum(axis='columns')
+    int_ant_array_50f1_bool_x_num = int_ant_array_50f1_bool_x.sum(axis='columns')
+    int_ant_array_50f1_bool = int_ant_array_50f1_bool_o_num > int_ant_array_50f1_bool_x_num
+    int_ant_array_50f1_score = int_ant_array_50f1_bool.mask(int_ant_array_50f1_bool==True, 1)
+    int_ant_array_50f1_score = int_ant_array_50f1_score.mask(int_ant_array_50f1_bool==False, 0)
+
+    int_ant_array_50f2_bool_o = (int_ant_array_50f2 == "o")
+    int_ant_array_50f2_bool_x = (int_ant_array_50f2 == "x")
+    int_ant_array_50f2_bool_o_num = int_ant_array_50f2_bool_o.sum(axis='columns')
+    int_ant_array_50f2_bool_x_num = int_ant_array_50f2_bool_x.sum(axis='columns')
+    int_ant_array_50f2_bool = int_ant_array_50f2_bool_o_num > int_ant_array_50f2_bool_x_num 
+    int_ant_array_50f2_score = int_ant_array_50f2_bool.mask(int_ant_array_50f2_bool==True, 1)
+    int_ant_array_50f2_score = int_ant_array_50f2_score.mask(int_ant_array_50f2_bool==False, 0)
+
+    int_ant_array_50f3_bool_o = (int_ant_array_50f3 == "o")
+    int_ant_array_50f3_bool_x = (int_ant_array_50f3 == "x")
+    int_ant_array_50f3_bool_o_num = int_ant_array_50f3_bool_o.sum(axis='columns')
+    int_ant_array_50f3_bool_x_num = int_ant_array_50f3_bool_x.sum(axis='columns')
+    int_ant_array_50f3_bool = int_ant_array_50f3_bool_o_num > int_ant_array_50f3_bool_x_num
+    int_ant_array_50f3_score = int_ant_array_50f3_bool.mask(int_ant_array_50f3_bool==True, 1)
+    int_ant_array_50f3_score = int_ant_array_50f3_score.mask(int_ant_array_50f3_bool==False, 0)
+
+
+    int_ant_array_20m1_bool_o = (int_ant_array_20m1 == "o")
+    int_ant_array_20m1_bool_x = (int_ant_array_20m1 == "x")
+    int_ant_array_20m1_bool_o_num = int_ant_array_20m1_bool_o.sum(axis='columns')
+    int_ant_array_20m1_bool_x_num = int_ant_array_20m1_bool_x.sum(axis='columns')
+    int_ant_array_20m1_bool = int_ant_array_20m1_bool_o_num > int_ant_array_20m1_bool_x_num
+    int_ant_array_20m1_score = int_ant_array_20m1_bool.mask(int_ant_array_20m1_bool==True, 1)
+    int_ant_array_20m1_score = int_ant_array_20m1_score.mask(int_ant_array_20m1_bool==False, 0)
+
+    int_ant_array_20m2_bool_o = (int_ant_array_20m2 == "o")
+    int_ant_array_20m2_bool_x = (int_ant_array_20m2 == "x")
+    int_ant_array_20m2_bool_o_num = int_ant_array_20m2_bool_o.sum(axis='columns')
+    int_ant_array_20m2_bool_x_num = int_ant_array_20m2_bool_x.sum(axis='columns')
+    int_ant_array_20m2_bool = int_ant_array_20m2_bool_o_num > int_ant_array_20m2_bool_x_num 
+    int_ant_array_20m2_score = int_ant_array_20m2_bool.mask(int_ant_array_20m2_bool==True, 1)
+    int_ant_array_20m2_score = int_ant_array_20m2_score.mask(int_ant_array_20m2_bool==False, 0)
+
+    int_ant_array_20m3_bool_o = (int_ant_array_20m3 == "o")
+    int_ant_array_20m3_bool_x = (int_ant_array_20m3 == "x")
+    int_ant_array_20m3_bool_o_num = int_ant_array_20m3_bool_o.sum(axis='columns')
+    int_ant_array_20m3_bool_x_num = int_ant_array_20m3_bool_x.sum(axis='columns')
+    int_ant_array_20m3_bool = int_ant_array_20m3_bool_o_num > int_ant_array_20m3_bool_x_num
+    int_ant_array_20m3_score = int_ant_array_20m3_bool.mask(int_ant_array_20m3_bool==True, 1)
+    int_ant_array_20m3_score = int_ant_array_20m3_score.mask(int_ant_array_20m3_bool==False, 0)
+
+    int_ant_array_20m4_bool_o = (int_ant_array_20m4 == "o")
+    int_ant_array_20m4_bool_x = (int_ant_array_20m4 == "x")
+    int_ant_array_20m4_bool_o_num = int_ant_array_20m4_bool_o.sum(axis='columns')
+    int_ant_array_20m4_bool_x_num = int_ant_array_20m4_bool_x.sum(axis='columns')
+    int_ant_array_20m4_bool = int_ant_array_20m4_bool_o_num > int_ant_array_20m4_bool_x_num
+    int_ant_array_20m4_score = int_ant_array_20m4_bool.mask(int_ant_array_20m4_bool==True, 1)
+    int_ant_array_20m4_score = int_ant_array_20m4_score.mask(int_ant_array_20m4_bool==False, 0)
+
+    int_ant_array_20m5_bool_o = (int_ant_array_20m5 == "o")
+    int_ant_array_20m5_bool_x = (int_ant_array_20m5 == "x")
+    int_ant_array_20m5_bool_o_num = int_ant_array_20m5_bool_o.sum(axis='columns')
+    int_ant_array_20m5_bool_x_num = int_ant_array_20m5_bool_x.sum(axis='columns')
+    int_ant_array_20m5_bool = int_ant_array_20m5_bool_o_num > int_ant_array_20m5_bool_x_num
+    int_ant_array_20m5_score = int_ant_array_20m5_bool.mask(int_ant_array_20m5_bool==True, 1)
+    int_ant_array_20m5_score = int_ant_array_20m5_score.mask(int_ant_array_20m5_bool==False, 0)
+
+    
+    int_ant_array_30m1_bool_o = (int_ant_array_30m1 == "o")
+    int_ant_array_30m1_bool_x = (int_ant_array_30m1 == "x")
+    int_ant_array_30m1_bool_o_num = int_ant_array_30m1_bool_o.sum(axis='columns')
+    int_ant_array_30m1_bool_x_num = int_ant_array_30m1_bool_x.sum(axis='columns')
+    int_ant_array_30m1_bool = int_ant_array_30m1_bool_o_num > int_ant_array_30m1_bool_x_num
+    int_ant_array_30m1_score = int_ant_array_30m1_bool.mask(int_ant_array_30m1_bool==True, 1)
+    int_ant_array_30m1_score = int_ant_array_30m1_score.mask(int_ant_array_30m1_bool==False, 0)
+
+    int_ant_array_30m2_bool_o = (int_ant_array_30m2 == "o")
+    int_ant_array_30m2_bool_x = (int_ant_array_30m2 == "x")
+    int_ant_array_30m2_bool_o_num = int_ant_array_30m2_bool_o.sum(axis='columns')
+    int_ant_array_30m2_bool_x_num = int_ant_array_30m2_bool_x.sum(axis='columns')
+    int_ant_array_30m2_bool = int_ant_array_30m2_bool_o_num > int_ant_array_30m2_bool_x_num 
+    int_ant_array_30m2_score = int_ant_array_30m2_bool.mask(int_ant_array_30m2_bool==True, 1)
+    int_ant_array_30m2_score = int_ant_array_30m2_score.mask(int_ant_array_30m2_bool==False, 0)
+
+    int_ant_array_30m3_bool_o = (int_ant_array_30m3 == "o")
+    int_ant_array_30m3_bool_x = (int_ant_array_30m3 == "x")
+    int_ant_array_30m3_bool_o_num = int_ant_array_30m3_bool_o.sum(axis='columns')
+    int_ant_array_30m3_bool_x_num = int_ant_array_30m3_bool_x.sum(axis='columns')
+    int_ant_array_30m3_bool = int_ant_array_30m3_bool_o_num > int_ant_array_30m3_bool_x_num
+    int_ant_array_30m3_score = int_ant_array_30m3_bool.mask(int_ant_array_30m3_bool==True, 1)
+    int_ant_array_30m3_score = int_ant_array_30m3_score.mask(int_ant_array_30m3_bool==False, 0)
+
+
+    int_ant_array_40m1_bool_o = (int_ant_array_40m1 == "o")
+    int_ant_array_40m1_bool_x = (int_ant_array_40m1 == "x")
+    int_ant_array_40m1_bool_o_num = int_ant_array_40m1_bool_o.sum(axis='columns')
+    int_ant_array_40m1_bool_x_num = int_ant_array_40m1_bool_x.sum(axis='columns')
+    int_ant_array_40m1_bool = int_ant_array_40m1_bool_o_num > int_ant_array_40m1_bool_x_num
+    int_ant_array_40m1_score = int_ant_array_40m1_bool.mask(int_ant_array_40m1_bool==True, 1)
+    int_ant_array_40m1_score = int_ant_array_40m1_score.mask(int_ant_array_40m1_bool==False, 0)
+
+    int_ant_array_40m2_bool_o = (int_ant_array_40m2 == "o")
+    int_ant_array_40m2_bool_x = (int_ant_array_40m2 == "x")
+    int_ant_array_40m2_bool_o_num = int_ant_array_40m2_bool_o.sum(axis='columns')
+    int_ant_array_40m2_bool_x_num = int_ant_array_40m2_bool_x.sum(axis='columns')
+    int_ant_array_40m2_bool = int_ant_array_40m2_bool_o_num > int_ant_array_40m2_bool_x_num 
+    int_ant_array_40m2_score = int_ant_array_40m2_bool.mask(int_ant_array_40m2_bool==True, 1)
+    int_ant_array_40m2_score = int_ant_array_40m2_score.mask(int_ant_array_40m2_bool==False, 0)
+
+    int_ant_array_40m3_bool_o = (int_ant_array_40m3 == "o")
+    int_ant_array_40m3_bool_x = (int_ant_array_40m3 == "x")
+    int_ant_array_40m3_bool_o_num = int_ant_array_40m3_bool_o.sum(axis='columns')
+    int_ant_array_40m3_bool_x_num = int_ant_array_40m3_bool_x.sum(axis='columns')
+    int_ant_array_40m3_bool = int_ant_array_40m3_bool_o_num > int_ant_array_40m3_bool_x_num
+    int_ant_array_40m3_score = int_ant_array_40m3_bool.mask(int_ant_array_40m3_bool==True, 1)
+    int_ant_array_40m3_score = int_ant_array_40m3_score.mask(int_ant_array_40m3_bool==False, 0)
+
+    int_ant_array_40m4_bool_o = (int_ant_array_40m4 == "o")
+    int_ant_array_40m4_bool_x = (int_ant_array_40m4 == "x")
+    int_ant_array_40m4_bool_o_num = int_ant_array_40m4_bool_o.sum(axis='columns')
+    int_ant_array_40m4_bool_x_num = int_ant_array_40m4_bool_x.sum(axis='columns')
+    int_ant_array_40m4_bool = int_ant_array_40m4_bool_o_num > int_ant_array_40m4_bool_x_num
+    int_ant_array_40m4_score = int_ant_array_40m4_bool.mask(int_ant_array_40m4_bool==True, 1)
+    int_ant_array_40m4_score = int_ant_array_40m4_score.mask(int_ant_array_40m4_bool==False, 0)
+
+    int_ant_array_40m5_bool_o = (int_ant_array_40m5 == "o")
+    int_ant_array_40m5_bool_x = (int_ant_array_40m5 == "x")
+    int_ant_array_40m5_bool_o_num = int_ant_array_40m5_bool_o.sum(axis='columns')
+    int_ant_array_40m5_bool_x_num = int_ant_array_40m5_bool_x.sum(axis='columns')
+    int_ant_array_40m5_bool = int_ant_array_40m5_bool_o_num > int_ant_array_40m5_bool_x_num
+    int_ant_array_40m5_score = int_ant_array_40m5_bool.mask(int_ant_array_40m5_bool==True, 1)
+    int_ant_array_40m5_score = int_ant_array_40m5_score.mask(int_ant_array_40m5_bool==False, 0)
+
+    au_int_array_20f1 = pd.concat([au_array_20f1, int_ant_array_20f1_score], axis=1)
+    au_int_array_20f2 = pd.concat([au_array_20f2, int_ant_array_20f2_score], axis=1)
+    au_int_array_20f3 = pd.concat([au_array_20f3, int_ant_array_20f3_score], axis=1)
+    au_int_array_20f4 = pd.concat([au_array_20f4, int_ant_array_20f4_score], axis=1)
+
+    au_int_array_30f1 = pd.concat([au_array_30f1, int_ant_array_30f1_score], axis=1)
+    au_int_array_30f2 = pd.concat([au_array_30f2, int_ant_array_30f2_score], axis=1)
+    au_int_array_30f3 = pd.concat([au_array_30f3, int_ant_array_30f3_score], axis=1)
+
+    au_int_array_40f1 = pd.concat([au_array_40f1, int_ant_array_40f1_score], axis=1)
+    au_int_array_40f2 = pd.concat([au_array_40f2, int_ant_array_40f2_score], axis=1)
+    au_int_array_40f3 = pd.concat([au_array_40f3, int_ant_array_40f3_score], axis=1)
+    au_int_array_40f4 = pd.concat([au_array_40f4, int_ant_array_40f4_score], axis=1)
+
+    au_int_array_50f1 = pd.concat([au_array_50f1, int_ant_array_50f1_score], axis=1)
+    au_int_array_50f2 = pd.concat([au_array_50f2, int_ant_array_50f2_score], axis=1)
+    au_int_array_50f3 = pd.concat([au_array_50f3, int_ant_array_50f3_score], axis=1)
+
+    au_int_array_20m1 = pd.concat([au_array_20m1, int_ant_array_20m1_score], axis=1)
+    au_int_array_20m2 = pd.concat([au_array_20m2, int_ant_array_20m2_score], axis=1)
+    au_int_array_20m3 = pd.concat([au_array_20m3, int_ant_array_20m3_score], axis=1)
+    au_int_array_20m4 = pd.concat([au_array_20m4, int_ant_array_20m4_score], axis=1)
+    au_int_array_20m5 = pd.concat([au_array_20m5, int_ant_array_20m5_score], axis=1)
+
+    au_int_array_30m1 = pd.concat([au_array_30m1, int_ant_array_30m1_score], axis=1)
+    au_int_array_30m2 = pd.concat([au_array_30m2, int_ant_array_30m2_score], axis=1)
+    au_int_array_30m3 = pd.concat([au_array_30m3, int_ant_array_30m3_score], axis=1)
+
+    au_int_array_40m1 = pd.concat([au_array_40m1, int_ant_array_40m1_score], axis=1)
+    au_int_array_40m2 = pd.concat([au_array_40m2, int_ant_array_40m2_score], axis=1)
+    au_int_array_40m3 = pd.concat([au_array_40m3, int_ant_array_40m3_score], axis=1)
+    au_int_array_40m4 = pd.concat([au_array_40m4, int_ant_array_40m4_score], axis=1)
+    au_int_array_40m5 = pd.concat([au_array_40m5, int_ant_array_40m5_score], axis=1)
+
+    print(au_int_array_20f1)
+
+    '''
+    print(au_array_20f1)
+    print(au_array_20f2)
+    print(au_array_20f3)
+    print(au_array_20f4)
+
+    print(au_array_30f1)
+    print(au_array_30f2)
+    print(au_array_30f3)
+
+    print(au_array_40f1)
+    print(au_array_40f2)
+    print(au_array_40f3)
+    print(au_array_40f4)
+
+    print(au_array_50f1)
+    print(au_array_50f2)
+    print(au_array_50f3)
+
+    print(au_array_20m1)
+    print(au_array_20m2)
+    print(au_array_20m3)
+    print(au_array_20m4)
+    print(au_array_20m5)
+
+    print(au_array_30m1)
+    print(au_array_30m2)
+    print(au_array_30m3)
+
+    print(au_array_40m1)
+    print(au_array_40m2)
+    print(au_array_40m3)
+    print(au_array_40m4)
+    print(au_array_40m5)
+    '''
+
+    print(int_ant_array_20f1)
+    print(int_ant_array_20f2)
+    print(int_ant_array_20f3)
+    print(int_ant_array_20f4)
+
+    print(int_ant_array_20f1_score)
+    print(int_ant_array_20f2_score)
+    print(int_ant_array_20f3_score)
+    print(int_ant_array_20f4_score)
+
+    print(int_ant_array_30f1)
+    print(int_ant_array_30f2)
+    print(int_ant_array_30f3)
+
+    print(int_ant_array_30f1_score)
+    print(int_ant_array_30f2_score)
+    print(int_ant_array_30f3_score)
+
+    print(int_ant_array_40f1)
+    print(int_ant_array_40f2)
+    print(int_ant_array_40f3)
+    print(int_ant_array_40f4)
+
+    print(int_ant_array_40f1_score)
+    print(int_ant_array_40f2_score)
+    print(int_ant_array_40f3_score)
+    print(int_ant_array_40f4_score)
+
+    print(int_ant_array_50f1)
+    print(int_ant_array_50f2)
+    print(int_ant_array_50f3)
+
+    print(int_ant_array_50f1_score)
+    print(int_ant_array_50f2_score)
+    print(int_ant_array_50f3_score)
+
+    print(int_ant_array_20m1)
+    print(int_ant_array_20m2)
+    print(int_ant_array_20m3)
+    print(int_ant_array_20m4)
+    print(int_ant_array_20m5)
+
+    print(int_ant_array_20m1_score)
+    print(int_ant_array_20m2_score)
+    print(int_ant_array_20m3_score)
+    print(int_ant_array_20m4_score)
+    print(int_ant_array_20m5_score)
+
+    print(int_ant_array_30m1)
+    print(int_ant_array_30m2)
+    print(int_ant_array_30m3)
+
+    print(int_ant_array_30m1_score)
+    print(int_ant_array_30m2_score)
+    print(int_ant_array_30m3_score)
+
+    print(int_ant_array_40m1)
+    print(int_ant_array_40m2)
+    print(int_ant_array_40m3)
+    print(int_ant_array_40m4)
+    print(int_ant_array_40m5)
+
+    print(int_ant_array_40m1_score)
+    print(int_ant_array_40m2_score)
+    print(int_ant_array_40m3_score)
+    print(int_ant_array_40m4_score)
+    print(int_ant_array_40m5_score)
+
 
 '''
 ### F4
-    start_time_f4 = d_20f4_dump['end(system)[ms]'].values
+    start_time_f4 = d_20f4_dump['end(system)[ms]'].valuesd_20f1_dump['AU01_c_mean'].values
     au01_array_f4 = d_20f4_dump['AU01_c_mean'].values
     au02_array_f4 = d_20f4_dump['AU02_c_mean'].values
     head_vel_max_array_f4 = d_20f4_dump['Head_velocity_max'].values
