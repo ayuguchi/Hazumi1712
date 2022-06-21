@@ -382,37 +382,140 @@ def main():
     au_int_array_20f2 = pd.concat([au_array_20f2, int_ant_array_20f2_score], axis=1)
     au_int_array_20f3 = pd.concat([au_array_20f3, int_ant_array_20f3_score], axis=1)
     au_int_array_20f4 = pd.concat([au_array_20f4, int_ant_array_20f4_score], axis=1)
+    au_int_array_20f1 = au_int_array_20f1.set_axis(['AU01', 'AU02', 'AU04', 'AU05', 'AU06', 'AU07', 'AU09', 'AU10', 'AU12', 'AU14', 'AU15', 'AU17', 'AU20', 'AU23', 'AU25', 'AU26', 'AU28','AU45', 'INT'], axis=1)
+    au_int_array_20f2 = au_int_array_20f2.set_axis(['AU01', 'AU02', 'AU04', 'AU05', 'AU06', 'AU07', 'AU09', 'AU10', 'AU12', 'AU14', 'AU15', 'AU17', 'AU20', 'AU23', 'AU25', 'AU26', 'AU28','AU45', 'INT'], axis=1)
+    au_int_array_20f3 = au_int_array_20f3.set_axis(['AU01', 'AU02', 'AU04', 'AU05', 'AU06', 'AU07', 'AU09', 'AU10', 'AU12', 'AU14', 'AU15', 'AU17', 'AU20', 'AU23', 'AU25', 'AU26', 'AU28','AU45', 'INT'], axis=1)
+    au_int_array_20f4 = au_int_array_20f4.set_axis(['AU01', 'AU02', 'AU04', 'AU05', 'AU06', 'AU07', 'AU09', 'AU10', 'AU12', 'AU14', 'AU15', 'AU17', 'AU20', 'AU23', 'AU25', 'AU26', 'AU28','AU45', 'INT'], axis=1)
 
     au_int_array_30f1 = pd.concat([au_array_30f1, int_ant_array_30f1_score], axis=1)
     au_int_array_30f2 = pd.concat([au_array_30f2, int_ant_array_30f2_score], axis=1)
     au_int_array_30f3 = pd.concat([au_array_30f3, int_ant_array_30f3_score], axis=1)
+    au_int_array_30f1 = au_int_array_30f1.set_axis(['AU01', 'AU02', 'AU04', 'AU05', 'AU06', 'AU07', 'AU09', 'AU10', 'AU12', 'AU14', 'AU15', 'AU17', 'AU20', 'AU23', 'AU25', 'AU26', 'AU28','AU45', 'INT'], axis=1)
+    au_int_array_30f2 = au_int_array_30f2.set_axis(['AU01', 'AU02', 'AU04', 'AU05', 'AU06', 'AU07', 'AU09', 'AU10', 'AU12', 'AU14', 'AU15', 'AU17', 'AU20', 'AU23', 'AU25', 'AU26', 'AU28','AU45', 'INT'], axis=1)
+    au_int_array_30f3 = au_int_array_30f3.set_axis(['AU01', 'AU02', 'AU04', 'AU05', 'AU06', 'AU07', 'AU09', 'AU10', 'AU12', 'AU14', 'AU15', 'AU17', 'AU20', 'AU23', 'AU25', 'AU26', 'AU28','AU45', 'INT'], axis=1)
 
     au_int_array_40f1 = pd.concat([au_array_40f1, int_ant_array_40f1_score], axis=1)
     au_int_array_40f2 = pd.concat([au_array_40f2, int_ant_array_40f2_score], axis=1)
     au_int_array_40f3 = pd.concat([au_array_40f3, int_ant_array_40f3_score], axis=1)
     au_int_array_40f4 = pd.concat([au_array_40f4, int_ant_array_40f4_score], axis=1)
+    au_int_array_40f1 = au_int_array_40f1.set_axis(['AU01', 'AU02', 'AU04', 'AU05', 'AU06', 'AU07', 'AU09', 'AU10', 'AU12', 'AU14', 'AU15', 'AU17', 'AU20', 'AU23', 'AU25', 'AU26', 'AU28','AU45', 'INT'], axis=1)
+    au_int_array_40f2 = au_int_array_40f2.set_axis(['AU01', 'AU02', 'AU04', 'AU05', 'AU06', 'AU07', 'AU09', 'AU10', 'AU12', 'AU14', 'AU15', 'AU17', 'AU20', 'AU23', 'AU25', 'AU26', 'AU28','AU45', 'INT'], axis=1)
+    au_int_array_40f3 = au_int_array_40f3.set_axis(['AU01', 'AU02', 'AU04', 'AU05', 'AU06', 'AU07', 'AU09', 'AU10', 'AU12', 'AU14', 'AU15', 'AU17', 'AU20', 'AU23', 'AU25', 'AU26', 'AU28','AU45', 'INT'], axis=1)
+    au_int_array_40f4 = au_int_array_40f4.set_axis(['AU01', 'AU02', 'AU04', 'AU05', 'AU06', 'AU07', 'AU09', 'AU10', 'AU12', 'AU14', 'AU15', 'AU17', 'AU20', 'AU23', 'AU25', 'AU26', 'AU28','AU45', 'INT'], axis=1)
 
     au_int_array_50f1 = pd.concat([au_array_50f1, int_ant_array_50f1_score], axis=1)
     au_int_array_50f2 = pd.concat([au_array_50f2, int_ant_array_50f2_score], axis=1)
     au_int_array_50f3 = pd.concat([au_array_50f3, int_ant_array_50f3_score], axis=1)
+    au_int_array_50f1 = au_int_array_50f1.set_axis(['AU01', 'AU02', 'AU04', 'AU05', 'AU06', 'AU07', 'AU09', 'AU10', 'AU12', 'AU14', 'AU15', 'AU17', 'AU20', 'AU23', 'AU25', 'AU26', 'AU28','AU45', 'INT'], axis=1)
+    au_int_array_50f2 = au_int_array_50f2.set_axis(['AU01', 'AU02', 'AU04', 'AU05', 'AU06', 'AU07', 'AU09', 'AU10', 'AU12', 'AU14', 'AU15', 'AU17', 'AU20', 'AU23', 'AU25', 'AU26', 'AU28','AU45', 'INT'], axis=1)
+    au_int_array_50f3 = au_int_array_50f3.set_axis(['AU01', 'AU02', 'AU04', 'AU05', 'AU06', 'AU07', 'AU09', 'AU10', 'AU12', 'AU14', 'AU15', 'AU17', 'AU20', 'AU23', 'AU25', 'AU26', 'AU28','AU45', 'INT'], axis=1)
 
     au_int_array_20m1 = pd.concat([au_array_20m1, int_ant_array_20m1_score], axis=1)
     au_int_array_20m2 = pd.concat([au_array_20m2, int_ant_array_20m2_score], axis=1)
     au_int_array_20m3 = pd.concat([au_array_20m3, int_ant_array_20m3_score], axis=1)
     au_int_array_20m4 = pd.concat([au_array_20m4, int_ant_array_20m4_score], axis=1)
     au_int_array_20m5 = pd.concat([au_array_20m5, int_ant_array_20m5_score], axis=1)
+    au_int_array_20m1 = au_int_array_20m1.set_axis(['AU01', 'AU02', 'AU04', 'AU05', 'AU06', 'AU07', 'AU09', 'AU10', 'AU12', 'AU14', 'AU15', 'AU17', 'AU20', 'AU23', 'AU25', 'AU26', 'AU28','AU45', 'INT'], axis=1)
+    au_int_array_20m2 = au_int_array_20m2.set_axis(['AU01', 'AU02', 'AU04', 'AU05', 'AU06', 'AU07', 'AU09', 'AU10', 'AU12', 'AU14', 'AU15', 'AU17', 'AU20', 'AU23', 'AU25', 'AU26', 'AU28','AU45', 'INT'], axis=1)
+    au_int_array_20m3 = au_int_array_20m3.set_axis(['AU01', 'AU02', 'AU04', 'AU05', 'AU06', 'AU07', 'AU09', 'AU10', 'AU12', 'AU14', 'AU15', 'AU17', 'AU20', 'AU23', 'AU25', 'AU26', 'AU28','AU45', 'INT'], axis=1)
+    au_int_array_20m4 = au_int_array_20m4.set_axis(['AU01', 'AU02', 'AU04', 'AU05', 'AU06', 'AU07', 'AU09', 'AU10', 'AU12', 'AU14', 'AU15', 'AU17', 'AU20', 'AU23', 'AU25', 'AU26', 'AU28','AU45', 'INT'], axis=1)
+    au_int_array_20m5 = au_int_array_20m5.set_axis(['AU01', 'AU02', 'AU04', 'AU05', 'AU06', 'AU07', 'AU09', 'AU10', 'AU12', 'AU14', 'AU15', 'AU17', 'AU20', 'AU23', 'AU25', 'AU26', 'AU28','AU45', 'INT'], axis=1)
 
     au_int_array_30m1 = pd.concat([au_array_30m1, int_ant_array_30m1_score], axis=1)
     au_int_array_30m2 = pd.concat([au_array_30m2, int_ant_array_30m2_score], axis=1)
     au_int_array_30m3 = pd.concat([au_array_30m3, int_ant_array_30m3_score], axis=1)
+    au_int_array_30m1 = au_int_array_30m1.set_axis(['AU01', 'AU02', 'AU04', 'AU05', 'AU06', 'AU07', 'AU09', 'AU10', 'AU12', 'AU14', 'AU15', 'AU17', 'AU20', 'AU23', 'AU25', 'AU26', 'AU28','AU45', 'INT'], axis=1)
+    au_int_array_30m2 = au_int_array_30m2.set_axis(['AU01', 'AU02', 'AU04', 'AU05', 'AU06', 'AU07', 'AU09', 'AU10', 'AU12', 'AU14', 'AU15', 'AU17', 'AU20', 'AU23', 'AU25', 'AU26', 'AU28','AU45', 'INT'], axis=1)
+    au_int_array_30m3 = au_int_array_30m3.set_axis(['AU01', 'AU02', 'AU04', 'AU05', 'AU06', 'AU07', 'AU09', 'AU10', 'AU12', 'AU14', 'AU15', 'AU17', 'AU20', 'AU23', 'AU25', 'AU26', 'AU28','AU45', 'INT'], axis=1)
 
     au_int_array_40m1 = pd.concat([au_array_40m1, int_ant_array_40m1_score], axis=1)
     au_int_array_40m2 = pd.concat([au_array_40m2, int_ant_array_40m2_score], axis=1)
     au_int_array_40m3 = pd.concat([au_array_40m3, int_ant_array_40m3_score], axis=1)
     au_int_array_40m4 = pd.concat([au_array_40m4, int_ant_array_40m4_score], axis=1)
     au_int_array_40m5 = pd.concat([au_array_40m5, int_ant_array_40m5_score], axis=1)
+    au_int_array_40m1 = au_int_array_40m1.set_axis(['AU01', 'AU02', 'AU04', 'AU05', 'AU06', 'AU07', 'AU09', 'AU10', 'AU12', 'AU14', 'AU15', 'AU17', 'AU20', 'AU23', 'AU25', 'AU26', 'AU28','AU45', 'INT'], axis=1)
+    au_int_array_40m2 = au_int_array_40m2.set_axis(['AU01', 'AU02', 'AU04', 'AU05', 'AU06', 'AU07', 'AU09', 'AU10', 'AU12', 'AU14', 'AU15', 'AU17', 'AU20', 'AU23', 'AU25', 'AU26', 'AU28','AU45', 'INT'], axis=1)
+    au_int_array_40m3 = au_int_array_40m3.set_axis(['AU01', 'AU02', 'AU04', 'AU05', 'AU06', 'AU07', 'AU09', 'AU10', 'AU12', 'AU14', 'AU15', 'AU17', 'AU20', 'AU23', 'AU25', 'AU26', 'AU28','AU45', 'INT'], axis=1)
+    au_int_array_40m4 = au_int_array_40m4.set_axis(['AU01', 'AU02', 'AU04', 'AU05', 'AU06', 'AU07', 'AU09', 'AU10', 'AU12', 'AU14', 'AU15', 'AU17', 'AU20', 'AU23', 'AU25', 'AU26', 'AU28','AU45', 'INT'], axis=1)
+    au_int_array_40m5 = au_int_array_40m5.set_axis(['AU01', 'AU02', 'AU04', 'AU05', 'AU06', 'AU07', 'AU09', 'AU10', 'AU12', 'AU14', 'AU15', 'AU17', 'AU20', 'AU23', 'AU25', 'AU26', 'AU28','AU45', 'INT'], axis=1)
 
+    pos_au_int_array_20f1 = au_int_array_20f1[au_int_array_20f1['INT']==1]
+    pos_au_int_array_20f2 = au_int_array_20f2[au_int_array_20f2['INT']==1]
+    pos_au_int_array_20f3 = au_int_array_20f3[au_int_array_20f3['INT']==1]
+    pos_au_int_array_20f4 = au_int_array_20f4[au_int_array_20f4['INT']==1]
+
+    pos_au_int_array_30f1 = au_int_array_30f1[au_int_array_30f1['INT']==1]
+    pos_au_int_array_30f2 = au_int_array_30f2[au_int_array_30f2['INT']==1]
+    pos_au_int_array_30f3 = au_int_array_30f3[au_int_array_30f3['INT']==1]
+
+    pos_au_int_array_40f1 = au_int_array_40f1[au_int_array_40f1['INT']==1]
+    pos_au_int_array_40f2 = au_int_array_40f2[au_int_array_40f2['INT']==1]
+    pos_au_int_array_40f3 = au_int_array_40f3[au_int_array_40f3['INT']==1]
+    pos_au_int_array_40f4 = au_int_array_40f4[au_int_array_40f4['INT']==1]
+
+    pos_au_int_array_50f1 = au_int_array_50f1[au_int_array_50f1['INT']==1]
+    pos_au_int_array_50f2 = au_int_array_50f2[au_int_array_50f2['INT']==1]
+    pos_au_int_array_50f3 = au_int_array_50f3[au_int_array_50f3['INT']==1]
+
+    pos_au_int_array_20m1 = au_int_array_20m1[au_int_array_20m1['INT']==1]
+    pos_au_int_array_20m2 = au_int_array_20m2[au_int_array_20m2['INT']==1]
+    pos_au_int_array_20m3 = au_int_array_20m3[au_int_array_20m3['INT']==1]
+    pos_au_int_array_20m4 = au_int_array_20m4[au_int_array_20m4['INT']==1]
+    pos_au_int_array_20m5 = au_int_array_20m5[au_int_array_20m5['INT']==1]
+
+    pos_au_int_array_30m1 = au_int_array_30m1[au_int_array_30m1['INT']==1]
+    pos_au_int_array_30m2 = au_int_array_30m2[au_int_array_30m2['INT']==1]
+    pos_au_int_array_30m3 = au_int_array_30m3[au_int_array_30m3['INT']==1]
+
+    pos_au_int_array_40m1 = au_int_array_40m1[au_int_array_40m1['INT']==1]
+    pos_au_int_array_40m2 = au_int_array_40m2[au_int_array_40m2['INT']==1]
+    pos_au_int_array_40m3 = au_int_array_40m3[au_int_array_40m3['INT']==1]
+    pos_au_int_array_40m4 = au_int_array_40m4[au_int_array_40m4['INT']==1]
+    pos_au_int_array_40m5 = au_int_array_40m5[au_int_array_40m5['INT']==1]
+
+    pos_au_int_array = pd.concat([pos_au_int_array_20f1, pos_au_int_array_20f2, pos_au_int_array_20f3, pos_au_int_array_20f4, pos_au_int_array_30f1, pos_au_int_array_30f2, pos_au_int_array_30f3, pos_au_int_array_40f1, pos_au_int_array_40f2, pos_au_int_array_40f3, pos_au_int_array_40f4, pos_au_int_array_50f1, pos_au_int_array_50f2, pos_au_int_array_50f3, pos_au_int_array_20m1, pos_au_int_array_20m2, pos_au_int_array_20m3, pos_au_int_array_20m4, pos_au_int_array_20m5, pos_au_int_array_30m1, pos_au_int_array_30m2, pos_au_int_array_30m3, pos_au_int_array_40m1, pos_au_int_array_40m2, pos_au_int_array_40m3, pos_au_int_array_40m4, pos_au_int_array_40m5])
+
+    pos_au_array = pos_au_int_array.drop('INT', axis=1)
+
+#    print (pos_au_array.columns)
+#    clf_svm = LinearSVC(C=1.0)
+#    clf_svm.fit(pos_au_array, pos_au_array.columns)
+
+    '''
     print(au_int_array_20f1)
+    print(au_int_array_20f2)
+    print(au_int_array_20f3)
+    print(au_int_array_20f4)
+
+    print(au_int_array_30f1)
+    print(au_int_array_30f2)
+    print(au_int_array_30f3)
+
+    print(au_int_array_40f1)
+    print(au_int_array_40f2)
+    print(au_int_array_40f3)
+    print(au_int_array_40f4)
+
+    print(au_int_array_50f1)    
+    print(au_int_array_50f2)
+    print(au_int_array_50f3)
+
+    print(au_int_array_20m1)
+    print(au_int_array_20m2)
+    print(au_int_array_20m3)
+    print(au_int_array_20m4)
+    print(au_int_array_20m5)
+
+    print(au_int_array_30m1)    
+    print(au_int_array_30m2)
+    print(au_int_array_30m3)
+
+    print(au_int_array_40m1)
+    print(au_int_array_40m2)
+    print(au_int_array_40m3)
+    print(au_int_array_40m4)
+    print(au_int_array_40m5)
+    '''
 
     '''
     print(au_array_20f1)
@@ -448,7 +551,6 @@ def main():
     print(au_array_40m3)
     print(au_array_40m4)
     print(au_array_40m5)
-    '''
 
     print(int_ant_array_20f1)
     print(int_ant_array_20f2)
@@ -517,47 +619,9 @@ def main():
     print(int_ant_array_40m3_score)
     print(int_ant_array_40m4_score)
     print(int_ant_array_40m5_score)
-
+    '''
 
 '''
-### F4
-    start_time_f4 = d_20f4_dump['end(system)[ms]'].valuesd_20f1_dump['AU01_c_mean'].values
-    au01_array_f4 = d_20f4_dump['AU01_c_mean'].values
-    au02_array_f4 = d_20f4_dump['AU02_c_mean'].values
-    head_vel_max_array_f4 = d_20f4_dump['Head_velocity_max'].values
-    head_vel_max_array_f4 = head_vel_max_array_f4 * 10
-#    shoulderRight_vel_max_array_f3 = d_20f3_dump['ShoulderRight_velocity_max'].values
-#    shoulderRight_vel_max_array_f3 = shoulderRight_vel_max_array_f3 * 10
-#    shoulderLeft_vel_max_array_f3 = d_20f3_dump['ShoulderLeft_velocity_max'].values
-#    shoulderLeft_vel_max_array_f3 = shoulderLeft_vel_max_array_f3 * 10
-
-    dif_au01_f4 = np.diff(au01_array_f4)
-    dif_au02_f4 = np.diff(au02_array_f4)
-#    dif_au45 = np.diff(au45_array)
-
-#    e_20f4_int = e_20f4_int.set_axis(['ID','interest_level'], axis=1)
-#    auHeadInterest_dump_f4 = pd.concat([d_20f4_dump['end(system)[ms]'],d_20f4_dump['AU01_c_mean'],d_20f4_dump['AU02_c_mean'],d_20f4_dump['Head_velocity_max'],e_20f4_int['interest_level']],axis=1)
-
-#    azAU_appear_f4 = auHeadInterest_dump_f4.query('AU01_c_mean >= 0.5 | AU02_c_mean >= 0.5')
-#    azHead_appear_f4 = auHeadInterest_dump_f4.query('Head_velocity_max > 0.075')
-#    azAU_Head_appear_f4 = azHead_appear_f4.query('AU01_c_mean >= 0.5 | AU02_c_mean >= 0.5')
-#    negInterest_appear_f4 = auHeadInterest_dump_f4.query('interest_level == -1')
-#    posInterest_appear_f4 = auHeadInterest_dump_f4.query('interest_level == 1')
-
-#    negIntAzHead_appear_f4 = negInterest_appear_f4.query('Head_velocity_max > 0.075')
-#    posIntAzHead_appear_f4 = posInterest_appear_f4.query('Head_velocity_max > 0.075')
-
-#    negIntAzAU_Head_appear_f4 = negIntAzHead_appear_f4.query('AU01_c_mean >= 0.5 | AU02_c_mean >= 0.5')
-#    posIntAzAU_Head_appear_f4 = posIntAzHead_appear_f4.query('AU01_c_mean >= 0.5 | AU02_c_mean >= 0.5')
-
-#    print('AU appearance rate of f4', float(len(azAU_appear_f4)/len(auHeadInterest_dump_f4)))
-#    print('Head appearance rate of f4', float(len(azHead_appear_f4)/len(auHeadInterest_dump_f4)))
-#    print('AU_Head appearance rate of f4', float(len(azAU_Head_appear_f4)/len(auHeadInterest_dump_f4)))
-
-#    print('Head appearance rate of f4 in positive interest', float(len(posIntAzHead_appear_f4)/len(posInterest_appear_f4)))
-#    print('AU_Head appearance rate of f4 in positive interest', float(len(posIntAzAU_Head_appear_f4)/len(posInterest_appear_f4)))
-#    print('Head appearance rate of f4 in negative interest', float(len(negIntAzHead_appear_f4)/len(negInterest_appear_f4)))
-#    print('AU_Head appearance rate of f4 in negative interest', float(len(negIntAzAU_Head_appear_f4)/len(negInterest_appear_f4)))
 #    plt.subplot(col, row, 4)#4
     plt.xlabel('time (ms)')
     plt.ylabel('AUs | Velocity (10*cm/s) | Interest Level')
@@ -583,18 +647,7 @@ def main():
 
 #    plt.tight_layout()
     plt.show()
-
-#    print('Total AU appearance rate', float((len(azAU_appear_f1)+len(azAU_appear_f2)+len(azAU_appear_f3)+len(azAU_appear_f4))/(len(d_20f1_dump)+len(d_20f2_dump)+len(d_20f3_dump)+len(d_20f4_dump))))
-#    print('Total Head appearance rate', float((len(azHead_appear_f1)+len(azHead_appear_f2)+len(azHead_appear_f3)+len(azHead_appear_f4))/(len(d_20f1_dump)+len(d_20f2_dump)+len(d_20f3_dump)+len(d_20f4_dump))))
-#    print('Total AU_Head appearance rate', float((len(azAU_Head_appear_f1)+len(azAU_Head_appear_f2)+len(azAU_Head_appear_f3)+len(azAU_Head_appear_f4))/(len(d_20f1_dump)+len(d_20f2_dump)+len(d_20f3_dump)+len(d_20f4_dump))))
-
-#    print('Total Head appearance rate in positive interest', float((len(posIntAzHead_appear_f1)+len(posIntAzHead_appear_f2)+len(posIntAzHead_appear_f3)+len(posIntAzHead_appear_f4))/(len(posInterest_appear_f1)+len(posInterest_appear_f2)+len(posInterest_appear_f3)+len(posInterest_appear_f4))))
-#    print('Total AU_Head appearance rate in positive interest', float((len(posIntAzAU_Head_appear_f1)+len(posIntAzAU_Head_appear_f2)+len(posIntAzAU_Head_appear_f3)+len(posIntAzAU_Head_appear_f4))/(len(posInterest_appear_f1)+len(posInterest_appear_f2)+len(posInterest_appear_f3)+len(posInterest_appear_f4))))
-
-#    print('Total Head appearance rate in negative interest', float((len(negIntAzHead_appear_f1)+len(negIntAzHead_appear_f2)+len(negIntAzHead_appear_f3)+len(negIntAzHead_appear_f4))/(len(negInterest_appear_f1)+len(negInterest_appear_f2)+len(negInterest_appear_f3)+len(negInterest_appear_f4))))
-#    print('Total AU_Head appearance rate in negative interest', float((len(negIntAzAU_Head_appear_f1)+len(negIntAzAU_Head_appear_f2)+len(negIntAzAU_Head_appear_f3)+len(negIntAzAU_Head_appear_f4))/(len(negInterest_appear_f1)+len(negInterest_appear_f2)+len(negInterest_appear_f3)+len(negInterest_appear_f4))))
 '''
-
 
 if __name__ == '__main__':
     main()
