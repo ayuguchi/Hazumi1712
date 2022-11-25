@@ -2,6 +2,7 @@
 #! python3
 import sys
 import csv
+from xml.sax.handler import feature_namespace_prefixes, feature_namespaces
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -11,6 +12,7 @@ from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import cross_val_score
+from sklearn.inspection import permutation_importance
 #from sklearn.model_selection import GridSearchCV
 #from sklearn.model_selection import RandomizedSearchCV
 #import seaborn as sns
@@ -432,17 +434,28 @@ def main():
     np_int_ant_array = np.concatenate([np_int_ant_array_20f1_score,np_int_ant_array_20f2_score,np_int_ant_array_20f3_score,np_int_ant_array_20f4_score,np_int_ant_array_30f1_score,np_int_ant_array_30f2_score,np_int_ant_array_30f3_score,np_int_ant_array_40f1_score,np_int_ant_array_40f2_score,np_int_ant_array_40f3_score,np_int_ant_array_40f4_score,np_int_ant_array_50f1_score,np_int_ant_array_50f2_score,np_int_ant_array_50f3_score,np_int_ant_array_20m1_score,np_int_ant_array_20m2_score,np_int_ant_array_20m3_score,np_int_ant_array_20m4_score,np_int_ant_array_20m5_score,np_int_ant_array_30m1_score,np_int_ant_array_30m2_score,np_int_ant_array_30m3_score,np_int_ant_array_40m1_score,np_int_ant_array_40m2_score,np_int_ant_array_40m3_score,np_int_ant_array_40m4_score,np_int_ant_array_40m5_score])    
     np_int_ant_array = np_int_ant_array.astype('int')
 
-    np_au_array_train, np_au_array_test, np_int_ant_array_train, np_int_ant_array_test=train_test_split(np_au_array,np_int_ant_array,test_size=0.2)
+    np_au_array_train, np_au_array_test, np_int_ant_array_train, np_int_ant_array_test=train_test_split(np_au_array, np_int_ant_array,test_size=0.2)
 
-    clf = make_pipeline(StandardScaler(), LinearSVC(random_state=0))
+    clf = make_pipeline(StandardScaler(), LinearSVC(penalty="l1", loss='squared_hinge', dual=False, max_iter=10000, random_state=0))
+#    clf = make_pipeline(StandardScaler(), LinearSVC(penalty="l2", loss='squared_hinge', dual=True, max_iter=10000, random_state=0))
     clf.fit(np_au_array_train, np_int_ant_array_train)
     print(clf.named_steps['linearsvc'].coef_)
     print(clf.named_steps['linearsvc'].intercept_)
     #prediction = clf.predict(np_au_array_test)
     print(clf.score(np_au_array_test,np_int_ant_array_test))
 
+    perm_importance = permutation_importance(clf, np_au_array_test, np_int_ant_array_test, random_state=0)
+    feature_names = ['AU01', 'AU02', 'AU04', 'AU05', 'AU06', 'AU07', 'AU09', 'AU10', 'AU12', 'AU14', 'AU15', 'AU17', 'AU20', 'AU23', 'AU25', 'AU26', 'AU28','AU45']
+    features = np.array(feature_names)
+
+    sorted_index = perm_importance.importances_mean.argsort()
+
+    plt.barh(features[sorted_index], perm_importance.importances_mean[sorted_index])
+    plt.xlabel('Permutation Importance')
+    plt.show()
+
     #cross validation with 5 classes
-    print(cross_val_score(clf, np_au_array, np_int_ant_array, cv=5))
+    print('Cross validation score:',cross_val_score(clf, np_au_array, np_int_ant_array, cv=5))
 
     '''
     au_int_array_20f1 = pd.concat([au_array_20f1, int_ant_array_20f1_score], axis=1)
@@ -712,7 +725,6 @@ def main():
     plt.legend(loc='upper left', borderaxespad=0)
 
 #    plt.tight_layout()
-    plt.show()
 '''
 
 if __name__ == '__main__':

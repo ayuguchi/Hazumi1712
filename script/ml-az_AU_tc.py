@@ -180,6 +180,7 @@ def main():
     tc_ant_array_20f1_bool_l = (tc_ant_array_20f1 == 0)
     tc_ant_array_20f1_score = tc_ant_array_20f1_bool_l.mask(tc_ant_array_20f1_bool_l==True, 0)
     tc_ant_array_20f1_score = tc_ant_array_20f1_score.mask(tc_ant_array_20f1_bool_l==False, 1)
+    
     np_tc_ant_array_20f1_score = tc_ant_array_20f1_score.to_numpy()
     print(tc_ant_array_20f1_score)
 
