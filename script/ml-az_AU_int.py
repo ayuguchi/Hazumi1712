@@ -11,6 +11,7 @@ from sklearn.svm import LinearSVC
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
 from sklearn.model_selection import cross_val_score
 from sklearn.inspection import permutation_importance
 #from sklearn.model_selection import GridSearchCV
@@ -59,95 +60,91 @@ def main():
     d_40m4_dump = pd.read_csv('../dumpfiles/1712M4022.csv')
     d_40m5_dump = pd.read_csv('../dumpfiles/1712M4025.csv')
 
-#    e_20f1_int = pd.read_csv('../script/1712F2006_int_level.csv')
-#    e_20f2_int = pd.read_csv('../script/1712F2010_int_level.csv')
-#    e_20f3_int = pd.read_csv('../script/1712F2018_int_level.csv')
-#    e_20f4_int = pd.read_csv('../script/1712F2019_int_level.csv')
-
 #    data_num = ['20f1','20f2','20f3','20f4','30f1','30f2','30f3','40f1','40f2','40f3','40f4','50f1','50f2','50f3','20m1','20m2','20m3','20m4','20m5','30m1','30m2','30m3','40m1','40m2','40m3','40m4','40m5',]
 
-    au_array_20f1 = pd.concat([d_20f1_dump['AU01_c_mean'], d_20f1_dump['AU02_c_mean'], d_20f1_dump['AU04_c_mean'], d_20f1_dump['AU05_c_mean'], d_20f1_dump['AU06_c_mean'], d_20f1_dump['AU07_c_mean'], d_20f1_dump['AU09_c_mean'], d_20f1_dump['AU10_c_mean'], d_20f1_dump['AU12_c_mean'], d_20f1_dump['AU14_c_mean'], d_20f1_dump['AU15_c_mean'], d_20f1_dump['AU17_c_mean'], d_20f1_dump['AU20_c_mean'], d_20f1_dump['AU23_c_mean'], d_20f1_dump['AU25_c_mean'], d_20f1_dump['AU26_c_mean'], d_20f1_dump['AU28_c_mean'], d_20f1_dump['AU45_c_mean']], axis=1)
+    #Without AU45 (Eyeblinks)
+    au_array_20f1 = pd.concat([d_20f1_dump['AU01_c_mean'], d_20f1_dump['AU02_c_mean'], d_20f1_dump['AU04_c_mean'], d_20f1_dump['AU05_c_mean'], d_20f1_dump['AU06_c_mean'], d_20f1_dump['AU07_c_mean'], d_20f1_dump['AU09_c_mean'], d_20f1_dump['AU10_c_mean'], d_20f1_dump['AU12_c_mean'], d_20f1_dump['AU14_c_mean'], d_20f1_dump['AU15_c_mean'], d_20f1_dump['AU17_c_mean'], d_20f1_dump['AU20_c_mean'], d_20f1_dump['AU23_c_mean'], d_20f1_dump['AU25_c_mean'], d_20f1_dump['AU26_c_mean'], d_20f1_dump['AU28_c_mean']], axis=1)
     np_au_array_20f1 = au_array_20f1.to_numpy()
     
-    au_array_20f2 = pd.concat([d_20f2_dump['AU01_c_mean'], d_20f2_dump['AU02_c_mean'], d_20f2_dump['AU04_c_mean'], d_20f2_dump['AU05_c_mean'], d_20f2_dump['AU06_c_mean'], d_20f2_dump['AU07_c_mean'], d_20f2_dump['AU09_c_mean'], d_20f2_dump['AU10_c_mean'], d_20f2_dump['AU12_c_mean'], d_20f2_dump['AU14_c_mean'], d_20f2_dump['AU15_c_mean'], d_20f2_dump['AU17_c_mean'], d_20f2_dump['AU20_c_mean'], d_20f2_dump['AU23_c_mean'], d_20f2_dump['AU25_c_mean'], d_20f2_dump['AU26_c_mean'], d_20f2_dump['AU28_c_mean'], d_20f2_dump['AU45_c_mean']], axis=1)
+    au_array_20f2 = pd.concat([d_20f2_dump['AU01_c_mean'], d_20f2_dump['AU02_c_mean'], d_20f2_dump['AU04_c_mean'], d_20f2_dump['AU05_c_mean'], d_20f2_dump['AU06_c_mean'], d_20f2_dump['AU07_c_mean'], d_20f2_dump['AU09_c_mean'], d_20f2_dump['AU10_c_mean'], d_20f2_dump['AU12_c_mean'], d_20f2_dump['AU14_c_mean'], d_20f2_dump['AU15_c_mean'], d_20f2_dump['AU17_c_mean'], d_20f2_dump['AU20_c_mean'], d_20f2_dump['AU23_c_mean'], d_20f2_dump['AU25_c_mean'], d_20f2_dump['AU26_c_mean'], d_20f2_dump['AU28_c_mean']], axis=1)
     np_au_array_20f2 = au_array_20f2.to_numpy()
     
-    au_array_20f3 = pd.concat([d_20f3_dump['AU01_c_mean'], d_20f3_dump['AU02_c_mean'], d_20f3_dump['AU04_c_mean'], d_20f3_dump['AU05_c_mean'], d_20f3_dump['AU06_c_mean'], d_20f3_dump['AU07_c_mean'], d_20f3_dump['AU09_c_mean'], d_20f3_dump['AU10_c_mean'], d_20f3_dump['AU12_c_mean'], d_20f3_dump['AU14_c_mean'], d_20f3_dump['AU15_c_mean'], d_20f3_dump['AU17_c_mean'], d_20f3_dump['AU20_c_mean'], d_20f3_dump['AU23_c_mean'], d_20f3_dump['AU25_c_mean'], d_20f3_dump['AU26_c_mean'], d_20f3_dump['AU28_c_mean'], d_20f3_dump['AU45_c_mean']], axis=1)
+    au_array_20f3 = pd.concat([d_20f3_dump['AU01_c_mean'], d_20f3_dump['AU02_c_mean'], d_20f3_dump['AU04_c_mean'], d_20f3_dump['AU05_c_mean'], d_20f3_dump['AU06_c_mean'], d_20f3_dump['AU07_c_mean'], d_20f3_dump['AU09_c_mean'], d_20f3_dump['AU10_c_mean'], d_20f3_dump['AU12_c_mean'], d_20f3_dump['AU14_c_mean'], d_20f3_dump['AU15_c_mean'], d_20f3_dump['AU17_c_mean'], d_20f3_dump['AU20_c_mean'], d_20f3_dump['AU23_c_mean'], d_20f3_dump['AU25_c_mean'], d_20f3_dump['AU26_c_mean'], d_20f3_dump['AU28_c_mean']], axis=1)
     np_au_array_20f3 = au_array_20f3.to_numpy()
     
-    au_array_20f4 = pd.concat([d_20f4_dump['AU01_c_mean'], d_20f4_dump['AU02_c_mean'], d_20f4_dump['AU04_c_mean'], d_20f4_dump['AU05_c_mean'], d_20f4_dump['AU06_c_mean'], d_20f4_dump['AU07_c_mean'], d_20f4_dump['AU09_c_mean'], d_20f4_dump['AU10_c_mean'], d_20f4_dump['AU12_c_mean'], d_20f4_dump['AU14_c_mean'], d_20f4_dump['AU15_c_mean'], d_20f4_dump['AU17_c_mean'], d_20f4_dump['AU20_c_mean'], d_20f4_dump['AU23_c_mean'], d_20f4_dump['AU25_c_mean'], d_20f4_dump['AU26_c_mean'], d_20f4_dump['AU28_c_mean'], d_20f4_dump['AU45_c_mean']], axis=1)
+    au_array_20f4 = pd.concat([d_20f4_dump['AU01_c_mean'], d_20f4_dump['AU02_c_mean'], d_20f4_dump['AU04_c_mean'], d_20f4_dump['AU05_c_mean'], d_20f4_dump['AU06_c_mean'], d_20f4_dump['AU07_c_mean'], d_20f4_dump['AU09_c_mean'], d_20f4_dump['AU10_c_mean'], d_20f4_dump['AU12_c_mean'], d_20f4_dump['AU14_c_mean'], d_20f4_dump['AU15_c_mean'], d_20f4_dump['AU17_c_mean'], d_20f4_dump['AU20_c_mean'], d_20f4_dump['AU23_c_mean'], d_20f4_dump['AU25_c_mean'], d_20f4_dump['AU26_c_mean'], d_20f4_dump['AU28_c_mean']], axis=1)
     np_au_array_20f4 = au_array_20f4.to_numpy()
 
-    au_array_30f1 = pd.concat([d_30f1_dump['AU01_c_mean'], d_30f1_dump['AU02_c_mean'], d_30f1_dump['AU04_c_mean'], d_30f1_dump['AU05_c_mean'], d_30f1_dump['AU06_c_mean'], d_30f1_dump['AU07_c_mean'], d_30f1_dump['AU09_c_mean'], d_30f1_dump['AU10_c_mean'], d_30f1_dump['AU12_c_mean'], d_30f1_dump['AU14_c_mean'], d_30f1_dump['AU15_c_mean'], d_30f1_dump['AU17_c_mean'], d_30f1_dump['AU20_c_mean'], d_30f1_dump['AU23_c_mean'], d_30f1_dump['AU25_c_mean'], d_30f1_dump['AU26_c_mean'], d_30f1_dump['AU28_c_mean'], d_30f1_dump['AU45_c_mean']], axis=1)
+    au_array_30f1 = pd.concat([d_30f1_dump['AU01_c_mean'], d_30f1_dump['AU02_c_mean'], d_30f1_dump['AU04_c_mean'], d_30f1_dump['AU05_c_mean'], d_30f1_dump['AU06_c_mean'], d_30f1_dump['AU07_c_mean'], d_30f1_dump['AU09_c_mean'], d_30f1_dump['AU10_c_mean'], d_30f1_dump['AU12_c_mean'], d_30f1_dump['AU14_c_mean'], d_30f1_dump['AU15_c_mean'], d_30f1_dump['AU17_c_mean'], d_30f1_dump['AU20_c_mean'], d_30f1_dump['AU23_c_mean'], d_30f1_dump['AU25_c_mean'], d_30f1_dump['AU26_c_mean'], d_30f1_dump['AU28_c_mean']], axis=1)
     np_au_array_30f1 = au_array_30f1.to_numpy()
     
-    au_array_30f2 = pd.concat([d_30f2_dump['AU01_c_mean'], d_30f2_dump['AU02_c_mean'], d_30f2_dump['AU04_c_mean'], d_30f2_dump['AU05_c_mean'], d_30f2_dump['AU06_c_mean'], d_30f2_dump['AU07_c_mean'], d_30f2_dump['AU09_c_mean'], d_30f2_dump['AU10_c_mean'], d_30f2_dump['AU12_c_mean'], d_30f2_dump['AU14_c_mean'], d_30f2_dump['AU15_c_mean'], d_30f2_dump['AU17_c_mean'], d_30f2_dump['AU20_c_mean'], d_30f2_dump['AU23_c_mean'], d_30f2_dump['AU25_c_mean'], d_30f2_dump['AU26_c_mean'], d_30f2_dump['AU28_c_mean'], d_30f2_dump['AU45_c_mean']], axis=1)
+    au_array_30f2 = pd.concat([d_30f2_dump['AU01_c_mean'], d_30f2_dump['AU02_c_mean'], d_30f2_dump['AU04_c_mean'], d_30f2_dump['AU05_c_mean'], d_30f2_dump['AU06_c_mean'], d_30f2_dump['AU07_c_mean'], d_30f2_dump['AU09_c_mean'], d_30f2_dump['AU10_c_mean'], d_30f2_dump['AU12_c_mean'], d_30f2_dump['AU14_c_mean'], d_30f2_dump['AU15_c_mean'], d_30f2_dump['AU17_c_mean'], d_30f2_dump['AU20_c_mean'], d_30f2_dump['AU23_c_mean'], d_30f2_dump['AU25_c_mean'], d_30f2_dump['AU26_c_mean'], d_30f2_dump['AU28_c_mean']], axis=1)
     np_au_array_30f2 = au_array_30f2.to_numpy()
     
-    au_array_30f3 = pd.concat([d_30f3_dump['AU01_c_mean'], d_30f3_dump['AU02_c_mean'], d_30f3_dump['AU04_c_mean'], d_30f3_dump['AU05_c_mean'], d_30f3_dump['AU06_c_mean'], d_30f3_dump['AU07_c_mean'], d_30f3_dump['AU09_c_mean'], d_30f3_dump['AU10_c_mean'], d_30f3_dump['AU12_c_mean'], d_30f3_dump['AU14_c_mean'], d_30f3_dump['AU15_c_mean'], d_30f3_dump['AU17_c_mean'], d_30f3_dump['AU20_c_mean'], d_30f3_dump['AU23_c_mean'], d_30f3_dump['AU25_c_mean'], d_30f3_dump['AU26_c_mean'], d_30f3_dump['AU28_c_mean'], d_30f3_dump['AU45_c_mean']], axis=1)
+    au_array_30f3 = pd.concat([d_30f3_dump['AU01_c_mean'], d_30f3_dump['AU02_c_mean'], d_30f3_dump['AU04_c_mean'], d_30f3_dump['AU05_c_mean'], d_30f3_dump['AU06_c_mean'], d_30f3_dump['AU07_c_mean'], d_30f3_dump['AU09_c_mean'], d_30f3_dump['AU10_c_mean'], d_30f3_dump['AU12_c_mean'], d_30f3_dump['AU14_c_mean'], d_30f3_dump['AU15_c_mean'], d_30f3_dump['AU17_c_mean'], d_30f3_dump['AU20_c_mean'], d_30f3_dump['AU23_c_mean'], d_30f3_dump['AU25_c_mean'], d_30f3_dump['AU26_c_mean'], d_30f3_dump['AU28_c_mean']], axis=1)
     np_au_array_30f3 = au_array_30f3.to_numpy()
 
-    au_array_40f1 = pd.concat([d_40f1_dump['AU01_c_mean'], d_40f1_dump['AU02_c_mean'], d_40f1_dump['AU04_c_mean'], d_40f1_dump['AU05_c_mean'], d_40f1_dump['AU06_c_mean'], d_40f1_dump['AU07_c_mean'], d_40f1_dump['AU09_c_mean'], d_40f1_dump['AU10_c_mean'], d_40f1_dump['AU12_c_mean'], d_40f1_dump['AU14_c_mean'], d_40f1_dump['AU15_c_mean'], d_40f1_dump['AU17_c_mean'], d_40f1_dump['AU20_c_mean'], d_40f1_dump['AU23_c_mean'], d_40f1_dump['AU25_c_mean'], d_40f1_dump['AU26_c_mean'], d_40f1_dump['AU28_c_mean'], d_40f1_dump['AU45_c_mean']], axis=1)
+    au_array_40f1 = pd.concat([d_40f1_dump['AU01_c_mean'], d_40f1_dump['AU02_c_mean'], d_40f1_dump['AU04_c_mean'], d_40f1_dump['AU05_c_mean'], d_40f1_dump['AU06_c_mean'], d_40f1_dump['AU07_c_mean'], d_40f1_dump['AU09_c_mean'], d_40f1_dump['AU10_c_mean'], d_40f1_dump['AU12_c_mean'], d_40f1_dump['AU14_c_mean'], d_40f1_dump['AU15_c_mean'], d_40f1_dump['AU17_c_mean'], d_40f1_dump['AU20_c_mean'], d_40f1_dump['AU23_c_mean'], d_40f1_dump['AU25_c_mean'], d_40f1_dump['AU26_c_mean'], d_40f1_dump['AU28_c_mean']], axis=1)
     np_au_array_40f1 = au_array_40f1.to_numpy()
     
-    au_array_40f2 = pd.concat([d_40f2_dump['AU01_c_mean'], d_40f2_dump['AU02_c_mean'], d_40f2_dump['AU04_c_mean'], d_40f2_dump['AU05_c_mean'], d_40f2_dump['AU06_c_mean'], d_40f2_dump['AU07_c_mean'], d_40f2_dump['AU09_c_mean'], d_40f2_dump['AU10_c_mean'], d_40f2_dump['AU12_c_mean'], d_40f2_dump['AU14_c_mean'], d_40f2_dump['AU15_c_mean'], d_40f2_dump['AU17_c_mean'], d_40f2_dump['AU20_c_mean'], d_40f2_dump['AU23_c_mean'], d_40f2_dump['AU25_c_mean'], d_40f2_dump['AU26_c_mean'], d_40f2_dump['AU28_c_mean'], d_40f2_dump['AU45_c_mean']], axis=1)
+    au_array_40f2 = pd.concat([d_40f2_dump['AU01_c_mean'], d_40f2_dump['AU02_c_mean'], d_40f2_dump['AU04_c_mean'], d_40f2_dump['AU05_c_mean'], d_40f2_dump['AU06_c_mean'], d_40f2_dump['AU07_c_mean'], d_40f2_dump['AU09_c_mean'], d_40f2_dump['AU10_c_mean'], d_40f2_dump['AU12_c_mean'], d_40f2_dump['AU14_c_mean'], d_40f2_dump['AU15_c_mean'], d_40f2_dump['AU17_c_mean'], d_40f2_dump['AU20_c_mean'], d_40f2_dump['AU23_c_mean'], d_40f2_dump['AU25_c_mean'], d_40f2_dump['AU26_c_mean'], d_40f2_dump['AU28_c_mean']], axis=1)
     np_au_array_40f2 = au_array_40f2.to_numpy()
     
-    au_array_40f3 = pd.concat([d_40f3_dump['AU01_c_mean'], d_40f3_dump['AU02_c_mean'], d_40f3_dump['AU04_c_mean'], d_40f3_dump['AU05_c_mean'], d_40f3_dump['AU06_c_mean'], d_40f3_dump['AU07_c_mean'], d_40f3_dump['AU09_c_mean'], d_40f3_dump['AU10_c_mean'], d_40f3_dump['AU12_c_mean'], d_40f3_dump['AU14_c_mean'], d_40f3_dump['AU15_c_mean'], d_40f3_dump['AU17_c_mean'], d_40f3_dump['AU20_c_mean'], d_40f3_dump['AU23_c_mean'], d_40f3_dump['AU25_c_mean'], d_40f3_dump['AU26_c_mean'], d_40f3_dump['AU28_c_mean'], d_40f3_dump['AU45_c_mean']], axis=1)
+    au_array_40f3 = pd.concat([d_40f3_dump['AU01_c_mean'], d_40f3_dump['AU02_c_mean'], d_40f3_dump['AU04_c_mean'], d_40f3_dump['AU05_c_mean'], d_40f3_dump['AU06_c_mean'], d_40f3_dump['AU07_c_mean'], d_40f3_dump['AU09_c_mean'], d_40f3_dump['AU10_c_mean'], d_40f3_dump['AU12_c_mean'], d_40f3_dump['AU14_c_mean'], d_40f3_dump['AU15_c_mean'], d_40f3_dump['AU17_c_mean'], d_40f3_dump['AU20_c_mean'], d_40f3_dump['AU23_c_mean'], d_40f3_dump['AU25_c_mean'], d_40f3_dump['AU26_c_mean'], d_40f3_dump['AU28_c_mean']], axis=1)
     np_au_array_40f3 = au_array_40f3.to_numpy()
     
-    au_array_40f4 = pd.concat([d_40f4_dump['AU01_c_mean'], d_40f4_dump['AU02_c_mean'], d_40f4_dump['AU04_c_mean'], d_40f4_dump['AU05_c_mean'], d_40f4_dump['AU06_c_mean'], d_40f4_dump['AU07_c_mean'], d_40f4_dump['AU09_c_mean'], d_40f4_dump['AU10_c_mean'], d_40f4_dump['AU12_c_mean'], d_40f4_dump['AU14_c_mean'], d_40f4_dump['AU15_c_mean'], d_40f4_dump['AU17_c_mean'], d_40f4_dump['AU20_c_mean'], d_40f4_dump['AU23_c_mean'], d_40f4_dump['AU25_c_mean'], d_40f4_dump['AU26_c_mean'], d_40f4_dump['AU28_c_mean'], d_40f4_dump['AU45_c_mean']], axis=1)
+    au_array_40f4 = pd.concat([d_40f4_dump['AU01_c_mean'], d_40f4_dump['AU02_c_mean'], d_40f4_dump['AU04_c_mean'], d_40f4_dump['AU05_c_mean'], d_40f4_dump['AU06_c_mean'], d_40f4_dump['AU07_c_mean'], d_40f4_dump['AU09_c_mean'], d_40f4_dump['AU10_c_mean'], d_40f4_dump['AU12_c_mean'], d_40f4_dump['AU14_c_mean'], d_40f4_dump['AU15_c_mean'], d_40f4_dump['AU17_c_mean'], d_40f4_dump['AU20_c_mean'], d_40f4_dump['AU23_c_mean'], d_40f4_dump['AU25_c_mean'], d_40f4_dump['AU26_c_mean'], d_40f4_dump['AU28_c_mean']], axis=1)
     np_au_array_40f4 = au_array_40f4.to_numpy()
 
-    au_array_50f1 = pd.concat([d_50f1_dump['AU01_c_mean'], d_50f1_dump['AU02_c_mean'], d_50f1_dump['AU04_c_mean'], d_50f1_dump['AU05_c_mean'], d_50f1_dump['AU06_c_mean'], d_50f1_dump['AU07_c_mean'], d_50f1_dump['AU09_c_mean'], d_50f1_dump['AU10_c_mean'], d_50f1_dump['AU12_c_mean'], d_50f1_dump['AU14_c_mean'], d_50f1_dump['AU15_c_mean'], d_50f1_dump['AU17_c_mean'], d_50f1_dump['AU20_c_mean'], d_50f1_dump['AU23_c_mean'], d_50f1_dump['AU25_c_mean'], d_50f1_dump['AU26_c_mean'], d_50f1_dump['AU28_c_mean'], d_50f1_dump['AU45_c_mean']], axis=1)
+    au_array_50f1 = pd.concat([d_50f1_dump['AU01_c_mean'], d_50f1_dump['AU02_c_mean'], d_50f1_dump['AU04_c_mean'], d_50f1_dump['AU05_c_mean'], d_50f1_dump['AU06_c_mean'], d_50f1_dump['AU07_c_mean'], d_50f1_dump['AU09_c_mean'], d_50f1_dump['AU10_c_mean'], d_50f1_dump['AU12_c_mean'], d_50f1_dump['AU14_c_mean'], d_50f1_dump['AU15_c_mean'], d_50f1_dump['AU17_c_mean'], d_50f1_dump['AU20_c_mean'], d_50f1_dump['AU23_c_mean'], d_50f1_dump['AU25_c_mean'], d_50f1_dump['AU26_c_mean'], d_50f1_dump['AU28_c_mean']], axis=1)
     np_au_array_50f1 = au_array_50f1.to_numpy()
     
-    au_array_50f2 = pd.concat([d_50f2_dump['AU01_c_mean'], d_50f2_dump['AU02_c_mean'], d_50f2_dump['AU04_c_mean'], d_50f2_dump['AU05_c_mean'], d_50f2_dump['AU06_c_mean'], d_50f2_dump['AU07_c_mean'], d_50f2_dump['AU09_c_mean'], d_50f2_dump['AU10_c_mean'], d_50f2_dump['AU12_c_mean'], d_50f2_dump['AU14_c_mean'], d_50f2_dump['AU15_c_mean'], d_50f2_dump['AU17_c_mean'], d_50f2_dump['AU20_c_mean'], d_50f2_dump['AU23_c_mean'], d_50f2_dump['AU25_c_mean'], d_50f2_dump['AU26_c_mean'], d_50f2_dump['AU28_c_mean'], d_50f2_dump['AU45_c_mean']], axis=1)
+    au_array_50f2 = pd.concat([d_50f2_dump['AU01_c_mean'], d_50f2_dump['AU02_c_mean'], d_50f2_dump['AU04_c_mean'], d_50f2_dump['AU05_c_mean'], d_50f2_dump['AU06_c_mean'], d_50f2_dump['AU07_c_mean'], d_50f2_dump['AU09_c_mean'], d_50f2_dump['AU10_c_mean'], d_50f2_dump['AU12_c_mean'], d_50f2_dump['AU14_c_mean'], d_50f2_dump['AU15_c_mean'], d_50f2_dump['AU17_c_mean'], d_50f2_dump['AU20_c_mean'], d_50f2_dump['AU23_c_mean'], d_50f2_dump['AU25_c_mean'], d_50f2_dump['AU26_c_mean'], d_50f2_dump['AU28_c_mean']], axis=1)
     np_au_array_50f2 = au_array_50f2.to_numpy()
     
-    au_array_50f3 = pd.concat([d_50f3_dump['AU01_c_mean'], d_50f3_dump['AU02_c_mean'], d_50f3_dump['AU04_c_mean'], d_50f3_dump['AU05_c_mean'], d_50f3_dump['AU06_c_mean'], d_50f3_dump['AU07_c_mean'], d_50f3_dump['AU09_c_mean'], d_50f3_dump['AU10_c_mean'], d_50f3_dump['AU12_c_mean'], d_50f3_dump['AU14_c_mean'], d_50f3_dump['AU15_c_mean'], d_50f3_dump['AU17_c_mean'], d_50f3_dump['AU20_c_mean'], d_50f3_dump['AU23_c_mean'], d_50f3_dump['AU25_c_mean'], d_50f3_dump['AU26_c_mean'], d_50f3_dump['AU28_c_mean'], d_50f3_dump['AU45_c_mean']], axis=1)
+    au_array_50f3 = pd.concat([d_50f3_dump['AU01_c_mean'], d_50f3_dump['AU02_c_mean'], d_50f3_dump['AU04_c_mean'], d_50f3_dump['AU05_c_mean'], d_50f3_dump['AU06_c_mean'], d_50f3_dump['AU07_c_mean'], d_50f3_dump['AU09_c_mean'], d_50f3_dump['AU10_c_mean'], d_50f3_dump['AU12_c_mean'], d_50f3_dump['AU14_c_mean'], d_50f3_dump['AU15_c_mean'], d_50f3_dump['AU17_c_mean'], d_50f3_dump['AU20_c_mean'], d_50f3_dump['AU23_c_mean'], d_50f3_dump['AU25_c_mean'], d_50f3_dump['AU26_c_mean'], d_50f3_dump['AU28_c_mean']], axis=1)
     np_au_array_50f3 = au_array_50f3.to_numpy()
 
-    au_array_20m1 = pd.concat([d_20m1_dump['AU01_c_mean'], d_20m1_dump['AU02_c_mean'], d_20m1_dump['AU04_c_mean'], d_20m1_dump['AU05_c_mean'], d_20m1_dump['AU06_c_mean'], d_20m1_dump['AU07_c_mean'], d_20m1_dump['AU09_c_mean'], d_20m1_dump['AU10_c_mean'], d_20m1_dump['AU12_c_mean'], d_20m1_dump['AU14_c_mean'], d_20m1_dump['AU15_c_mean'], d_20m1_dump['AU17_c_mean'], d_20m1_dump['AU20_c_mean'], d_20m1_dump['AU23_c_mean'], d_20m1_dump['AU25_c_mean'], d_20m1_dump['AU26_c_mean'], d_20m1_dump['AU28_c_mean'], d_20m1_dump['AU45_c_mean']], axis=1) 
+    au_array_20m1 = pd.concat([d_20m1_dump['AU01_c_mean'], d_20m1_dump['AU02_c_mean'], d_20m1_dump['AU04_c_mean'], d_20m1_dump['AU05_c_mean'], d_20m1_dump['AU06_c_mean'], d_20m1_dump['AU07_c_mean'], d_20m1_dump['AU09_c_mean'], d_20m1_dump['AU10_c_mean'], d_20m1_dump['AU12_c_mean'], d_20m1_dump['AU14_c_mean'], d_20m1_dump['AU15_c_mean'], d_20m1_dump['AU17_c_mean'], d_20m1_dump['AU20_c_mean'], d_20m1_dump['AU23_c_mean'], d_20m1_dump['AU25_c_mean'], d_20m1_dump['AU26_c_mean'], d_20m1_dump['AU28_c_mean']], axis=1) 
     np_au_array_20m1 = au_array_20m1.to_numpy()
-    
-    au_array_20m2 = pd.concat([d_20m2_dump['AU01_c_mean'], d_20m2_dump['AU02_c_mean'], d_20m2_dump['AU04_c_mean'], d_20m2_dump['AU05_c_mean'], d_20m2_dump['AU06_c_mean'], d_20m2_dump['AU07_c_mean'], d_20m2_dump['AU09_c_mean'], d_20m2_dump['AU10_c_mean'], d_20m2_dump['AU12_c_mean'], d_20m2_dump['AU14_c_mean'], d_20m2_dump['AU15_c_mean'], d_20m2_dump['AU17_c_mean'], d_20m2_dump['AU20_c_mean'], d_20m2_dump['AU23_c_mean'], d_20m2_dump['AU25_c_mean'], d_20m2_dump['AU26_c_mean'], d_20m2_dump['AU28_c_mean'], d_20m2_dump['AU45_c_mean']], axis=1)    
+
+    au_array_20m2 = pd.concat([d_20m2_dump['AU01_c_mean'], d_20m2_dump['AU02_c_mean'], d_20m2_dump['AU04_c_mean'], d_20m2_dump['AU05_c_mean'], d_20m2_dump['AU06_c_mean'], d_20m2_dump['AU07_c_mean'], d_20m2_dump['AU09_c_mean'], d_20m2_dump['AU10_c_mean'], d_20m2_dump['AU12_c_mean'], d_20m2_dump['AU14_c_mean'], d_20m2_dump['AU15_c_mean'], d_20m2_dump['AU17_c_mean'], d_20m2_dump['AU20_c_mean'], d_20m2_dump['AU23_c_mean'], d_20m2_dump['AU25_c_mean'], d_20m2_dump['AU26_c_mean'], d_20m2_dump['AU28_c_mean']], axis=1)    
     np_au_array_20m2 = au_array_20m2.to_numpy()
     
-    au_array_20m3 = pd.concat([d_20m3_dump['AU01_c_mean'], d_20m3_dump['AU02_c_mean'], d_20m3_dump['AU04_c_mean'], d_20m3_dump['AU05_c_mean'], d_20m3_dump['AU06_c_mean'], d_20m3_dump['AU07_c_mean'], d_20m3_dump['AU09_c_mean'], d_20m3_dump['AU10_c_mean'], d_20m3_dump['AU12_c_mean'], d_20m3_dump['AU14_c_mean'], d_20m3_dump['AU15_c_mean'], d_20m3_dump['AU17_c_mean'], d_20m3_dump['AU20_c_mean'], d_20m3_dump['AU23_c_mean'], d_20m3_dump['AU25_c_mean'], d_20m3_dump['AU26_c_mean'], d_20m3_dump['AU28_c_mean'], d_20m3_dump['AU45_c_mean']], axis=1)
+    au_array_20m3 = pd.concat([d_20m3_dump['AU01_c_mean'], d_20m3_dump['AU02_c_mean'], d_20m3_dump['AU04_c_mean'], d_20m3_dump['AU05_c_mean'], d_20m3_dump['AU06_c_mean'], d_20m3_dump['AU07_c_mean'], d_20m3_dump['AU09_c_mean'], d_20m3_dump['AU10_c_mean'], d_20m3_dump['AU12_c_mean'], d_20m3_dump['AU14_c_mean'], d_20m3_dump['AU15_c_mean'], d_20m3_dump['AU17_c_mean'], d_20m3_dump['AU20_c_mean'], d_20m3_dump['AU23_c_mean'], d_20m3_dump['AU25_c_mean'], d_20m3_dump['AU26_c_mean'], d_20m3_dump['AU28_c_mean']], axis=1)
     np_au_array_20m3 = au_array_20m3.to_numpy()
     
-    au_array_20m4 = pd.concat([d_20m4_dump['AU01_c_mean'], d_20m4_dump['AU02_c_mean'], d_20m4_dump['AU04_c_mean'], d_20m4_dump['AU05_c_mean'], d_20m4_dump['AU06_c_mean'], d_20m4_dump['AU07_c_mean'], d_20m4_dump['AU09_c_mean'], d_20m4_dump['AU10_c_mean'], d_20m4_dump['AU12_c_mean'], d_20m4_dump['AU14_c_mean'], d_20m4_dump['AU15_c_mean'], d_20m4_dump['AU17_c_mean'], d_20m4_dump['AU20_c_mean'], d_20m4_dump['AU23_c_mean'], d_20m4_dump['AU25_c_mean'], d_20m4_dump['AU26_c_mean'], d_20m4_dump['AU28_c_mean'], d_20m4_dump['AU45_c_mean']], axis=1)
+    au_array_20m4 = pd.concat([d_20m4_dump['AU01_c_mean'], d_20m4_dump['AU02_c_mean'], d_20m4_dump['AU04_c_mean'], d_20m4_dump['AU05_c_mean'], d_20m4_dump['AU06_c_mean'], d_20m4_dump['AU07_c_mean'], d_20m4_dump['AU09_c_mean'], d_20m4_dump['AU10_c_mean'], d_20m4_dump['AU12_c_mean'], d_20m4_dump['AU14_c_mean'], d_20m4_dump['AU15_c_mean'], d_20m4_dump['AU17_c_mean'], d_20m4_dump['AU20_c_mean'], d_20m4_dump['AU23_c_mean'], d_20m4_dump['AU25_c_mean'], d_20m4_dump['AU26_c_mean'], d_20m4_dump['AU28_c_mean']], axis=1)
     np_au_array_20m4 = au_array_20m4.to_numpy()
     
-    au_array_20m5 = pd.concat([d_20m5_dump['AU01_c_mean'], d_20m5_dump['AU02_c_mean'], d_20m5_dump['AU04_c_mean'], d_20m5_dump['AU05_c_mean'], d_20m5_dump['AU06_c_mean'], d_20m5_dump['AU07_c_mean'], d_20m5_dump['AU09_c_mean'], d_20m5_dump['AU10_c_mean'], d_20m5_dump['AU12_c_mean'], d_20m5_dump['AU14_c_mean'], d_20m5_dump['AU15_c_mean'], d_20m5_dump['AU17_c_mean'], d_20m5_dump['AU20_c_mean'], d_20m5_dump['AU23_c_mean'], d_20m5_dump['AU25_c_mean'], d_20m5_dump['AU26_c_mean'], d_20m5_dump['AU28_c_mean'], d_20m5_dump['AU45_c_mean']], axis=1)
+    au_array_20m5 = pd.concat([d_20m5_dump['AU01_c_mean'], d_20m5_dump['AU02_c_mean'], d_20m5_dump['AU04_c_mean'], d_20m5_dump['AU05_c_mean'], d_20m5_dump['AU06_c_mean'], d_20m5_dump['AU07_c_mean'], d_20m5_dump['AU09_c_mean'], d_20m5_dump['AU10_c_mean'], d_20m5_dump['AU12_c_mean'], d_20m5_dump['AU14_c_mean'], d_20m5_dump['AU15_c_mean'], d_20m5_dump['AU17_c_mean'], d_20m5_dump['AU20_c_mean'], d_20m5_dump['AU23_c_mean'], d_20m5_dump['AU25_c_mean'], d_20m5_dump['AU26_c_mean'], d_20m5_dump['AU28_c_mean']], axis=1)
     np_au_array_20m5 = au_array_20m5.to_numpy()
 
-    au_array_30m1 = pd.concat([d_30m1_dump['AU01_c_mean'], d_30m1_dump['AU02_c_mean'], d_30m1_dump['AU04_c_mean'], d_30m1_dump['AU05_c_mean'], d_30m1_dump['AU06_c_mean'], d_30m1_dump['AU07_c_mean'], d_30m1_dump['AU09_c_mean'], d_30m1_dump['AU10_c_mean'], d_30m1_dump['AU12_c_mean'], d_30m1_dump['AU14_c_mean'], d_30m1_dump['AU15_c_mean'], d_30m1_dump['AU17_c_mean'], d_30m1_dump['AU20_c_mean'], d_30m1_dump['AU23_c_mean'], d_30m1_dump['AU25_c_mean'], d_30m1_dump['AU26_c_mean'], d_30m1_dump['AU28_c_mean'], d_30m1_dump['AU45_c_mean']], axis=1)
+    au_array_30m1 = pd.concat([d_30m1_dump['AU01_c_mean'], d_30m1_dump['AU02_c_mean'], d_30m1_dump['AU04_c_mean'], d_30m1_dump['AU05_c_mean'], d_30m1_dump['AU06_c_mean'], d_30m1_dump['AU07_c_mean'], d_30m1_dump['AU09_c_mean'], d_30m1_dump['AU10_c_mean'], d_30m1_dump['AU12_c_mean'], d_30m1_dump['AU14_c_mean'], d_30m1_dump['AU15_c_mean'], d_30m1_dump['AU17_c_mean'], d_30m1_dump['AU20_c_mean'], d_30m1_dump['AU23_c_mean'], d_30m1_dump['AU25_c_mean'], d_30m1_dump['AU26_c_mean'], d_30m1_dump['AU28_c_mean']], axis=1)
     np_au_array_30m1 = au_array_30m1.to_numpy()
     
-    au_array_30m2 = pd.concat([d_30m2_dump['AU01_c_mean'], d_30m2_dump['AU02_c_mean'], d_30m2_dump['AU04_c_mean'], d_30m2_dump['AU05_c_mean'], d_30m2_dump['AU06_c_mean'], d_30m2_dump['AU07_c_mean'], d_30m2_dump['AU09_c_mean'], d_30m2_dump['AU10_c_mean'], d_30m2_dump['AU12_c_mean'], d_30m2_dump['AU14_c_mean'], d_30m2_dump['AU15_c_mean'], d_30m2_dump['AU17_c_mean'], d_30m2_dump['AU20_c_mean'], d_30m2_dump['AU23_c_mean'], d_30m2_dump['AU25_c_mean'], d_30m2_dump['AU26_c_mean'], d_30m2_dump['AU28_c_mean'], d_30m2_dump['AU45_c_mean']], axis=1)
+    au_array_30m2 = pd.concat([d_30m2_dump['AU01_c_mean'], d_30m2_dump['AU02_c_mean'], d_30m2_dump['AU04_c_mean'], d_30m2_dump['AU05_c_mean'], d_30m2_dump['AU06_c_mean'], d_30m2_dump['AU07_c_mean'], d_30m2_dump['AU09_c_mean'], d_30m2_dump['AU10_c_mean'], d_30m2_dump['AU12_c_mean'], d_30m2_dump['AU14_c_mean'], d_30m2_dump['AU15_c_mean'], d_30m2_dump['AU17_c_mean'], d_30m2_dump['AU20_c_mean'], d_30m2_dump['AU23_c_mean'], d_30m2_dump['AU25_c_mean'], d_30m2_dump['AU26_c_mean'], d_30m2_dump['AU28_c_mean']], axis=1)
     np_au_array_30m2 = au_array_30m2.to_numpy()
     
-    au_array_30m3 = pd.concat([d_30m3_dump['AU01_c_mean'], d_30m3_dump['AU02_c_mean'], d_30m3_dump['AU04_c_mean'], d_30m3_dump['AU05_c_mean'], d_30m3_dump['AU06_c_mean'], d_30m3_dump['AU07_c_mean'], d_30m3_dump['AU09_c_mean'], d_30m3_dump['AU10_c_mean'], d_30m3_dump['AU12_c_mean'], d_30m3_dump['AU14_c_mean'], d_30m3_dump['AU15_c_mean'], d_30m3_dump['AU17_c_mean'], d_30m3_dump['AU20_c_mean'], d_30m3_dump['AU23_c_mean'], d_30m3_dump['AU25_c_mean'], d_30m3_dump['AU26_c_mean'], d_30m3_dump['AU28_c_mean'], d_30m3_dump['AU45_c_mean']], axis=1)
+    au_array_30m3 = pd.concat([d_30m3_dump['AU01_c_mean'], d_30m3_dump['AU02_c_mean'], d_30m3_dump['AU04_c_mean'], d_30m3_dump['AU05_c_mean'], d_30m3_dump['AU06_c_mean'], d_30m3_dump['AU07_c_mean'], d_30m3_dump['AU09_c_mean'], d_30m3_dump['AU10_c_mean'], d_30m3_dump['AU12_c_mean'], d_30m3_dump['AU14_c_mean'], d_30m3_dump['AU15_c_mean'], d_30m3_dump['AU17_c_mean'], d_30m3_dump['AU20_c_mean'], d_30m3_dump['AU23_c_mean'], d_30m3_dump['AU25_c_mean'], d_30m3_dump['AU26_c_mean'], d_30m3_dump['AU28_c_mean']], axis=1)
     np_au_array_30m3 = au_array_30m3.to_numpy()
 
-    au_array_40m1 = pd.concat([d_40m1_dump['AU01_c_mean'], d_40m1_dump['AU02_c_mean'], d_40m1_dump['AU04_c_mean'], d_40m1_dump['AU05_c_mean'], d_40m1_dump['AU06_c_mean'], d_40m1_dump['AU07_c_mean'], d_40m1_dump['AU09_c_mean'], d_40m1_dump['AU10_c_mean'], d_40m1_dump['AU12_c_mean'], d_40m1_dump['AU14_c_mean'], d_40m1_dump['AU15_c_mean'], d_40m1_dump['AU17_c_mean'], d_40m1_dump['AU20_c_mean'], d_40m1_dump['AU23_c_mean'], d_40m1_dump['AU25_c_mean'], d_40m1_dump['AU26_c_mean'], d_40m1_dump['AU28_c_mean'], d_40m1_dump['AU45_c_mean']], axis=1) 
+    au_array_40m1 = pd.concat([d_40m1_dump['AU01_c_mean'], d_40m1_dump['AU02_c_mean'], d_40m1_dump['AU04_c_mean'], d_40m1_dump['AU05_c_mean'], d_40m1_dump['AU06_c_mean'], d_40m1_dump['AU07_c_mean'], d_40m1_dump['AU09_c_mean'], d_40m1_dump['AU10_c_mean'], d_40m1_dump['AU12_c_mean'], d_40m1_dump['AU14_c_mean'], d_40m1_dump['AU15_c_mean'], d_40m1_dump['AU17_c_mean'], d_40m1_dump['AU20_c_mean'], d_40m1_dump['AU23_c_mean'], d_40m1_dump['AU25_c_mean'], d_40m1_dump['AU26_c_mean'], d_40m1_dump['AU28_c_mean']], axis=1) 
     np_au_array_40m1 = au_array_40m1.to_numpy()
     
-    au_array_40m2 = pd.concat([d_40m2_dump['AU01_c_mean'], d_40m2_dump['AU02_c_mean'], d_40m2_dump['AU04_c_mean'], d_40m2_dump['AU05_c_mean'], d_40m2_dump['AU06_c_mean'], d_40m2_dump['AU07_c_mean'], d_40m2_dump['AU09_c_mean'], d_40m2_dump['AU10_c_mean'], d_40m2_dump['AU12_c_mean'], d_40m2_dump['AU14_c_mean'], d_40m2_dump['AU15_c_mean'], d_40m2_dump['AU17_c_mean'], d_40m2_dump['AU20_c_mean'], d_40m2_dump['AU23_c_mean'], d_40m2_dump['AU25_c_mean'], d_40m2_dump['AU26_c_mean'], d_40m2_dump['AU28_c_mean'], d_40m2_dump['AU45_c_mean']], axis=1)    
+    au_array_40m2 = pd.concat([d_40m2_dump['AU01_c_mean'], d_40m2_dump['AU02_c_mean'], d_40m2_dump['AU04_c_mean'], d_40m2_dump['AU05_c_mean'], d_40m2_dump['AU06_c_mean'], d_40m2_dump['AU07_c_mean'], d_40m2_dump['AU09_c_mean'], d_40m2_dump['AU10_c_mean'], d_40m2_dump['AU12_c_mean'], d_40m2_dump['AU14_c_mean'], d_40m2_dump['AU15_c_mean'], d_40m2_dump['AU17_c_mean'], d_40m2_dump['AU20_c_mean'], d_40m2_dump['AU23_c_mean'], d_40m2_dump['AU25_c_mean'], d_40m2_dump['AU26_c_mean'], d_40m2_dump['AU28_c_mean']], axis=1)    
     np_au_array_40m2 = au_array_40m2.to_numpy()
     
-    au_array_40m3 = pd.concat([d_40m3_dump['AU01_c_mean'], d_40m3_dump['AU02_c_mean'], d_40m3_dump['AU04_c_mean'], d_40m3_dump['AU05_c_mean'], d_40m3_dump['AU06_c_mean'], d_40m3_dump['AU07_c_mean'], d_40m3_dump['AU09_c_mean'], d_40m3_dump['AU10_c_mean'], d_40m3_dump['AU12_c_mean'], d_40m3_dump['AU14_c_mean'], d_40m3_dump['AU15_c_mean'], d_40m3_dump['AU17_c_mean'], d_40m3_dump['AU20_c_mean'], d_40m3_dump['AU23_c_mean'], d_40m3_dump['AU25_c_mean'], d_40m3_dump['AU26_c_mean'], d_40m3_dump['AU28_c_mean'], d_40m3_dump['AU45_c_mean']], axis=1)
+    au_array_40m3 = pd.concat([d_40m3_dump['AU01_c_mean'], d_40m3_dump['AU02_c_mean'], d_40m3_dump['AU04_c_mean'], d_40m3_dump['AU05_c_mean'], d_40m3_dump['AU06_c_mean'], d_40m3_dump['AU07_c_mean'], d_40m3_dump['AU09_c_mean'], d_40m3_dump['AU10_c_mean'], d_40m3_dump['AU12_c_mean'], d_40m3_dump['AU14_c_mean'], d_40m3_dump['AU15_c_mean'], d_40m3_dump['AU17_c_mean'], d_40m3_dump['AU20_c_mean'], d_40m3_dump['AU23_c_mean'], d_40m3_dump['AU25_c_mean'], d_40m3_dump['AU26_c_mean'], d_40m3_dump['AU28_c_mean']], axis=1)
     np_au_array_40m3 = au_array_40m3.to_numpy()
     
-    au_array_40m4 = pd.concat([d_40m4_dump['AU01_c_mean'], d_40m4_dump['AU02_c_mean'], d_40m4_dump['AU04_c_mean'], d_40m4_dump['AU05_c_mean'], d_40m4_dump['AU06_c_mean'], d_40m4_dump['AU07_c_mean'], d_40m4_dump['AU09_c_mean'], d_40m4_dump['AU10_c_mean'], d_40m4_dump['AU12_c_mean'], d_40m4_dump['AU14_c_mean'], d_40m4_dump['AU15_c_mean'], d_40m4_dump['AU17_c_mean'], d_40m4_dump['AU20_c_mean'], d_40m4_dump['AU23_c_mean'], d_40m4_dump['AU25_c_mean'], d_40m4_dump['AU26_c_mean'], d_40m4_dump['AU28_c_mean'], d_40m4_dump['AU45_c_mean']], axis=1)
+    au_array_40m4 = pd.concat([d_40m4_dump['AU01_c_mean'], d_40m4_dump['AU02_c_mean'], d_40m4_dump['AU04_c_mean'], d_40m4_dump['AU05_c_mean'], d_40m4_dump['AU06_c_mean'], d_40m4_dump['AU07_c_mean'], d_40m4_dump['AU09_c_mean'], d_40m4_dump['AU10_c_mean'], d_40m4_dump['AU12_c_mean'], d_40m4_dump['AU14_c_mean'], d_40m4_dump['AU15_c_mean'], d_40m4_dump['AU17_c_mean'], d_40m4_dump['AU20_c_mean'], d_40m4_dump['AU23_c_mean'], d_40m4_dump['AU25_c_mean'], d_40m4_dump['AU26_c_mean'], d_40m4_dump['AU28_c_mean']], axis=1)
     np_au_array_40m4 = au_array_40m4.to_numpy()
     
-    au_array_40m5 = pd.concat([d_40m5_dump['AU01_c_mean'], d_40m5_dump['AU02_c_mean'], d_40m5_dump['AU04_c_mean'], d_40m5_dump['AU05_c_mean'], d_40m5_dump['AU06_c_mean'], d_40m5_dump['AU07_c_mean'], d_40m5_dump['AU09_c_mean'], d_40m5_dump['AU10_c_mean'], d_40m5_dump['AU12_c_mean'], d_40m5_dump['AU14_c_mean'], d_40m5_dump['AU15_c_mean'], d_40m5_dump['AU17_c_mean'], d_40m5_dump['AU20_c_mean'], d_40m5_dump['AU23_c_mean'], d_40m5_dump['AU25_c_mean'], d_40m5_dump['AU26_c_mean'], d_40m5_dump['AU28_c_mean'], d_40m5_dump['AU45_c_mean']], axis=1)
+    au_array_40m5 = pd.concat([d_40m5_dump['AU01_c_mean'], d_40m5_dump['AU02_c_mean'], d_40m5_dump['AU04_c_mean'], d_40m5_dump['AU05_c_mean'], d_40m5_dump['AU06_c_mean'], d_40m5_dump['AU07_c_mean'], d_40m5_dump['AU09_c_mean'], d_40m5_dump['AU10_c_mean'], d_40m5_dump['AU12_c_mean'], d_40m5_dump['AU14_c_mean'], d_40m5_dump['AU15_c_mean'], d_40m5_dump['AU17_c_mean'], d_40m5_dump['AU20_c_mean'], d_40m5_dump['AU23_c_mean'], d_40m5_dump['AU25_c_mean'], d_40m5_dump['AU26_c_mean'], d_40m5_dump['AU28_c_mean']], axis=1)
     np_au_array_40m5 = au_array_40m5.to_numpy()
-#    print(np_au_array_40m5)
     
+
     np_au_array = np.concatenate([np_au_array_20f1,np_au_array_20f2,np_au_array_20f3,np_au_array_20f4,np_au_array_30f1,np_au_array_30f2,np_au_array_30f3,np_au_array_40f1,np_au_array_40f2,np_au_array_40f3,np_au_array_40f4,np_au_array_50f1,np_au_array_50f2,np_au_array_50f3,np_au_array_20m1,np_au_array_20m2,np_au_array_20m3,np_au_array_20m4,np_au_array_20m5,np_au_array_30m1,np_au_array_30m2,np_au_array_30m3,np_au_array_40m1,np_au_array_40m2,np_au_array_40m3,np_au_array_40m4,np_au_array_40m5])
     print(np_au_array.shape)
 
@@ -194,7 +191,8 @@ def main():
     int_ant_array_20f1_score = int_ant_array_20f1_bool.mask(int_ant_array_20f1_bool==True, 1)
     int_ant_array_20f1_score = int_ant_array_20f1_score.mask(int_ant_array_20f1_bool==False, 0)
     np_int_ant_array_20f1_score = int_ant_array_20f1_score.to_numpy()
-    
+    print(int_ant_array_20f1_score)
+
     int_ant_array_20f2_bool_o = (int_ant_array_20f2 == "o")
     int_ant_array_20f2_bool_x = (int_ant_array_20f2 == "x")
     int_ant_array_20f2_bool_o_num = int_ant_array_20f2_bool_o.sum(axis='columns')
@@ -429,33 +427,34 @@ def main():
     int_ant_array_40m5_score = int_ant_array_40m5_bool.mask(int_ant_array_40m5_bool==True, 1)
     int_ant_array_40m5_score = int_ant_array_40m5_score.mask(int_ant_array_40m5_bool==False, 0)
     np_int_ant_array_40m5_score = int_ant_array_40m5_score.to_numpy()
-#    print(np_int_ant_array_40m5_score)
     
     np_int_ant_array = np.concatenate([np_int_ant_array_20f1_score,np_int_ant_array_20f2_score,np_int_ant_array_20f3_score,np_int_ant_array_20f4_score,np_int_ant_array_30f1_score,np_int_ant_array_30f2_score,np_int_ant_array_30f3_score,np_int_ant_array_40f1_score,np_int_ant_array_40f2_score,np_int_ant_array_40f3_score,np_int_ant_array_40f4_score,np_int_ant_array_50f1_score,np_int_ant_array_50f2_score,np_int_ant_array_50f3_score,np_int_ant_array_20m1_score,np_int_ant_array_20m2_score,np_int_ant_array_20m3_score,np_int_ant_array_20m4_score,np_int_ant_array_20m5_score,np_int_ant_array_30m1_score,np_int_ant_array_30m2_score,np_int_ant_array_30m3_score,np_int_ant_array_40m1_score,np_int_ant_array_40m2_score,np_int_ant_array_40m3_score,np_int_ant_array_40m4_score,np_int_ant_array_40m5_score])    
     np_int_ant_array = np_int_ant_array.astype('int')
 
-    np_au_array_train, np_au_array_test, np_int_ant_array_train, np_int_ant_array_test=train_test_split(np_au_array, np_int_ant_array,test_size=0.2)
+    np_au_array_train, np_au_array_test, np_int_ant_array_train, np_int_ant_array_test=train_test_split(np_au_array, np_int_ant_array,test_size=0.2,random_state=0)
 
     clf = make_pipeline(StandardScaler(), LinearSVC(penalty="l1", loss='squared_hinge', dual=False, max_iter=10000, random_state=0))
 #    clf = make_pipeline(StandardScaler(), LinearSVC(penalty="l2", loss='squared_hinge', dual=True, max_iter=10000, random_state=0))
     clf.fit(np_au_array_train, np_int_ant_array_train)
     print(clf.named_steps['linearsvc'].coef_)
     print(clf.named_steps['linearsvc'].intercept_)
-    #prediction = clf.predict(np_au_array_test)
-    print(clf.score(np_au_array_test,np_int_ant_array_test))
-
-    perm_importance = permutation_importance(clf, np_au_array_test, np_int_ant_array_test, random_state=0)
-    feature_names = ['AU01', 'AU02', 'AU04', 'AU05', 'AU06', 'AU07', 'AU09', 'AU10', 'AU12', 'AU14', 'AU15', 'AU17', 'AU20', 'AU23', 'AU25', 'AU26', 'AU28','AU45']
-    features = np.array(feature_names)
-
-    sorted_index = perm_importance.importances_mean.argsort()
-
-    plt.barh(features[sorted_index], perm_importance.importances_mean[sorted_index])
-    plt.xlabel('Permutation Importance')
-    plt.show()
+    prediction = clf.predict(np_au_array_test)
+    #print(clf.score(np_au_array_test,np_int_ant_array_test))
+#    print('Accuracy score:',accuracy_score(np_int_ant_array_test,prediction))
 
     #cross validation with 5 classes
-    print('Cross validation score:',cross_val_score(clf, np_au_array, np_int_ant_array, cv=5))
+#    scores = cross_val_score(clf, np_au_array, np_int_ant_array, cv=5))
+    print('Mean of cross validation score:', cross_val_score(clf, np_au_array, np_int_ant_array, cv=5).mean())
+
+    perm_importance = permutation_importance(clf, np_au_array_test, np_int_ant_array_test, random_state=0)
+    feature_names = ['AU01', 'AU02', 'AU04', 'AU05', 'AU06', 'AU07', 'AU09', 'AU10', 'AU12', 'AU14', 'AU15', 'AU17', 'AU20', 'AU23', 'AU25', 'AU26', 'AU28']#'AU45'
+    features = np.array(feature_names)
+#    sorted_index = perm_importance.importances_mean.argsort()
+
+    plt.barh(features, abs(perm_importance.importances_mean))
+    plt.xlim(0,0.1)
+    plt.xlabel('Feature Importance')
+    plt.show()
 
     '''
     au_int_array_20f1 = pd.concat([au_array_20f1, int_ant_array_20f1_score], axis=1)
