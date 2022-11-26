@@ -347,7 +347,8 @@ def main():
 
     clf = make_pipeline(StandardScaler(), LinearSVC(penalty="l1", loss='squared_hinge', dual=False, max_iter=10000, random_state=0))
 #    clf = make_pipeline(StandardScaler(), LinearSVC(penalty="l2", loss='squared_hinge', dual=True, max_iter=10000, random_state=0))
-    clf.fit(np_au_array_train, np_tc_ant_array_train)
+#    clf.fit(np_au_array_train, np_tc_ant_array_train)
+    clf.fit(np_au_array, np_tc_ant_array)
     print(clf.named_steps['linearsvc'].coef_)
     print(clf.named_steps['linearsvc'].intercept_)
     prediction = clf.predict(np_au_array_test)
@@ -358,13 +359,14 @@ def main():
 #    scores = cross_val_score(clf, np_au_array, np_int_ant_array, cv=5))
     print('Mean of cross validation score:', cross_val_score(clf, np_au_array, np_tc_ant_array, cv=5).mean())
 
-    perm_importance = permutation_importance(clf, np_au_array_test, np_tc_ant_array_test, random_state=0)
+    perm_importance = permutation_importance(clf, np_au_array, np_tc_ant_array, random_state=0)
     feature_names = ['AU01', 'AU02', 'AU04', 'AU05', 'AU06', 'AU07', 'AU09', 'AU10', 'AU12', 'AU14', 'AU15', 'AU17', 'AU20', 'AU23', 'AU25', 'AU26', 'AU28']#'AU45'
     features = np.array(feature_names)
-#    sorted_index = perm_importance.importances_mean.argsort()
+    sorted_index = perm_importance.importances_mean.argsort()
 
-    plt.barh(features, abs(perm_importance.importances_mean))
-    plt.xlim(0,0.1)
+#    plt.barh(features, abs(perm_importance.importances_mean))
+    plt.barh(features[sorted_index], perm_importance.importances_mean[sorted_index])
+#    plt.xlim(0,0.1)
     plt.xlabel('Feature Importance')
     plt.show()
 
