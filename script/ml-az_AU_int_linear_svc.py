@@ -191,7 +191,7 @@ def main():
     int_ant_array_20f1_score = int_ant_array_20f1_bool.mask(int_ant_array_20f1_bool==True, 1)
     int_ant_array_20f1_score = int_ant_array_20f1_score.mask(int_ant_array_20f1_bool==False, 0)
     np_int_ant_array_20f1_score = int_ant_array_20f1_score.to_numpy()
-    print(int_ant_array_20f1_score)
+    #print(int_ant_array_20f1_score)
 
     int_ant_array_20f2_bool_o = (int_ant_array_20f2 == "o")
     int_ant_array_20f2_bool_x = (int_ant_array_20f2 == "x")
@@ -431,6 +431,7 @@ def main():
     np_int_ant_array = np.concatenate([np_int_ant_array_20f1_score,np_int_ant_array_20f2_score,np_int_ant_array_20f3_score,np_int_ant_array_20f4_score,np_int_ant_array_30f1_score,np_int_ant_array_30f2_score,np_int_ant_array_30f3_score,np_int_ant_array_40f1_score,np_int_ant_array_40f2_score,np_int_ant_array_40f3_score,np_int_ant_array_40f4_score,np_int_ant_array_50f1_score,np_int_ant_array_50f2_score,np_int_ant_array_50f3_score,np_int_ant_array_20m1_score,np_int_ant_array_20m2_score,np_int_ant_array_20m3_score,np_int_ant_array_20m4_score,np_int_ant_array_20m5_score,np_int_ant_array_30m1_score,np_int_ant_array_30m2_score,np_int_ant_array_30m3_score,np_int_ant_array_40m1_score,np_int_ant_array_40m2_score,np_int_ant_array_40m3_score,np_int_ant_array_40m4_score,np_int_ant_array_40m5_score])    
     np_int_ant_array = np_int_ant_array.astype('int')
 
+    print(np_int_ant_array.shape)
     np_au_array_train, np_au_array_test, np_int_ant_array_train, np_int_ant_array_test=train_test_split(np_au_array, np_int_ant_array,test_size=0.2,random_state=0)
 
     clf = make_pipeline(StandardScaler(), LinearSVC(penalty="l1", loss='squared_hinge', dual=False, max_iter=10000, random_state=0))
