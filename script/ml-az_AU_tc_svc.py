@@ -2,7 +2,6 @@
 #! python3
 import sys
 import csv
-from xml.sax.handler import feature_namespace_prefixes, feature_namespaces
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -11,9 +10,7 @@ from sklearn.svm import SVC
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split, cross_val_score
-from sklearn.metrics import accuracy_score
 from sklearn.inspection import permutation_importance
-from sklearn.base import BaseEstimator
 #from sklearn.model_selection import GridSearchCV
 #from sklearn.model_selection import RandomizedSearchCV
 #import seaborn as sns
@@ -60,9 +57,6 @@ def main():
     d_40m4_dump = pd.read_csv('../dumpfiles/1712M4022.csv')
     d_40m5_dump = pd.read_csv('../dumpfiles/1712M4025.csv')
 
-#    data_num = ['20f1','20f2','20f3','20f4','30f1','30f2','30f3','40f1','40f2','40f3','40f4','50f1','50f2','50f3','20m1','20m2','20m3','20m4','20m5','30m1','30m2','30m3','40m1','40m2','40m3','40m4','40m5',]
-
-    #Without AU45 (Eyeblinks)
     au_array_20f1 = pd.concat([d_20f1_dump['AU01_c_mean'], d_20f1_dump['AU02_c_mean'], d_20f1_dump['AU04_c_mean'], d_20f1_dump['AU05_c_mean'], d_20f1_dump['AU06_c_mean'], d_20f1_dump['AU07_c_mean'], d_20f1_dump['AU09_c_mean'], d_20f1_dump['AU10_c_mean'], d_20f1_dump['AU12_c_mean'], d_20f1_dump['AU14_c_mean'], d_20f1_dump['AU15_c_mean'], d_20f1_dump['AU17_c_mean'], d_20f1_dump['AU20_c_mean'], d_20f1_dump['AU23_c_mean'], d_20f1_dump['AU25_c_mean'], d_20f1_dump['AU26_c_mean'], d_20f1_dump['AU28_c_mean']], axis=1)
     np_au_array_20f1 = au_array_20f1.to_numpy()
     
@@ -107,7 +101,7 @@ def main():
 
     au_array_20m1 = pd.concat([d_20m1_dump['AU01_c_mean'], d_20m1_dump['AU02_c_mean'], d_20m1_dump['AU04_c_mean'], d_20m1_dump['AU05_c_mean'], d_20m1_dump['AU06_c_mean'], d_20m1_dump['AU07_c_mean'], d_20m1_dump['AU09_c_mean'], d_20m1_dump['AU10_c_mean'], d_20m1_dump['AU12_c_mean'], d_20m1_dump['AU14_c_mean'], d_20m1_dump['AU15_c_mean'], d_20m1_dump['AU17_c_mean'], d_20m1_dump['AU20_c_mean'], d_20m1_dump['AU23_c_mean'], d_20m1_dump['AU25_c_mean'], d_20m1_dump['AU26_c_mean'], d_20m1_dump['AU28_c_mean']], axis=1) 
     np_au_array_20m1 = au_array_20m1.to_numpy()
-
+    
     au_array_20m2 = pd.concat([d_20m2_dump['AU01_c_mean'], d_20m2_dump['AU02_c_mean'], d_20m2_dump['AU04_c_mean'], d_20m2_dump['AU05_c_mean'], d_20m2_dump['AU06_c_mean'], d_20m2_dump['AU07_c_mean'], d_20m2_dump['AU09_c_mean'], d_20m2_dump['AU10_c_mean'], d_20m2_dump['AU12_c_mean'], d_20m2_dump['AU14_c_mean'], d_20m2_dump['AU15_c_mean'], d_20m2_dump['AU17_c_mean'], d_20m2_dump['AU20_c_mean'], d_20m2_dump['AU23_c_mean'], d_20m2_dump['AU25_c_mean'], d_20m2_dump['AU26_c_mean'], d_20m2_dump['AU28_c_mean']], axis=1)    
     np_au_array_20m2 = au_array_20m2.to_numpy()
     
@@ -143,310 +137,228 @@ def main():
     
     au_array_40m5 = pd.concat([d_40m5_dump['AU01_c_mean'], d_40m5_dump['AU02_c_mean'], d_40m5_dump['AU04_c_mean'], d_40m5_dump['AU05_c_mean'], d_40m5_dump['AU06_c_mean'], d_40m5_dump['AU07_c_mean'], d_40m5_dump['AU09_c_mean'], d_40m5_dump['AU10_c_mean'], d_40m5_dump['AU12_c_mean'], d_40m5_dump['AU14_c_mean'], d_40m5_dump['AU15_c_mean'], d_40m5_dump['AU17_c_mean'], d_40m5_dump['AU20_c_mean'], d_40m5_dump['AU23_c_mean'], d_40m5_dump['AU25_c_mean'], d_40m5_dump['AU26_c_mean'], d_40m5_dump['AU28_c_mean']], axis=1)
     np_au_array_40m5 = au_array_40m5.to_numpy()
+#    print(np_au_array_40m5)
     
-
     np_au_array = np.concatenate([np_au_array_20f1,np_au_array_20f2,np_au_array_20f3,np_au_array_20f4,np_au_array_30f1,np_au_array_30f2,np_au_array_30f3,np_au_array_40f1,np_au_array_40f2,np_au_array_40f3,np_au_array_40f4,np_au_array_50f1,np_au_array_50f2,np_au_array_50f3,np_au_array_20m1,np_au_array_20m2,np_au_array_20m3,np_au_array_20m4,np_au_array_20m5,np_au_array_30m1,np_au_array_30m2,np_au_array_30m3,np_au_array_40m1,np_au_array_40m2,np_au_array_40m3,np_au_array_40m4,np_au_array_40m5])
     print(np_au_array.shape)
 
-    int_ant_array_20f1 = pd.concat([d_20f1_dump['IN1'], d_20f1_dump['IN2'], d_20f1_dump['IN3'], d_20f1_dump['IN4'], d_20f1_dump['IN5'], d_20f1_dump['IN6']], axis=1)
-    int_ant_array_20f2 = pd.concat([d_20f2_dump['IN1'], d_20f2_dump['IN2'], d_20f2_dump['IN3'], d_20f2_dump['IN4'], d_20f2_dump['IN5'], d_20f2_dump['IN6']], axis=1)
-    int_ant_array_20f3 = pd.concat([d_20f3_dump['IN1'], d_20f3_dump['IN2'], d_20f3_dump['IN3'], d_20f3_dump['IN4'], d_20f3_dump['IN5'], d_20f3_dump['IN6']], axis=1)
-    int_ant_array_20f4 = pd.concat([d_20f4_dump['IN1'], d_20f4_dump['IN2'], d_20f4_dump['IN3'], d_20f4_dump['IN4'], d_20f4_dump['IN5'], d_20f4_dump['IN6']], axis=1)
+    tc_ant_array_20f1 = pd.concat([d_20f1_dump['TC_ternary']], axis=1)
+    tc_ant_array_20f2 = pd.concat([d_20f2_dump['TC_ternary']], axis=1)
+    tc_ant_array_20f3 = pd.concat([d_20f3_dump['TC_ternary']], axis=1)
+    tc_ant_array_20f4 = pd.concat([d_20f4_dump['TC_ternary']], axis=1)
 
-    int_ant_array_30f1 = pd.concat([d_30f1_dump['IN1'], d_30f1_dump['IN2'], d_30f1_dump['IN3'], d_30f1_dump['IN4'], d_30f1_dump['IN5'], d_30f1_dump['IN6']], axis=1)
-    int_ant_array_30f2 = pd.concat([d_30f2_dump['IN1'], d_30f2_dump['IN2'], d_30f2_dump['IN3'], d_30f2_dump['IN4'], d_30f2_dump['IN5'], d_30f2_dump['IN6']], axis=1)
-    int_ant_array_30f3 = pd.concat([d_30f3_dump['IN1'], d_30f3_dump['IN2'], d_30f3_dump['IN3'], d_30f3_dump['IN4'], d_30f3_dump['IN5'], d_30f3_dump['IN6']], axis=1)
+    tc_ant_array_30f1 = pd.concat([d_30f1_dump['TC_ternary']], axis=1)
+    tc_ant_array_30f2 = pd.concat([d_30f2_dump['TC_ternary']], axis=1)
+    tc_ant_array_30f3 = pd.concat([d_30f3_dump['TC_ternary']], axis=1)
 
-    int_ant_array_40f1 = pd.concat([d_40f1_dump['IN1'], d_40f1_dump['IN2'], d_40f1_dump['IN3'], d_40f1_dump['IN4'], d_40f1_dump['IN5'], d_40f1_dump['IN6']], axis=1)
-    int_ant_array_40f2 = pd.concat([d_40f2_dump['IN1'], d_40f2_dump['IN2'], d_40f2_dump['IN3'], d_40f2_dump['IN4'], d_40f2_dump['IN5'], d_40f2_dump['IN6']], axis=1)
-    int_ant_array_40f3 = pd.concat([d_40f3_dump['IN1'], d_40f3_dump['IN2'], d_40f3_dump['IN3'], d_40f3_dump['IN4'], d_40f3_dump['IN5'], d_40f3_dump['IN6']], axis=1)
-    int_ant_array_40f4 = pd.concat([d_40f4_dump['IN1'], d_40f4_dump['IN2'], d_40f4_dump['IN3'], d_40f4_dump['IN4'], d_40f4_dump['IN5'], d_40f4_dump['IN6']], axis=1)
+    tc_ant_array_40f1 = pd.concat([d_40f1_dump['TC_ternary']], axis=1)
+    tc_ant_array_40f2 = pd.concat([d_40f2_dump['TC_ternary']], axis=1)
+    tc_ant_array_40f3 = pd.concat([d_40f3_dump['TC_ternary']], axis=1)
+    tc_ant_array_40f4 = pd.concat([d_40f4_dump['TC_ternary']], axis=1)
 
-    int_ant_array_50f1 = pd.concat([d_50f1_dump['IN1'], d_50f1_dump['IN2'], d_50f1_dump['IN3'], d_50f1_dump['IN4'], d_50f1_dump['IN5'], d_50f1_dump['IN6']], axis=1)
-    int_ant_array_50f2 = pd.concat([d_50f2_dump['IN1'], d_50f2_dump['IN2'], d_50f2_dump['IN3'], d_50f2_dump['IN4'], d_50f2_dump['IN5'], d_50f2_dump['IN6']], axis=1)
-    int_ant_array_50f3 = pd.concat([d_50f3_dump['IN1'], d_50f3_dump['IN2'], d_50f3_dump['IN3'], d_50f3_dump['IN4'], d_50f3_dump['IN5'], d_50f3_dump['IN6']], axis=1)
+    tc_ant_array_50f1 = pd.concat([d_50f1_dump['TC_ternary']], axis=1)
+    tc_ant_array_50f2 = pd.concat([d_50f2_dump['TC_ternary']], axis=1)
+    tc_ant_array_50f3 = pd.concat([d_50f3_dump['TC_ternary']], axis=1)
 
-    int_ant_array_20m1 = pd.concat([d_20m1_dump['IN1'], d_20m1_dump['IN2'], d_20m1_dump['IN3'], d_20m1_dump['IN4'], d_20m1_dump['IN5'], d_20m1_dump['IN6']], axis=1)
-    int_ant_array_20m2 = pd.concat([d_20m2_dump['IN1'], d_20m2_dump['IN2'], d_20m2_dump['IN3'], d_20m2_dump['IN4'], d_20m2_dump['IN5'], d_20m2_dump['IN6']], axis=1)
-    int_ant_array_20m3 = pd.concat([d_20m3_dump['IN1'], d_20m3_dump['IN2'], d_20m3_dump['IN3'], d_20m3_dump['IN4'], d_20m3_dump['IN5'], d_20m3_dump['IN6']], axis=1)
-    int_ant_array_20m4 = pd.concat([d_20m4_dump['IN1'], d_20m4_dump['IN2'], d_20m4_dump['IN3'], d_20m4_dump['IN4'], d_20m4_dump['IN5'], d_20m4_dump['IN6']], axis=1)
-    int_ant_array_20m5 = pd.concat([d_20m5_dump['IN1'], d_20m5_dump['IN2'], d_20m5_dump['IN3'], d_20m5_dump['IN4'], d_20m5_dump['IN5'], d_20m5_dump['IN6']], axis=1)
+    tc_ant_array_20m1 = pd.concat([d_20m1_dump['TC_ternary']], axis=1)
+    tc_ant_array_20m2 = pd.concat([d_20m2_dump['TC_ternary']], axis=1)
+    tc_ant_array_20m3 = pd.concat([d_20m3_dump['TC_ternary']], axis=1)
+    tc_ant_array_20m4 = pd.concat([d_20m4_dump['TC_ternary']], axis=1)
+    tc_ant_array_20m5 = pd.concat([d_20m5_dump['TC_ternary']], axis=1)
 
-    int_ant_array_30m1 = pd.concat([d_30m1_dump['IN1'], d_30m1_dump['IN2'], d_30m1_dump['IN3'], d_30m1_dump['IN4'], d_30m1_dump['IN5'], d_30m1_dump['IN6']], axis=1)
-    int_ant_array_30m2 = pd.concat([d_30m2_dump['IN1'], d_30m2_dump['IN2'], d_30m2_dump['IN3'], d_30m2_dump['IN4'], d_30m2_dump['IN5'], d_30m2_dump['IN6']], axis=1)
-    int_ant_array_30m3 = pd.concat([d_30m3_dump['IN1'], d_30m3_dump['IN2'], d_30m3_dump['IN3'], d_30m3_dump['IN4'], d_30m3_dump['IN5'], d_30m3_dump['IN6']], axis=1)
+    tc_ant_array_30m1 = pd.concat([d_30m1_dump['TC_ternary']], axis=1)
+    tc_ant_array_30m2 = pd.concat([d_30m2_dump['TC_ternary']], axis=1)
+    tc_ant_array_30m3 = pd.concat([d_30m3_dump['TC_ternary']], axis=1)
 
-    int_ant_array_40m1 = pd.concat([d_40m1_dump['IN1'], d_40m1_dump['IN2'], d_40m1_dump['IN3'], d_40m1_dump['IN4'], d_40m1_dump['IN5'], d_40m1_dump['IN6']], axis=1)
-    int_ant_array_40m2 = pd.concat([d_40m2_dump['IN1'], d_40m2_dump['IN2'], d_40m2_dump['IN3'], d_40m2_dump['IN4'], d_40m2_dump['IN5'], d_40m2_dump['IN6']], axis=1)
-    int_ant_array_40m3 = pd.concat([d_40m3_dump['IN1'], d_40m3_dump['IN2'], d_40m3_dump['IN3'], d_40m3_dump['IN4'], d_40m3_dump['IN5'], d_40m3_dump['IN6']], axis=1)
-    int_ant_array_40m4 = pd.concat([d_40m4_dump['IN1'], d_40m4_dump['IN2'], d_40m4_dump['IN3'], d_40m4_dump['IN4'], d_40m4_dump['IN5'], d_40m4_dump['IN6']], axis=1)
-    int_ant_array_40m5 = pd.concat([d_40m5_dump['IN1'], d_40m5_dump['IN2'], d_40m5_dump['IN3'], d_40m5_dump['IN4'], d_40m5_dump['IN5'], d_40m5_dump['IN6']], axis=1)
+    tc_ant_array_40m1 = pd.concat([d_40m1_dump['TC_ternary']], axis=1)
+    tc_ant_array_40m2 = pd.concat([d_40m2_dump['TC_ternary']], axis=1)
+    tc_ant_array_40m3 = pd.concat([d_40m3_dump['TC_ternary']], axis=1)
+    tc_ant_array_40m4 = pd.concat([d_40m4_dump['TC_ternary']], axis=1)
+    tc_ant_array_40m5 = pd.concat([d_40m5_dump['TC_ternary']], axis=1)
 
+    tc_ant_array_20f1_bool_l = (tc_ant_array_20f1 == 0)
+    tc_ant_array_20f1_score = tc_ant_array_20f1_bool_l.mask(tc_ant_array_20f1_bool_l==True, 0)
+    tc_ant_array_20f1_score = tc_ant_array_20f1_score.mask(tc_ant_array_20f1_bool_l==False, 1)
+    tc_ant_array_20f1_score = tc_ant_array_20f1_score['TC_ternary']
+    np_tc_ant_array_20f1_score = tc_ant_array_20f1_score.to_numpy()
+    print(np_tc_ant_array_20f1_score)
 
-    int_ant_array_20f1_bool_o = (int_ant_array_20f1 == "o")
-    int_ant_array_20f1_bool_x = (int_ant_array_20f1 == "x")
-    int_ant_array_20f1_bool_o_num = int_ant_array_20f1_bool_o.sum(axis='columns')
-    int_ant_array_20f1_bool_x_num = int_ant_array_20f1_bool_x.sum(axis='columns')
-    int_ant_array_20f1_bool = int_ant_array_20f1_bool_o_num > int_ant_array_20f1_bool_x_num
-    int_ant_array_20f1_score = int_ant_array_20f1_bool.mask(int_ant_array_20f1_bool==True, 1)
-    int_ant_array_20f1_score = int_ant_array_20f1_score.mask(int_ant_array_20f1_bool==False, 0)
-    np_int_ant_array_20f1_score = int_ant_array_20f1_score.to_numpy()
-#    print(int_ant_array_20f1_score)
+    tc_ant_array_20f2_bool_l = (tc_ant_array_20f2 == 0)
+    tc_ant_array_20f2_score = tc_ant_array_20f2_bool_l.mask(tc_ant_array_20f2_bool_l==True, 0)
+    tc_ant_array_20f2_score = tc_ant_array_20f2_score.mask(tc_ant_array_20f2_bool_l==False, 1)
+    tc_ant_array_20f2_score = tc_ant_array_20f2_score['TC_ternary']
+    np_tc_ant_array_20f2_score = tc_ant_array_20f2_score.to_numpy()
 
-    int_ant_array_20f2_bool_o = (int_ant_array_20f2 == "o")
-    int_ant_array_20f2_bool_x = (int_ant_array_20f2 == "x")
-    int_ant_array_20f2_bool_o_num = int_ant_array_20f2_bool_o.sum(axis='columns')
-    int_ant_array_20f2_bool_x_num = int_ant_array_20f2_bool_x.sum(axis='columns')
-    int_ant_array_20f2_bool = int_ant_array_20f2_bool_o_num > int_ant_array_20f2_bool_x_num 
-    int_ant_array_20f2_score = int_ant_array_20f2_bool.mask(int_ant_array_20f2_bool==True, 1)
-    int_ant_array_20f2_score = int_ant_array_20f2_score.mask(int_ant_array_20f2_bool==False, 0)
-    np_int_ant_array_20f2_score = int_ant_array_20f2_score.to_numpy()
-    
-    int_ant_array_20f3_bool_o = (int_ant_array_20f3 == "o")
-    int_ant_array_20f3_bool_x = (int_ant_array_20f3 == "x")
-    int_ant_array_20f3_bool_o_num = int_ant_array_20f3_bool_o.sum(axis='columns')
-    int_ant_array_20f3_bool_x_num = int_ant_array_20f3_bool_x.sum(axis='columns')
-    int_ant_array_20f3_bool = int_ant_array_20f3_bool_o_num > int_ant_array_20f3_bool_x_num
-    int_ant_array_20f3_score = int_ant_array_20f3_bool.mask(int_ant_array_20f3_bool==True, 1)
-    int_ant_array_20f3_score = int_ant_array_20f3_score.mask(int_ant_array_20f3_bool==False, 0)
-    np_int_ant_array_20f3_score = int_ant_array_20f3_score.to_numpy()
+    tc_ant_array_20f3_bool_l = (tc_ant_array_20f3 == 0)
+    tc_ant_array_20f3_score = tc_ant_array_20f3_bool_l.mask(tc_ant_array_20f3_bool_l==True, 0)
+    tc_ant_array_20f3_score = tc_ant_array_20f3_score.mask(tc_ant_array_20f3_bool_l==False, 1)
+    tc_ant_array_20f3_score = tc_ant_array_20f3_score['TC_ternary']
+    np_tc_ant_array_20f3_score = tc_ant_array_20f3_score.to_numpy()
 
-    int_ant_array_20f4_bool_o = (int_ant_array_20f4 == "o")
-    int_ant_array_20f4_bool_x = (int_ant_array_20f4 == "x")
-    int_ant_array_20f4_bool_o_num = int_ant_array_20f4_bool_o.sum(axis='columns')
-    int_ant_array_20f4_bool_x_num = int_ant_array_20f4_bool_x.sum(axis='columns')
-    int_ant_array_20f4_bool = int_ant_array_20f4_bool_o_num > int_ant_array_20f4_bool_x_num
-    int_ant_array_20f4_score = int_ant_array_20f4_bool.mask(int_ant_array_20f4_bool==True, 1)
-    int_ant_array_20f4_score = int_ant_array_20f4_score.mask(int_ant_array_20f4_bool==False, 0)
-    np_int_ant_array_20f4_score = int_ant_array_20f4_score.to_numpy()
-    
-    int_ant_array_30f1_bool_o = (int_ant_array_30f1 == "o")
-    int_ant_array_30f1_bool_x = (int_ant_array_30f1 == "x")
-    int_ant_array_30f1_bool_o_num = int_ant_array_30f1_bool_o.sum(axis='columns')
-    int_ant_array_30f1_bool_x_num = int_ant_array_30f1_bool_x.sum(axis='columns')
-    int_ant_array_30f1_bool = int_ant_array_30f1_bool_o_num > int_ant_array_30f1_bool_x_num
-    int_ant_array_30f1_score = int_ant_array_30f1_bool.mask(int_ant_array_30f1_bool==True, 1)
-    int_ant_array_30f1_score = int_ant_array_30f1_score.mask(int_ant_array_30f1_bool==False, 0)
-    np_int_ant_array_30f1_score = int_ant_array_30f1_score.to_numpy()
-    
-    int_ant_array_30f2_bool_o = (int_ant_array_30f2 == "o")
-    int_ant_array_30f2_bool_x = (int_ant_array_30f2 == "x")
-    int_ant_array_30f2_bool_o_num = int_ant_array_30f2_bool_o.sum(axis='columns')
-    int_ant_array_30f2_bool_x_num = int_ant_array_30f2_bool_x.sum(axis='columns')
-    int_ant_array_30f2_bool = int_ant_array_30f2_bool_o_num > int_ant_array_30f2_bool_x_num 
-    int_ant_array_30f2_score = int_ant_array_30f2_bool.mask(int_ant_array_30f2_bool==True, 1)
-    int_ant_array_30f2_score = int_ant_array_30f2_score.mask(int_ant_array_30f2_bool==False, 0)
-    np_int_ant_array_30f2_score = int_ant_array_30f2_score.to_numpy()
+    tc_ant_array_20f4_bool_l = (tc_ant_array_20f4 == 0)
+    tc_ant_array_20f4_score = tc_ant_array_20f4_bool_l.mask(tc_ant_array_20f4_bool_l==True, 0)
+    tc_ant_array_20f4_score = tc_ant_array_20f4_score.mask(tc_ant_array_20f4_bool_l==False, 1)
+    tc_ant_array_20f4_score = tc_ant_array_20f4_score['TC_ternary']
+    np_tc_ant_array_20f4_score = tc_ant_array_20f4_score.to_numpy()
 
-    int_ant_array_30f3_bool_o = (int_ant_array_30f3 == "o")
-    int_ant_array_30f3_bool_x = (int_ant_array_30f3 == "x")
-    int_ant_array_30f3_bool_o_num = int_ant_array_30f3_bool_o.sum(axis='columns')
-    int_ant_array_30f3_bool_x_num = int_ant_array_30f3_bool_x.sum(axis='columns')
-    int_ant_array_30f3_bool = int_ant_array_30f3_bool_o_num > int_ant_array_30f3_bool_x_num
-    int_ant_array_30f3_score = int_ant_array_30f3_bool.mask(int_ant_array_30f3_bool==True, 1)
-    int_ant_array_30f3_score = int_ant_array_30f3_score.mask(int_ant_array_30f3_bool==False, 0)
-    np_int_ant_array_30f3_score = int_ant_array_30f3_score.to_numpy()
+    tc_ant_array_30f1_bool_l = (tc_ant_array_30f1 == 0)
+    tc_ant_array_30f1_score = tc_ant_array_30f1_bool_l.mask(tc_ant_array_30f1_bool_l==True, 0)
+    tc_ant_array_30f1_score = tc_ant_array_30f1_score.mask(tc_ant_array_30f1_bool_l==False, 1)
+    tc_ant_array_30f1_score = tc_ant_array_30f1_score['TC_ternary']
+    np_tc_ant_array_30f1_score = tc_ant_array_30f1_score.to_numpy()
 
-    int_ant_array_40f1_bool_o = (int_ant_array_40f1 == "o")
-    int_ant_array_40f1_bool_x = (int_ant_array_40f1 == "x")
-    int_ant_array_40f1_bool_o_num = int_ant_array_40f1_bool_o.sum(axis='columns')
-    int_ant_array_40f1_bool_x_num = int_ant_array_40f1_bool_x.sum(axis='columns')
-    int_ant_array_40f1_bool = int_ant_array_40f1_bool_o_num > int_ant_array_40f1_bool_x_num
-    int_ant_array_40f1_score = int_ant_array_40f1_bool.mask(int_ant_array_40f1_bool==True, 1)
-    int_ant_array_40f1_score = int_ant_array_40f1_score.mask(int_ant_array_40f1_bool==False, 0)
-    np_int_ant_array_40f1_score = int_ant_array_40f1_score.to_numpy()
+    tc_ant_array_30f2_bool_l = (tc_ant_array_30f2 == 0)
+    tc_ant_array_30f2_score = tc_ant_array_30f2_bool_l.mask(tc_ant_array_30f2_bool_l==True, 0)
+    tc_ant_array_30f2_score = tc_ant_array_30f2_score.mask(tc_ant_array_30f2_bool_l==False, 1)
+    tc_ant_array_30f2_score = tc_ant_array_30f2_score['TC_ternary']
+    np_tc_ant_array_30f2_score = tc_ant_array_30f2_score.to_numpy()
 
-    int_ant_array_40f2_bool_o = (int_ant_array_40f2 == "o")
-    int_ant_array_40f2_bool_x = (int_ant_array_40f2 == "x")
-    int_ant_array_40f2_bool_o_num = int_ant_array_40f2_bool_o.sum(axis='columns')
-    int_ant_array_40f2_bool_x_num = int_ant_array_40f2_bool_x.sum(axis='columns')
-    int_ant_array_40f2_bool = int_ant_array_40f2_bool_o_num > int_ant_array_40f2_bool_x_num 
-    int_ant_array_40f2_score = int_ant_array_40f2_bool.mask(int_ant_array_40f2_bool==True, 1)
-    int_ant_array_40f2_score = int_ant_array_40f2_score.mask(int_ant_array_40f2_bool==False, 0)
-    np_int_ant_array_40f2_score = int_ant_array_40f2_score.to_numpy()
-    
-    int_ant_array_40f3_bool_o = (int_ant_array_40f3 == "o")
-    int_ant_array_40f3_bool_x = (int_ant_array_40f3 == "x")
-    int_ant_array_40f3_bool_o_num = int_ant_array_40f3_bool_o.sum(axis='columns')
-    int_ant_array_40f3_bool_x_num = int_ant_array_40f3_bool_x.sum(axis='columns')
-    int_ant_array_40f3_bool = int_ant_array_40f3_bool_o_num > int_ant_array_40f3_bool_x_num
-    int_ant_array_40f3_score = int_ant_array_40f3_bool.mask(int_ant_array_40f3_bool==True, 1)
-    int_ant_array_40f3_score = int_ant_array_40f3_score.mask(int_ant_array_40f3_bool==False, 0)
-    np_int_ant_array_40f3_score = int_ant_array_40f3_score.to_numpy()
-    
-    int_ant_array_40f4_bool_o = (int_ant_array_40f4 == "o")
-    int_ant_array_40f4_bool_x = (int_ant_array_40f4 == "x")
-    int_ant_array_40f4_bool_o_num = int_ant_array_40f4_bool_o.sum(axis='columns')
-    int_ant_array_40f4_bool_x_num = int_ant_array_40f4_bool_x.sum(axis='columns')
-    int_ant_array_40f4_bool = int_ant_array_40f4_bool_o_num > int_ant_array_40f4_bool_x_num
-    int_ant_array_40f4_score = int_ant_array_40f4_bool.mask(int_ant_array_40f4_bool==True, 1)
-    int_ant_array_40f4_score = int_ant_array_40f4_score.mask(int_ant_array_40f4_bool==False, 0)
-    np_int_ant_array_40f4_score = int_ant_array_40f4_score.to_numpy()
+    tc_ant_array_30f3_bool_l = (tc_ant_array_30f3 == 0)
+    tc_ant_array_30f3_score = tc_ant_array_30f3_bool_l.mask(tc_ant_array_30f3_bool_l==True, 0)
+    tc_ant_array_30f3_score = tc_ant_array_30f3_score.mask(tc_ant_array_30f3_bool_l==False, 1)
+    tc_ant_array_30f3_score = tc_ant_array_30f3_score['TC_ternary']
+    np_tc_ant_array_30f3_score = tc_ant_array_30f3_score.to_numpy()
 
-    int_ant_array_50f1_bool_o = (int_ant_array_50f1 == "o")
-    int_ant_array_50f1_bool_x = (int_ant_array_50f1 == "x")
-    int_ant_array_50f1_bool_o_num = int_ant_array_50f1_bool_o.sum(axis='columns')
-    int_ant_array_50f1_bool_x_num = int_ant_array_50f1_bool_x.sum(axis='columns')
-    int_ant_array_50f1_bool = int_ant_array_50f1_bool_o_num > int_ant_array_50f1_bool_x_num
-    int_ant_array_50f1_score = int_ant_array_50f1_bool.mask(int_ant_array_50f1_bool==True, 1)
-    int_ant_array_50f1_score = int_ant_array_50f1_score.mask(int_ant_array_50f1_bool==False, 0)
-    np_int_ant_array_50f1_score = int_ant_array_50f1_score.to_numpy()
-    
-    int_ant_array_50f2_bool_o = (int_ant_array_50f2 == "o")
-    int_ant_array_50f2_bool_x = (int_ant_array_50f2 == "x")
-    int_ant_array_50f2_bool_o_num = int_ant_array_50f2_bool_o.sum(axis='columns')
-    int_ant_array_50f2_bool_x_num = int_ant_array_50f2_bool_x.sum(axis='columns')
-    int_ant_array_50f2_bool = int_ant_array_50f2_bool_o_num > int_ant_array_50f2_bool_x_num 
-    int_ant_array_50f2_score = int_ant_array_50f2_bool.mask(int_ant_array_50f2_bool==True, 1)
-    int_ant_array_50f2_score = int_ant_array_50f2_score.mask(int_ant_array_50f2_bool==False, 0)
-    np_int_ant_array_50f2_score = int_ant_array_50f2_score.to_numpy()
+    tc_ant_array_40f1_bool_l = (tc_ant_array_40f1 == 0)
+    tc_ant_array_40f1_score = tc_ant_array_40f1_bool_l.mask(tc_ant_array_40f1_bool_l==True, 0)
+    tc_ant_array_40f1_score = tc_ant_array_40f1_score.mask(tc_ant_array_40f1_bool_l==False, 1)
+    tc_ant_array_40f1_score = tc_ant_array_40f1_score['TC_ternary']
+    np_tc_ant_array_40f1_score = tc_ant_array_40f1_score.to_numpy()
 
-    int_ant_array_50f3_bool_o = (int_ant_array_50f3 == "o")
-    int_ant_array_50f3_bool_x = (int_ant_array_50f3 == "x")
-    int_ant_array_50f3_bool_o_num = int_ant_array_50f3_bool_o.sum(axis='columns')
-    int_ant_array_50f3_bool_x_num = int_ant_array_50f3_bool_x.sum(axis='columns')
-    int_ant_array_50f3_bool = int_ant_array_50f3_bool_o_num > int_ant_array_50f3_bool_x_num
-    int_ant_array_50f3_score = int_ant_array_50f3_bool.mask(int_ant_array_50f3_bool==True, 1)
-    int_ant_array_50f3_score = int_ant_array_50f3_score.mask(int_ant_array_50f3_bool==False, 0)
-    np_int_ant_array_50f3_score = int_ant_array_50f3_score.to_numpy()    
+    tc_ant_array_40f2_bool_l = (tc_ant_array_40f2 == 0)
+    tc_ant_array_40f2_score = tc_ant_array_40f2_bool_l.mask(tc_ant_array_40f2_bool_l==True, 0)
+    tc_ant_array_40f2_score = tc_ant_array_40f2_score.mask(tc_ant_array_40f2_bool_l==False, 1)
+    tc_ant_array_40f2_score = tc_ant_array_40f2_score['TC_ternary']
+    np_tc_ant_array_40f2_score = tc_ant_array_40f2_score.to_numpy()
 
+    tc_ant_array_40f3_bool_l = (tc_ant_array_40f3 == 0)
+    tc_ant_array_40f3_score = tc_ant_array_40f3_bool_l.mask(tc_ant_array_40f3_bool_l==True, 0)
+    tc_ant_array_40f3_score = tc_ant_array_40f3_score.mask(tc_ant_array_40f3_bool_l==False, 1)
+    tc_ant_array_40f3_score = tc_ant_array_40f3_score['TC_ternary']
+    np_tc_ant_array_40f3_score = tc_ant_array_40f3_score.to_numpy()
 
-    int_ant_array_20m1_bool_o = (int_ant_array_20m1 == "o")
-    int_ant_array_20m1_bool_x = (int_ant_array_20m1 == "x")
-    int_ant_array_20m1_bool_o_num = int_ant_array_20m1_bool_o.sum(axis='columns')
-    int_ant_array_20m1_bool_x_num = int_ant_array_20m1_bool_x.sum(axis='columns')
-    int_ant_array_20m1_bool = int_ant_array_20m1_bool_o_num > int_ant_array_20m1_bool_x_num
-    int_ant_array_20m1_score = int_ant_array_20m1_bool.mask(int_ant_array_20m1_bool==True, 1)
-    int_ant_array_20m1_score = int_ant_array_20m1_score.mask(int_ant_array_20m1_bool==False, 0)
-    np_int_ant_array_20m1_score = int_ant_array_20m1_score.to_numpy()
-    
-    int_ant_array_20m2_bool_o = (int_ant_array_20m2 == "o")
-    int_ant_array_20m2_bool_x = (int_ant_array_20m2 == "x")
-    int_ant_array_20m2_bool_o_num = int_ant_array_20m2_bool_o.sum(axis='columns')
-    int_ant_array_20m2_bool_x_num = int_ant_array_20m2_bool_x.sum(axis='columns')
-    int_ant_array_20m2_bool = int_ant_array_20m2_bool_o_num > int_ant_array_20m2_bool_x_num 
-    int_ant_array_20m2_score = int_ant_array_20m2_bool.mask(int_ant_array_20m2_bool==True, 1)
-    int_ant_array_20m2_score = int_ant_array_20m2_score.mask(int_ant_array_20m2_bool==False, 0)
-    np_int_ant_array_20m2_score = int_ant_array_20m2_score.to_numpy()
-    
-    int_ant_array_20m3_bool_o = (int_ant_array_20m3 == "o")
-    int_ant_array_20m3_bool_x = (int_ant_array_20m3 == "x")
-    int_ant_array_20m3_bool_o_num = int_ant_array_20m3_bool_o.sum(axis='columns')
-    int_ant_array_20m3_bool_x_num = int_ant_array_20m3_bool_x.sum(axis='columns')
-    int_ant_array_20m3_bool = int_ant_array_20m3_bool_o_num > int_ant_array_20m3_bool_x_num
-    int_ant_array_20m3_score = int_ant_array_20m3_bool.mask(int_ant_array_20m3_bool==True, 1)
-    int_ant_array_20m3_score = int_ant_array_20m3_score.mask(int_ant_array_20m3_bool==False, 0)
-    np_int_ant_array_20m3_score = int_ant_array_20m3_score.to_numpy()
-    
-    int_ant_array_20m4_bool_o = (int_ant_array_20m4 == "o")
-    int_ant_array_20m4_bool_x = (int_ant_array_20m4 == "x")
-    int_ant_array_20m4_bool_o_num = int_ant_array_20m4_bool_o.sum(axis='columns')
-    int_ant_array_20m4_bool_x_num = int_ant_array_20m4_bool_x.sum(axis='columns')
-    int_ant_array_20m4_bool = int_ant_array_20m4_bool_o_num > int_ant_array_20m4_bool_x_num
-    int_ant_array_20m4_score = int_ant_array_20m4_bool.mask(int_ant_array_20m4_bool==True, 1)
-    int_ant_array_20m4_score = int_ant_array_20m4_score.mask(int_ant_array_20m4_bool==False, 0)
-    np_int_ant_array_20m4_score = int_ant_array_20m4_score.to_numpy()
-    
-    int_ant_array_20m5_bool_o = (int_ant_array_20m5 == "o")
-    int_ant_array_20m5_bool_x = (int_ant_array_20m5 == "x")
-    int_ant_array_20m5_bool_o_num = int_ant_array_20m5_bool_o.sum(axis='columns')
-    int_ant_array_20m5_bool_x_num = int_ant_array_20m5_bool_x.sum(axis='columns')
-    int_ant_array_20m5_bool = int_ant_array_20m5_bool_o_num > int_ant_array_20m5_bool_x_num
-    int_ant_array_20m5_score = int_ant_array_20m5_bool.mask(int_ant_array_20m5_bool==True, 1)
-    int_ant_array_20m5_score = int_ant_array_20m5_score.mask(int_ant_array_20m5_bool==False, 0)
-    np_int_ant_array_20m5_score = int_ant_array_20m5_score.to_numpy()
-    
-    int_ant_array_30m1_bool_o = (int_ant_array_30m1 == "o")
-    int_ant_array_30m1_bool_x = (int_ant_array_30m1 == "x")
-    int_ant_array_30m1_bool_o_num = int_ant_array_30m1_bool_o.sum(axis='columns')
-    int_ant_array_30m1_bool_x_num = int_ant_array_30m1_bool_x.sum(axis='columns')
-    int_ant_array_30m1_bool = int_ant_array_30m1_bool_o_num > int_ant_array_30m1_bool_x_num
-    int_ant_array_30m1_score = int_ant_array_30m1_bool.mask(int_ant_array_30m1_bool==True, 1)
-    int_ant_array_30m1_score = int_ant_array_30m1_score.mask(int_ant_array_30m1_bool==False, 0)
-    np_int_ant_array_30m1_score = int_ant_array_30m1_score.to_numpy()
-    
-    int_ant_array_30m2_bool_o = (int_ant_array_30m2 == "o")
-    int_ant_array_30m2_bool_x = (int_ant_array_30m2 == "x")
-    int_ant_array_30m2_bool_o_num = int_ant_array_30m2_bool_o.sum(axis='columns')
-    int_ant_array_30m2_bool_x_num = int_ant_array_30m2_bool_x.sum(axis='columns')
-    int_ant_array_30m2_bool = int_ant_array_30m2_bool_o_num > int_ant_array_30m2_bool_x_num 
-    int_ant_array_30m2_score = int_ant_array_30m2_bool.mask(int_ant_array_30m2_bool==True, 1)
-    int_ant_array_30m2_score = int_ant_array_30m2_score.mask(int_ant_array_30m2_bool==False, 0)
-    np_int_ant_array_30m2_score = int_ant_array_30m2_score.to_numpy()
-    
-    int_ant_array_30m3_bool_o = (int_ant_array_30m3 == "o")
-    int_ant_array_30m3_bool_x = (int_ant_array_30m3 == "x")
-    int_ant_array_30m3_bool_o_num = int_ant_array_30m3_bool_o.sum(axis='columns')
-    int_ant_array_30m3_bool_x_num = int_ant_array_30m3_bool_x.sum(axis='columns')
-    int_ant_array_30m3_bool = int_ant_array_30m3_bool_o_num > int_ant_array_30m3_bool_x_num
-    int_ant_array_30m3_score = int_ant_array_30m3_bool.mask(int_ant_array_30m3_bool==True, 1)
-    int_ant_array_30m3_score = int_ant_array_30m3_score.mask(int_ant_array_30m3_bool==False, 0)
-    np_int_ant_array_30m3_score = int_ant_array_30m3_score.to_numpy()
+    tc_ant_array_40f4_bool_l = (tc_ant_array_40f4 == 0)
+    tc_ant_array_40f4_score = tc_ant_array_40f4_bool_l.mask(tc_ant_array_40f4_bool_l==True, 0)
+    tc_ant_array_40f4_score = tc_ant_array_40f4_score.mask(tc_ant_array_40f4_bool_l==False, 1)
+    tc_ant_array_40f4_score = tc_ant_array_40f4_score['TC_ternary']
+    np_tc_ant_array_40f4_score = tc_ant_array_40f4_score.to_numpy()
 
-    int_ant_array_40m1_bool_o = (int_ant_array_40m1 == "o")
-    int_ant_array_40m1_bool_x = (int_ant_array_40m1 == "x")
-    int_ant_array_40m1_bool_o_num = int_ant_array_40m1_bool_o.sum(axis='columns')
-    int_ant_array_40m1_bool_x_num = int_ant_array_40m1_bool_x.sum(axis='columns')
-    int_ant_array_40m1_bool = int_ant_array_40m1_bool_o_num > int_ant_array_40m1_bool_x_num
-    int_ant_array_40m1_score = int_ant_array_40m1_bool.mask(int_ant_array_40m1_bool==True, 1)
-    int_ant_array_40m1_score = int_ant_array_40m1_score.mask(int_ant_array_40m1_bool==False, 0)
-    np_int_ant_array_40m1_score = int_ant_array_40m1_score.to_numpy()
-    
-    int_ant_array_40m2_bool_o = (int_ant_array_40m2 == "o")
-    int_ant_array_40m2_bool_x = (int_ant_array_40m2 == "x")
-    int_ant_array_40m2_bool_o_num = int_ant_array_40m2_bool_o.sum(axis='columns')
-    int_ant_array_40m2_bool_x_num = int_ant_array_40m2_bool_x.sum(axis='columns')
-    int_ant_array_40m2_bool = int_ant_array_40m2_bool_o_num > int_ant_array_40m2_bool_x_num 
-    int_ant_array_40m2_score = int_ant_array_40m2_bool.mask(int_ant_array_40m2_bool==True, 1)
-    int_ant_array_40m2_score = int_ant_array_40m2_score.mask(int_ant_array_40m2_bool==False, 0)
-    np_int_ant_array_40m2_score = int_ant_array_40m2_score.to_numpy()
-    
-    int_ant_array_40m3_bool_o = (int_ant_array_40m3 == "o")
-    int_ant_array_40m3_bool_x = (int_ant_array_40m3 == "x")
-    int_ant_array_40m3_bool_o_num = int_ant_array_40m3_bool_o.sum(axis='columns')
-    int_ant_array_40m3_bool_x_num = int_ant_array_40m3_bool_x.sum(axis='columns')
-    int_ant_array_40m3_bool = int_ant_array_40m3_bool_o_num > int_ant_array_40m3_bool_x_num
-    int_ant_array_40m3_score = int_ant_array_40m3_bool.mask(int_ant_array_40m3_bool==True, 1)
-    int_ant_array_40m3_score = int_ant_array_40m3_score.mask(int_ant_array_40m3_bool==False, 0)
-    np_int_ant_array_40m3_score = int_ant_array_40m3_score.to_numpy()
+    tc_ant_array_50f1_bool_l = (tc_ant_array_50f1 == 0)
+    tc_ant_array_50f1_score = tc_ant_array_50f1_bool_l.mask(tc_ant_array_50f1_bool_l==True, 0)
+    tc_ant_array_50f1_score = tc_ant_array_50f1_score.mask(tc_ant_array_50f1_bool_l==False, 1)
+    tc_ant_array_50f1_score = tc_ant_array_50f1_score['TC_ternary']
+    np_tc_ant_array_50f1_score = tc_ant_array_50f1_score.to_numpy()
 
-    int_ant_array_40m4_bool_o = (int_ant_array_40m4 == "o")
-    int_ant_array_40m4_bool_x = (int_ant_array_40m4 == "x")
-    int_ant_array_40m4_bool_o_num = int_ant_array_40m4_bool_o.sum(axis='columns')
-    int_ant_array_40m4_bool_x_num = int_ant_array_40m4_bool_x.sum(axis='columns')
-    int_ant_array_40m4_bool = int_ant_array_40m4_bool_o_num > int_ant_array_40m4_bool_x_num
-    int_ant_array_40m4_score = int_ant_array_40m4_bool.mask(int_ant_array_40m4_bool==True, 1)
-    int_ant_array_40m4_score = int_ant_array_40m4_score.mask(int_ant_array_40m4_bool==False, 0)
-    np_int_ant_array_40m4_score = int_ant_array_40m4_score.to_numpy()
-    
-    int_ant_array_40m5_bool_o = (int_ant_array_40m5 == "o")
-    int_ant_array_40m5_bool_x = (int_ant_array_40m5 == "x")
-    int_ant_array_40m5_bool_o_num = int_ant_array_40m5_bool_o.sum(axis='columns')
-    int_ant_array_40m5_bool_x_num = int_ant_array_40m5_bool_x.sum(axis='columns')
-    int_ant_array_40m5_bool = int_ant_array_40m5_bool_o_num > int_ant_array_40m5_bool_x_num
-    int_ant_array_40m5_score = int_ant_array_40m5_bool.mask(int_ant_array_40m5_bool==True, 1)
-    int_ant_array_40m5_score = int_ant_array_40m5_score.mask(int_ant_array_40m5_bool==False, 0)
-    np_int_ant_array_40m5_score = int_ant_array_40m5_score.to_numpy()
-    
-    np_int_ant_array = np.concatenate([np_int_ant_array_20f1_score,np_int_ant_array_20f2_score,np_int_ant_array_20f3_score,np_int_ant_array_20f4_score,np_int_ant_array_30f1_score,np_int_ant_array_30f2_score,np_int_ant_array_30f3_score,np_int_ant_array_40f1_score,np_int_ant_array_40f2_score,np_int_ant_array_40f3_score,np_int_ant_array_40f4_score,np_int_ant_array_50f1_score,np_int_ant_array_50f2_score,np_int_ant_array_50f3_score,np_int_ant_array_20m1_score,np_int_ant_array_20m2_score,np_int_ant_array_20m3_score,np_int_ant_array_20m4_score,np_int_ant_array_20m5_score,np_int_ant_array_30m1_score,np_int_ant_array_30m2_score,np_int_ant_array_30m3_score,np_int_ant_array_40m1_score,np_int_ant_array_40m2_score,np_int_ant_array_40m3_score,np_int_ant_array_40m4_score,np_int_ant_array_40m5_score])    
-    np_int_ant_array = np_int_ant_array.astype('int')
+    tc_ant_array_50f2_bool_l = (tc_ant_array_50f2 == 0)
+    tc_ant_array_50f2_score = tc_ant_array_50f2_bool_l.mask(tc_ant_array_50f2_bool_l==True, 0)
+    tc_ant_array_50f2_score = tc_ant_array_50f2_score.mask(tc_ant_array_50f2_bool_l==False, 1)
+    tc_ant_array_50f2_score = tc_ant_array_50f2_score['TC_ternary']
+    np_tc_ant_array_50f2_score = tc_ant_array_50f2_score.to_numpy()
 
-    np_au_array_train, np_au_array_test, np_int_ant_array_train, np_int_ant_array_test=train_test_split(np_au_array, np_int_ant_array,test_size=0.2,random_state=0)
-    clf = make_pipeline(StandardScaler(), SVC(C=1.0, kernel='poly', degree=3, coef0=1.0, max_iter=10000, random_state=0))
-#    clf = make_pipeline(StandardScaler(), LinearSVC(penalty="l1", loss='squared_hinge', dual=True, max_iter=10000, random_state=0))
-#    clf.fit(np_au_array_train, np_int_ant_array_train)
-    clf.fit(np_au_array, np_int_ant_array)
+    tc_ant_array_50f3_bool_l = (tc_ant_array_50f3 == 0)
+    tc_ant_array_50f3_score = tc_ant_array_50f3_bool_l.mask(tc_ant_array_50f3_bool_l==True, 0)
+    tc_ant_array_50f3_score = tc_ant_array_50f3_score.mask(tc_ant_array_50f3_bool_l==False, 1)
+    tc_ant_array_50f3_score = tc_ant_array_50f3_score['TC_ternary']
+    np_tc_ant_array_50f3_score = tc_ant_array_50f3_score.to_numpy()
+
+    tc_ant_array_20m1_bool_l = (tc_ant_array_20m1 == 0)
+    tc_ant_array_20m1_score = tc_ant_array_20m1_bool_l.mask(tc_ant_array_20m1_bool_l==True, 0)
+    tc_ant_array_20m1_score = tc_ant_array_20m1_score.mask(tc_ant_array_20m1_bool_l==False, 1)
+    tc_ant_array_20m1_score = tc_ant_array_20m1_score['TC_ternary']
+    np_tc_ant_array_20m1_score = tc_ant_array_20m1_score.to_numpy()
+
+    tc_ant_array_20m2_bool_l = (tc_ant_array_20m2 == 0)
+    tc_ant_array_20m2_score = tc_ant_array_20m2_bool_l.mask(tc_ant_array_20m2_bool_l==True, 0)
+    tc_ant_array_20m2_score = tc_ant_array_20m2_score.mask(tc_ant_array_20m2_bool_l==False, 1)
+    tc_ant_array_20m2_score = tc_ant_array_20m2_score['TC_ternary']
+    np_tc_ant_array_20m2_score = tc_ant_array_20m2_score.to_numpy()
+
+    tc_ant_array_20m3_bool_l = (tc_ant_array_20m3 == 0)
+    tc_ant_array_20m3_score = tc_ant_array_20m3_bool_l.mask(tc_ant_array_20m3_bool_l==True, 0)
+    tc_ant_array_20m3_score = tc_ant_array_20m3_score.mask(tc_ant_array_20m3_bool_l==False, 1)
+    tc_ant_array_20m3_score = tc_ant_array_20m3_score['TC_ternary']
+    np_tc_ant_array_20m3_score = tc_ant_array_20m3_score.to_numpy()
+
+    tc_ant_array_20m4_bool_l = (tc_ant_array_20m4 == 0)
+    tc_ant_array_20m4_score = tc_ant_array_20m4_bool_l.mask(tc_ant_array_20m4_bool_l==True, 0)
+    tc_ant_array_20m4_score = tc_ant_array_20m4_score.mask(tc_ant_array_20m4_bool_l==False, 1)
+    tc_ant_array_20m4_score = tc_ant_array_20m4_score['TC_ternary']
+    np_tc_ant_array_20m4_score = tc_ant_array_20m4_score.to_numpy()    
+
+    tc_ant_array_20m5_bool_l = (tc_ant_array_20m5 == 0)
+    tc_ant_array_20m5_score = tc_ant_array_20m5_bool_l.mask(tc_ant_array_20m5_bool_l==True, 0)
+    tc_ant_array_20m5_score = tc_ant_array_20m5_score.mask(tc_ant_array_20m5_bool_l==False, 1)
+    tc_ant_array_20m5_score = tc_ant_array_20m5_score['TC_ternary']
+    np_tc_ant_array_20m5_score = tc_ant_array_20m5_score.to_numpy()   
+
+    tc_ant_array_30m1_bool_l = (tc_ant_array_30m1 == 0)
+    tc_ant_array_30m1_score = tc_ant_array_30m1_bool_l.mask(tc_ant_array_30m1_bool_l==True, 0)
+    tc_ant_array_30m1_score = tc_ant_array_30m1_score.mask(tc_ant_array_30m1_bool_l==False, 1)
+    tc_ant_array_30m1_score = tc_ant_array_30m1_score['TC_ternary']
+    np_tc_ant_array_30m1_score = tc_ant_array_30m1_score.to_numpy()
+
+    tc_ant_array_30m2_bool_l = (tc_ant_array_30m2 == 0)
+    tc_ant_array_30m2_score = tc_ant_array_30m2_bool_l.mask(tc_ant_array_30m2_bool_l==True, 0)
+    tc_ant_array_30m2_score = tc_ant_array_30m2_score.mask(tc_ant_array_30m2_bool_l==False, 1)
+    tc_ant_array_30m2_score = tc_ant_array_30m2_score['TC_ternary']
+    np_tc_ant_array_30m2_score = tc_ant_array_30m2_score.to_numpy()
+
+    tc_ant_array_30m3_bool_l = (tc_ant_array_30m3 == 0)
+    tc_ant_array_30m3_score = tc_ant_array_30m3_bool_l.mask(tc_ant_array_30m3_bool_l==True, 0)
+    tc_ant_array_30m3_score = tc_ant_array_30m3_score.mask(tc_ant_array_30m3_bool_l==False, 1)
+    tc_ant_array_30m3_score = tc_ant_array_30m3_score['TC_ternary']
+    np_tc_ant_array_30m3_score = tc_ant_array_30m3_score.to_numpy()
+
+    tc_ant_array_40m1_bool_l = (tc_ant_array_40m1 == 0)
+    tc_ant_array_40m1_score = tc_ant_array_40m1_bool_l.mask(tc_ant_array_40m1_bool_l==True, 0)
+    tc_ant_array_40m1_score = tc_ant_array_40m1_score.mask(tc_ant_array_40m1_bool_l==False, 1)
+    tc_ant_array_40m1_score = tc_ant_array_40m1_score['TC_ternary']
+    np_tc_ant_array_40m1_score = tc_ant_array_40m1_score.to_numpy()
+
+    tc_ant_array_40m2_bool_l = (tc_ant_array_40m2 == 0)
+    tc_ant_array_40m2_score = tc_ant_array_40m2_bool_l.mask(tc_ant_array_40m2_bool_l==True, 0)
+    tc_ant_array_40m2_score = tc_ant_array_40m2_score.mask(tc_ant_array_40m2_bool_l==False, 1)
+    tc_ant_array_40m2_score = tc_ant_array_40m2_score['TC_ternary']
+    np_tc_ant_array_40m2_score = tc_ant_array_40m2_score.to_numpy()
+
+    tc_ant_array_40m3_bool_l = (tc_ant_array_40m3 == 0)
+    tc_ant_array_40m3_score = tc_ant_array_40m3_bool_l.mask(tc_ant_array_40m3_bool_l==True, 0)
+    tc_ant_array_40m3_score = tc_ant_array_40m3_score.mask(tc_ant_array_40m3_bool_l==False, 1)
+    tc_ant_array_40m3_score = tc_ant_array_40m3_score['TC_ternary']
+    np_tc_ant_array_40m3_score = tc_ant_array_40m3_score.to_numpy()
+
+    tc_ant_array_40m4_bool_l = (tc_ant_array_40m4 == 0)
+    tc_ant_array_40m4_score = tc_ant_array_40m4_bool_l.mask(tc_ant_array_40m4_bool_l==True, 0)
+    tc_ant_array_40m4_score = tc_ant_array_40m4_score.mask(tc_ant_array_40m4_bool_l==False, 1)
+    tc_ant_array_40m4_score = tc_ant_array_40m4_score['TC_ternary']
+    np_tc_ant_array_40m4_score = tc_ant_array_40m4_score.to_numpy()    
+
+    tc_ant_array_40m5_bool_l = (tc_ant_array_40m5 == 0)
+    tc_ant_array_40m5_score = tc_ant_array_40m5_bool_l.mask(tc_ant_array_40m5_bool_l==True, 0)
+    tc_ant_array_40m5_score = tc_ant_array_40m5_score.mask(tc_ant_array_40m5_bool_l==False, 1)
+    tc_ant_array_40m5_score = tc_ant_array_40m5_score['TC_ternary']
+    np_tc_ant_array_40m5_score = tc_ant_array_40m5_score.to_numpy() 
+
+    np_tc_ant_array = np.concatenate([np_tc_ant_array_20f1_score,np_tc_ant_array_20f2_score,np_tc_ant_array_20f3_score,np_tc_ant_array_20f4_score,np_tc_ant_array_30f1_score,np_tc_ant_array_30f2_score,np_tc_ant_array_30f3_score,np_tc_ant_array_40f1_score,np_tc_ant_array_40f2_score,np_tc_ant_array_40f3_score,np_tc_ant_array_40f4_score,np_tc_ant_array_50f1_score,np_tc_ant_array_50f2_score,np_tc_ant_array_50f3_score,np_tc_ant_array_20m1_score,np_tc_ant_array_20m2_score,np_tc_ant_array_20m3_score,np_tc_ant_array_20m4_score,np_tc_ant_array_20m5_score,np_tc_ant_array_30m1_score,np_tc_ant_array_30m2_score,np_tc_ant_array_30m3_score,np_tc_ant_array_40m1_score,np_tc_ant_array_40m2_score,np_tc_ant_array_40m3_score,np_tc_ant_array_40m4_score,np_tc_ant_array_40m5_score])    
+    np_tc_ant_array = np_tc_ant_array.astype('int')
+
+    np_au_array_train, np_au_array_test, np_tc_ant_array_train, np_tc_ant_array_test=train_test_split(np_au_array,np_tc_ant_array,test_size=0.2)
+
+    clf = make_pipeline(StandardScaler(), SVC(kernel='poly', gamma='scale', max_iter=10000, random_state=0))
+#    clf = make_pipeline(StandardScaler(), LinearSVC(penalty="l2", loss='squared_hinge', dual=True, max_iter=10000, random_state=0))
+#    clf.fit(np_au_array_train, np_tc_ant_array_train)
+    clf.fit(np_au_array, np_tc_ant_array)
 #    print(clf.named_steps['linearsvc'].coef_)
 #    print(clf.named_steps['linearsvc'].intercept_)
-    prediction = clf.predict(np_au_array_test)
+#    print(prediction = clf.predict(np_au_array_test))
     #print(clf.score(np_au_array_test,np_int_ant_array_test))
 #    print('Accuracy score:',accuracy_score(np_int_ant_array_test,prediction))
 
     #cross validation with 5 classes
 #    scores = cross_val_score(clf, np_au_array, np_int_ant_array, cv=5))
-    print('Mean of cross validation score:', cross_val_score(clf, np_au_array, np_int_ant_array, cv=5).mean())
+    print('Mean of cross validation score:', cross_val_score(clf, np_au_array, np_tc_ant_array, cv=5).mean())
 
-    perm_importance = permutation_importance(clf, np_au_array, np_int_ant_array, random_state=0)
+    perm_importance = permutation_importance(clf, np_au_array, np_tc_ant_array, random_state=0)
     feature_names = ['AU01', 'AU02', 'AU04', 'AU05', 'AU06', 'AU07', 'AU09', 'AU10', 'AU12', 'AU14', 'AU15', 'AU17', 'AU20', 'AU23', 'AU25', 'AU26', 'AU28']#'AU45'
     features = np.array(feature_names)
     sorted_index = perm_importance.importances_mean.argsort()
@@ -725,6 +637,7 @@ def main():
     plt.legend(loc='upper left', borderaxespad=0)
 
 #    plt.tight_layout()
+    plt.show()
 '''
 
 if __name__ == '__main__':
