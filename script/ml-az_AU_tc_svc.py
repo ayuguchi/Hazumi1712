@@ -11,8 +11,9 @@ from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.inspection import permutation_importance
-#from sklearn.model_selection import GridSearchCV
-#from sklearn.model_selection import RandomizedSearchCV
+from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import RandomizedSearchCV
+from sklearn.metrics import f1_score
 #import seaborn as sns
 
 #start_time = []
@@ -21,6 +22,13 @@ from sklearn.inspection import permutation_importance
 #au04 = []
 #au05 = []
 #au45 = []
+
+
+SVC_random = {SVC(): {"C": stats.uniform(0.00001, 1000),
+                    "kernel": ["poly"],
+                    "decision_function_shape": ["ovo", "ovr"],
+                    "random_state": stats.randint(0, 100)
+                     }}
 
 def main():
     d_20f1_dump = pd.read_csv('../dumpfiles/1712F2006.csv')
@@ -344,7 +352,21 @@ def main():
 
     np_au_array_train, np_au_array_test, np_tc_ant_array_train, np_tc_ant_array_test=train_test_split(np_au_array,np_tc_ant_array,test_size=0.2)
 
-    clf = make_pipeline(StandardScaler(), SVC(kernel='poly', gamma='scale', max_iter=10000, random_state=0))
+
+    max_score = 0
+    
+    for model, param in SVC_random.items():
+        clf =RandomizedSearchCV(model, param)
+        clf.fit(np_au_array, np_tc_ant_array)
+        pred_y = clf.predict(np_au_array)
+        score = f1_score(np_tc_ant_array, pred_y, average="micro")
+
+        if max_score < score:
+            max_score = score
+            best_param = clf.best_params_
+            best_model = model.__class__.__name__
+
+#    clf = make_pipeline(StandardScaler(), SVC(kernel='poly', gamma='scale', max_iter=10000, random_state=0))
 #    clf = make_pipeline(StandardScaler(), LinearSVC(penalty="l2", loss='squared_hinge', dual=True, max_iter=10000, random_state=0))
 #    clf.fit(np_au_array_train, np_tc_ant_array_train)
     clf.fit(np_au_array, np_tc_ant_array)

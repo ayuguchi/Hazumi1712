@@ -14,8 +14,9 @@ from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.metrics import accuracy_score
 from sklearn.inspection import permutation_importance
 from sklearn.base import BaseEstimator
-#from sklearn.model_selection import GridSearchCV
-#from sklearn.model_selection import RandomizedSearchCV
+from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import RandomizedSearchCV
+from sklearn.metrics import f1_score
 #import seaborn as sns
 
 #start_time = []
@@ -24,6 +25,13 @@ from sklearn.base import BaseEstimator
 #au04 = []
 #au05 = []
 #au45 = []
+
+SVC_random = {SVC(): {"C": stats.uniform(0.00001, 1000),
+                    "kernel": ["poly"],
+                    "decision_function_shape": ["ovo", "ovr"],
+                    "random_state": stats.randint(0, 100)
+                     }}
+
 
 def main():
     d_20f1_dump = pd.read_csv('../dumpfiles/1712F2006.csv')
@@ -432,13 +440,26 @@ def main():
     np_int_ant_array = np_int_ant_array.astype('int')
 
     np_au_array_train, np_au_array_test, np_int_ant_array_train, np_int_ant_array_test=train_test_split(np_au_array, np_int_ant_array,test_size=0.2,random_state=0)
-    clf = make_pipeline(StandardScaler(), SVC(C=1.0, kernel='poly', degree=3, coef0=1.0, max_iter=10000, random_state=0))
-#    clf = make_pipeline(StandardScaler(), LinearSVC(penalty="l1", loss='squared_hinge', dual=True, max_iter=10000, random_state=0))
+
+    max_score = 0
+    
+    for model, param in SVC_random.items():
+        clf =RandomizedSearchCV(model, param)
+        clf.fit(np_au_array, np_int_ant_array)
+        pred_y = clf.predict(np_au_array)
+        score = f1_score(np_int_ant_array, pred_y, average="micro")
+
+        if max_score < score:
+            max_score = score
+            best_param = clf.best_params_
+            best_model = model.__class__.__name__
+
+#    clf = make_pipeline(StandardScaler(), SVC(C=1.0, kernel='poly', degree=3, coef0=1.0, max_iter=10000, random_state=0))
 #    clf.fit(np_au_array_train, np_int_ant_array_train)
-    clf.fit(np_au_array, np_int_ant_array)
+#    clf.fit(np_au_array, np_int_ant_array)
 #    print(clf.named_steps['linearsvc'].coef_)
 #    print(clf.named_steps['linearsvc'].intercept_)
-    prediction = clf.predict(np_au_array_test)
+#    prediction = clf.predict(np_au_array_test)
     #print(clf.score(np_au_array_test,np_int_ant_array_test))
 #    print('Accuracy score:',accuracy_score(np_int_ant_array_test,prediction))
 
