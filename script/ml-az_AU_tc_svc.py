@@ -26,8 +26,7 @@ from sklearn.metrics import f1_score
 
 SVC_random = {SVC(): {"C": stats.uniform(0.00001, 1000),
                     "kernel": ["poly"],
-                    "decision_function_shape": ["ovo", "ovr"],
-                    "random_state": stats.randint(0, 100)
+                    "random_state": [0]
                      }}
 
 def main():
@@ -364,7 +363,8 @@ def main():
         if max_score < score:
             max_score = score
             best_param = clf.best_params_
-            best_model = model.__class__.__name__
+            #best_model = model.__class__.__name__
+    print("Best param:", best_param)
 
 #    clf = make_pipeline(StandardScaler(), SVC(kernel='poly', gamma='scale', max_iter=10000, random_state=0))
 #    clf = make_pipeline(StandardScaler(), LinearSVC(penalty="l2", loss='squared_hinge', dual=True, max_iter=10000, random_state=0))
