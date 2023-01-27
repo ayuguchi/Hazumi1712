@@ -26,8 +26,13 @@ from sklearn.metrics import f1_score
 #au05 = []
 #au45 = []
 
+SVC_grid = {SVC(): {"C": [10 ** i for i in range(-5, 5)],
+                    "kernel": ["poly","sigmoid"],
+                    "random_state": [0]
+                     }}
+
 SVC_random = {SVC(): {"C": stats.uniform(0.00001, 1000),
-                    "kernel": ["poly"],
+                    "kernel": ["poly","sigmoid"],
                     "random_state": [0]
                      }}
 
@@ -447,9 +452,10 @@ def main():
     np_au_array_train, np_au_array_test, np_int_ant_array_train, np_int_ant_array_test=train_test_split(np_au_array, np_int_ant_array,test_size=0.2,random_state=0)
 
     max_score = 0
+    SearchMethod = 0
     
-    for model, param in SVC_random.items():
-        clf =RandomizedSearchCV(model, param)
+    for model, param in SVC_grid.items():
+        clf = GridSearchCV(model, param)
         clf.fit(np_au_array, np_int_ant_array)
         pred_y = clf.predict(np_au_array)
         score = f1_score(np_int_ant_array, pred_y, average="micro")
@@ -459,7 +465,24 @@ def main():
             best_param = clf.best_params_
             #best_model = model.__class__.__name__
 
-#    print("Best param:", best_param)
+    for model, param in SVC_random.items():
+        clf =RandomizedSearchCV(model, param)
+        clf.fit(np_au_array, np_int_ant_array)
+        pred_y = clf.predict(np_au_array)
+        score = f1_score(np_int_ant_array, pred_y, average="micro")
+
+        if max_score < score:
+            SearchMethod = 1
+            max_score = score
+            best_param = clf.best_params_
+            #best_model = model.__class__.__name__
+
+    if SearchMethod == 0:
+        print("Method: GridSearch")
+    else:
+        print("Method: RandomizedSearch")
+
+    print("Best param:", best_param)
 
 #    clf = make_pipeline(StandardScaler(), SVC(C=1.0, kernel='poly', degree=3, coef0=1.0, max_iter=10000, random_state=0))
 #    clf.fit(np_au_array_train, np_int_ant_array_train)

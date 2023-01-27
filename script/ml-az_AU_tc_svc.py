@@ -23,9 +23,13 @@ from sklearn.metrics import f1_score
 #au05 = []
 #au45 = []
 
+SVC_grid = {SVC(): {"C": [10 ** i for i in range(-5, 5)],
+                    "kernel": ["poly","sigmoid","linear"],
+                    "random_state": [0]
+                     }}
 
 SVC_random = {SVC(): {"C": stats.uniform(0.00001, 1000),
-                    "kernel": ["poly"],
+                    "kernel": ["poly","sigmoid","linear"],
                     "random_state": [0]
                      }}
 
@@ -353,6 +357,19 @@ def main():
 
 
     max_score = 0
+    SearchMethod = 0
+    
+    for model, param in SVC_grid.items():
+        clf = GridSearchCV(model, param)
+        clf.fit(np_au_array, np_tc_ant_array)
+        pred_y = clf.predict(np_au_array)
+        score = f1_score(np_tc_ant_array, pred_y, average="micro")
+
+        if max_score < score:
+            max_score = score
+            best_param = clf.best_params_
+            #best_model = model.__class__.__name__
+
     
     for model, param in SVC_random.items():
         clf =RandomizedSearchCV(model, param)
@@ -364,12 +381,19 @@ def main():
             max_score = score
             best_param = clf.best_params_
             #best_model = model.__class__.__name__
+
+    if SearchMethod == 0:
+        print("Method: GridSearch")
+    else:
+        print("Method: RandomizedSearch")
+
     print("Best param:", best_param)
+    #print("Best model:", best_model)
 
 #    clf = make_pipeline(StandardScaler(), SVC(kernel='poly', gamma='scale', max_iter=10000, random_state=0))
 #    clf = make_pipeline(StandardScaler(), LinearSVC(penalty="l2", loss='squared_hinge', dual=True, max_iter=10000, random_state=0))
 #    clf.fit(np_au_array_train, np_tc_ant_array_train)
-    clf.fit(np_au_array, np_tc_ant_array)
+#    clf.fit(np_au_array, np_tc_ant_array)
 #    print(clf.named_steps['linearsvc'].coef_)
 #    print(clf.named_steps['linearsvc'].intercept_)
 #    print(prediction = clf.predict(np_au_array_test))
