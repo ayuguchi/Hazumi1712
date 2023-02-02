@@ -27,7 +27,6 @@ SVC_grid = {SVC(): {"C": [10 ** i for i in range(-5, 5)],
                     "kernel": ["poly"],
                     "degree":[i for i in range(1, 10)],
                     "gamma":["auto","scale"],
-                    "coef0": [10 ** i for i in range(-1, 3)],              
                     "random_state": [0]
                      }}
 
@@ -39,6 +38,14 @@ SVC_grid = {SVC(): {"C": [10 ** i for i in range(-5, 5)],
 #                    "random_state": [0]
 #                     }}
 
+#SVC_grid = {SVC(): {"C": [10 ** i for i in range(-5, 5)],
+#                    "kernel": ["poly"],
+#                    "degree":[i for i in range(1, 10)],
+#                    "gamma":["auto","scale"],
+#                    "coef0": [10 ** i for i in range(-1, 3)],              
+#                    "random_state": [0]
+#                    }}
+
 def main():
     d_20f1_dump = pd.read_csv('../dumpfiles/1712F2006.csv')
     d_20f2_dump = pd.read_csv('../dumpfiles/1712F2010.csv')
@@ -46,6 +53,7 @@ def main():
     d_20f4_dump = pd.read_csv('../dumpfiles/1712F2019.csv')
 
     d_30f1_dump = pd.read_csv('../dumpfiles/1712F3013.csv')
+#        print("Method: Rando
     d_30f2_dump = pd.read_csv('../dumpfiles/1712F3016.csv')
     d_30f3_dump = pd.read_csv('../dumpfiles/1712F3030.csv')
 
@@ -363,21 +371,28 @@ def main():
 
 
     max_score = 0
+    max_feature_val = 0
     SearchMethod = 0
+    #best_param = {}
     
     for model, param in SVC_grid.items():
-        clf = GridSearchCV(model, param)
+        clf = GridSearchCV(model, param, n_jobs=-1)
         clf.fit(np_au_array, np_tc_ant_array)
         pred_y = clf.predict(np_au_array)
-        score = f1_score(np_tc_ant_array, pred_y, average="micro")
-        print("The current parameter:", clf.cv_results_)
+        perm_importance = permutation_importance(clf, np_au_array, pred_y, random_state=0)
+        feature_val = perm_importance.importances_mean.max()
+        print("The current best feature value:", feature_val)
+        #pred_y = clf.predict(np_au_array)
+        #score = f1_score(np_tc_ant_array, pred_y, average="micro")
+        #print("The current parameter:", clf.cv_results_)
         
-        if max_score < score:
-            max_score = score
+        if max_feature_val < feature_val:
+            #max_score = score
+            max_feature_val = feature_val
             best_param = clf.best_params_
+            print("Best param:", best_param)
             #best_model = model.__class__.__name__
 
-    
 #    for model, param in SVC_random.items():
 #        clf =RandomizedSearchCV(model, param)
 #        clf.fit(np_au_array, np_tc_ant_array)
@@ -389,12 +404,11 @@ def main():
 #            best_param = clf.best_params_
 #            #best_model = model.__class__.__name__
 
-    if SearchMethod == 0:
-        print("Method: GridSearch")
-    else:
-        print("Method: RandomizedSearch")
+#    if SearchMethod == 0:
+#        print("Method: GridSearch")
+#    else:
+#        print("Method: RandomizedSearch")
 
-    print("Best param:", best_param)
 
 #    clf = make_pipeline(StandardScaler(), SVC(kernel='poly', gamma='scale', max_iter=10000, random_state=0))
 #    clf = make_pipeline(StandardScaler(), LinearSVC(penalty="l2", loss='squared_hinge', dual=True, max_iter=10000, random_state=0))

@@ -16,8 +16,8 @@ from sklearn.inspection import permutation_importance
 from sklearn.base import BaseEstimator
 from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import RandomizedSearchCV
-from sklearn.metrics import f1_score
-#import seaborn as sns
+from sklearn.metrics import f1_score, confusion_matrix
+import seaborn as sns
 
 #start_time = []
 #au01 = []
@@ -30,7 +30,6 @@ SVC_grid = {SVC(): {"C": [10 ** i for i in range(-5, 5)],
                     "kernel": ["poly"],
                     "degree":[i for i in range(1, 10)],
                     "gamma":["auto","scale"],   
-                    "coef0": [10 ** i for i in range(-1, 3)],            
                     "random_state": [0]
                      }}
 
@@ -458,17 +457,25 @@ def main():
     np_au_array_train, np_au_array_test, np_int_ant_array_train, np_int_ant_array_test=train_test_split(np_au_array, np_int_ant_array,test_size=0.2,random_state=0)
 
     max_score = 0
+    max_feature_val = 0
     SearchMethod = 0
     
     for model, param in SVC_grid.items():
-        clf = GridSearchCV(model, param)
+        clf = GridSearchCV(model, param,n_jobs=-1)
+        clf.fit(np_au_array, np_int_ant_array)
         pred_y = clf.predict(np_au_array)
-        score = f1_score(np_int_ant_array, pred_y, average="micro")
-        print("The current parameters:", clf.best_params_)
+        perm_importance = permutation_importance(clf, np_au_array, pred_y, random_state=0)
+        feature_val = perm_importance.importances_mean.max()
+        print("The current best feature value:", feature_val)
+        #pred_y = clf.predict(np_au_array)
+        #score = f1_score(np_int_ant_array, pred_y, average="micro")
+        #print("The current parameters:", clf.best_params_)
 
-        if max_score < score:
-            max_score = score
-            best_param = clf.best_params_
+        if max_feature_val < feature_val:
+            #max_score = score
+            max_feature_val = feature_val
+            best_param = clf.best_params_ 
+            print("Best param:", best_param)
             #best_model = model.__class__.__name__
 
 #    for model, param in SVC_random.items():
@@ -484,29 +491,31 @@ def main():
 #            print("The current best parameters:", best_param)
 #            #best_model = model.__class__.__name__
 
-    if SearchMethod == 0:
-        print("Method: GridSearch")
-    else:
-        print("Method: RandomizedSearch")
+#    if SearchMethod == 0:
+#        print("Method: GridSearch")
+#    else:
+#        print("Method: RandomizedSearch")
 
-    print("Best param:", best_param)
-
-#    clf = make_pipeline(StandardScaler(), SVC(C=1.0, kernel='poly', degree=3, coef0=1.0, max_iter=10000, random_state=0))
+#    clf = make_pipeline(StandardScaler(), SVC(C=10, kernel='poly', degree=7, coef0=1.0, gamma='scale', max_iter=10000, random_state=0))
 #    clf.fit(np_au_array_train, np_int_ant_array_train)
 #    clf.fit(np_au_array, np_int_ant_array)
 #    print(clf.named_steps['linearsvc'].coef_)
 #    print(clf.named_steps['linearsvc'].intercept_)
-#    prediction = clf.predict(np_au_array_test)
+    prediction = clf.predict(np_au_array)
     #print(clf.score(np_au_array_test,np_int_ant_array_test))
 #    print('Accuracy score:',accuracy_score(np_int_ant_array_test,prediction))
 
     #cross validation with 5 classes
 #    scores = cross_val_score(clf, np_au_array, np_int_ant_array, cv=5))
     print('Mean of cross validation score:', cross_val_score(clf, np_au_array, np_int_ant_array, cv=5).mean())
+#    cm = confusion_matrix(np_int_ant_array,prediction,normalize = 'true')
+#    sns.heatmap(cm, annot=True, cmap='Blues')
+#    plt.show()
 
-    perm_importance = permutation_importance(clf, np_au_array, np_int_ant_array, random_state=0)
+#    perm_importance = permutation_importance(clf, np_au_array, np_int_ant_array, random_state=0)
     feature_names = ['AU01', 'AU02', 'AU04', 'AU05', 'AU06', 'AU07', 'AU09', 'AU10', 'AU12', 'AU14', 'AU15', 'AU17', 'AU20', 'AU23', 'AU25', 'AU26', 'AU28']#'AU45'
     features = np.array(feature_names)
+    #print('features:',perm_importance.importances_mean.max())
     sorted_index = perm_importance.importances_mean.argsort()
 
 #    plt.barh(features, abs(perm_importance.importances_mean))
