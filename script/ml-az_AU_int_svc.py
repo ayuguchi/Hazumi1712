@@ -27,21 +27,27 @@ from sklearn.metrics import f1_score
 #au45 = []
 
 SVC_grid = {SVC(): {"C": [10 ** i for i in range(-5, 5)],
-                    "kernel": ["poly","sigmoid"],
-                    "random_state": [0]
-                     }}
-
-SVC_random = {SVC(): {"C": stats.uniform(0.00001, 1000),
-                    "kernel": ["poly","sigmoid"],
+                    "kernel": ["poly"],
+                    "degree":[i for i in range(1, 10)],
+                    "gamma":["auto","scale"],   
+                    "coef0": [10 ** i for i in range(-1, 3)],            
                     "random_state": [0]
                      }}
 
 #SVC_random = {SVC(): {"C": stats.uniform(0.00001, 1000),
 #                    "kernel": ["poly"],
-#                    "decision_function_shape": ["ovo", "ovr"],
-#                    "random_state": stats.randint(0, 100)
+#                    "degree":[i for i in range(1, 10)],
+#                    "gamma":["auto","scale"],
+#                    "random_state": [0]
 #                     }}
 
+#SVC_grid = {SVC(): {"C": [10 ** i for i in range(-5, 5)],
+#                    "kernel": ["poly"],
+#                    "degree":[i for i in range(1, 10)],
+#                    "gamma":["auto","scale"],      
+#                    "coef0": [10 ** i for i in range(-1, 3)],           
+#                    "random_state": [0]
+#                     }}
 
 def main():
     d_20f1_dump = pd.read_csv('../dumpfiles/1712F2006.csv')
@@ -456,26 +462,27 @@ def main():
     
     for model, param in SVC_grid.items():
         clf = GridSearchCV(model, param)
-        clf.fit(np_au_array, np_int_ant_array)
         pred_y = clf.predict(np_au_array)
         score = f1_score(np_int_ant_array, pred_y, average="micro")
+        print("The current parameters:", clf.best_params_)
 
         if max_score < score:
             max_score = score
             best_param = clf.best_params_
             #best_model = model.__class__.__name__
 
-    for model, param in SVC_random.items():
-        clf =RandomizedSearchCV(model, param)
-        clf.fit(np_au_array, np_int_ant_array)
-        pred_y = clf.predict(np_au_array)
-        score = f1_score(np_int_ant_array, pred_y, average="micro")
+#    for model, param in SVC_random.items():
+#        clf =RandomizedSearchCV(model, param)
+#        clf.fit(np_au_array, np_int_ant_array)
+#        pred_y = clf.predict(np_au_array)
+#        score = f1_score(np_int_ant_array, pred_y, average="micro")
 
-        if max_score < score:
-            SearchMethod = 1
-            max_score = score
-            best_param = clf.best_params_
-            #best_model = model.__class__.__name__
+#        if max_score < score:
+#            SearchMethod = 1
+#            max_score = score
+#            best_param = clf.best_params_
+#            print("The current best parameters:", best_param)
+#            #best_model = model.__class__.__name__
 
     if SearchMethod == 0:
         print("Method: GridSearch")
