@@ -17,7 +17,7 @@ from sklearn.base import BaseEstimator
 from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import RandomizedSearchCV
 from sklearn.metrics import f1_score, confusion_matrix
-import seaborn as sns
+#import seaborn as sns
 
 #start_time = []
 #au01 = []
@@ -29,7 +29,8 @@ import seaborn as sns
 SVC_grid = {SVC(): {"C": [10 ** i for i in range(-5, 5)],
                     "kernel": ["poly"],
                     "degree":[i for i in range(1, 10)],
-                    "gamma":["auto","scale"],   
+                    "gamma":["auto","scale"],
+                    "coef0": [10 ** i for i in range(-1, 3)],    
                     "random_state": [0]
                      }}
 
@@ -466,7 +467,7 @@ def main():
         pred_y = clf.predict(np_au_array)
         perm_importance = permutation_importance(clf, np_au_array, pred_y, random_state=0)
         feature_val = perm_importance.importances_mean.max()
-        print("The current best feature value:", feature_val)
+        print("The best feature value:", feature_val)
         #pred_y = clf.predict(np_au_array)
         #score = f1_score(np_int_ant_array, pred_y, average="micro")
         #print("The current parameters:", clf.best_params_)
@@ -475,7 +476,7 @@ def main():
             #max_score = score
             max_feature_val = feature_val
             best_param = clf.best_params_ 
-            print("Best param:", best_param)
+
             #best_model = model.__class__.__name__
 
 #    for model, param in SVC_random.items():
@@ -495,13 +496,14 @@ def main():
 #        print("Method: GridSearch")
 #    else:
 #        print("Method: RandomizedSearch")
+    print("Best param:", best_param)
 
 #    clf = make_pipeline(StandardScaler(), SVC(C=10, kernel='poly', degree=7, coef0=1.0, gamma='scale', max_iter=10000, random_state=0))
 #    clf.fit(np_au_array_train, np_int_ant_array_train)
 #    clf.fit(np_au_array, np_int_ant_array)
 #    print(clf.named_steps['linearsvc'].coef_)
 #    print(clf.named_steps['linearsvc'].intercept_)
-    prediction = clf.predict(np_au_array)
+#    prediction = clf.predict(np_au_array)
     #print(clf.score(np_au_array_test,np_int_ant_array_test))
 #    print('Accuracy score:',accuracy_score(np_int_ant_array_test,prediction))
 

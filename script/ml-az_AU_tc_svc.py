@@ -373,42 +373,44 @@ def main():
     max_score = 0
     max_feature_val = 0
     SearchMethod = 0
-    #best_param = {}
     
     for model, param in SVC_grid.items():
-        clf = GridSearchCV(model, param, n_jobs=-1)
+        clf = GridSearchCV(model, param,n_jobs=-1)
         clf.fit(np_au_array, np_tc_ant_array)
         pred_y = clf.predict(np_au_array)
         perm_importance = permutation_importance(clf, np_au_array, pred_y, random_state=0)
         feature_val = perm_importance.importances_mean.max()
-        print("The current best feature value:", feature_val)
+        #print("The best feature value:", feature_val)
         #pred_y = clf.predict(np_au_array)
         #score = f1_score(np_tc_ant_array, pred_y, average="micro")
-        #print("The current parameter:", clf.cv_results_)
-        
-        if max_feature_val < feature_val:
+        #print("The current parameters:", clf.best_params_)
+
+        if max_feature_val <= feature_val:
+        #if max_score < score:
             #max_score = score
             max_feature_val = feature_val
-            best_param = clf.best_params_
-            print("Best param:", best_param)
+            best_param = clf.best_params_ 
+
             #best_model = model.__class__.__name__
 
 #    for model, param in SVC_random.items():
 #        clf =RandomizedSearchCV(model, param)
-#        clf.fit(np_au_array, np_tc_ant_array)
+#        clf.fit(np_au_array, np_int_ant_array)
 #        pred_y = clf.predict(np_au_array)
-#        score = f1_score(np_tc_ant_array, pred_y, average="micro")
-#
+#        score = f1_score(np_int_ant_array, pred_y, average="micro")
+
 #        if max_score < score:
+#            SearchMethod = 1
 #            max_score = score
 #            best_param = clf.best_params_
+#            print("The current best parameters:", best_param)
 #            #best_model = model.__class__.__name__
 
 #    if SearchMethod == 0:
 #        print("Method: GridSearch")
 #    else:
 #        print("Method: RandomizedSearch")
-
+    print("Best param:", best_param)
 
 #    clf = make_pipeline(StandardScaler(), SVC(kernel='poly', gamma='scale', max_iter=10000, random_state=0))
 #    clf = make_pipeline(StandardScaler(), LinearSVC(penalty="l2", loss='squared_hinge', dual=True, max_iter=10000, random_state=0))
@@ -424,7 +426,7 @@ def main():
 #    scores = cross_val_score(clf, np_au_array, np_int_ant_array, cv=5))
     print('Mean of cross validation score:', cross_val_score(clf, np_au_array, np_tc_ant_array, cv=5).mean())
 
-    perm_importance = permutation_importance(clf, np_au_array, np_tc_ant_array, random_state=0)
+    #perm_importance = permutation_importance(clf, np_au_array, np_tc_ant_array, random_state=0)
     feature_names = ['AU01', 'AU02', 'AU04', 'AU05', 'AU06', 'AU07', 'AU09', 'AU10', 'AU12', 'AU14', 'AU15', 'AU17', 'AU20', 'AU23', 'AU25', 'AU26', 'AU28']#'AU45'
     features = np.array(feature_names)
     sorted_index = perm_importance.importances_mean.argsort()
